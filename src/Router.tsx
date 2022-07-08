@@ -10,7 +10,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <ErrorBoundary>
-        {!isUserOnline ? (
+        {isUserOnline ? (
           <Routes>
             <Route path="/" element={<Dashboard />} />
 

@@ -13,12 +13,12 @@ describe('Devices', () => {
   it('should render the component', async () => {
     customRender(<Devices />)
 
-    await screen.findByText('Refresh')
+    expect(await screen.findByText('Refresh')).toBeInTheDocument()
   })
 
   it('should render the table rows', async () => {
     customRender(<Devices />)
 
-    await screen.findByText('Port')
+    expect(await screen.findByText('Port')).toBeInTheDocument()
   })
 })

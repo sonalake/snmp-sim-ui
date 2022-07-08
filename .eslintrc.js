@@ -91,6 +91,7 @@ module.exports = {
     'react/display-name': ['off'],
     'react/prop-types': ['off'],
     'jest/expect-expect': 'off',
+    'jest/no-disabled-tests': 'off',
   },
   settings: {
     react: {

@@ -7,6 +7,6 @@ describe('BreadCrumbs', () => {
   it('should render the component', async () => {
     customRender(<BreadCrumbs />)
 
-    await screen.findByText('Dashboard')
+    expect(await screen.findByText('Dashboard')).toBeInTheDocument()
   })
 })
