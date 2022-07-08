@@ -1,3 +1,5 @@
+export * from './AgentDetails/AgentDetails'
+export * from './Agents/Agents'
 export * from './Dashboard/Dashboard'
 export * from './DeviceDetails/DeviceDetails'
 export * from './Devices/Devices'

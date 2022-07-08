@@ -1,7 +1,7 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
-import { NoConnection } from './NoConnection'
+import React from 'react'
 import { customRender } from '../../utils/testUtils/testUtils'
+import { NoConnection } from './NoConnection'
 
 describe('NoConnection', () => {
   it('should render the component', () => {

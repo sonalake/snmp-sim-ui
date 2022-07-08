@@ -1272,10 +1272,19 @@
     "@types/history" "^4.7.11"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.14":
+"@types/react@*":
   version "18.0.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.14.tgz#e016616ffff51dba01b04945610fe3671fdbe06d"
   integrity sha512-x4gGuASSiWmo0xjDLpm5mPb52syZHJx02VKbqUKdLmKtAwIh63XClGsiTI1K6DO5q7ox4xAsQrU+Gl3+gGXF9Q==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.0.15":
+  version "18.0.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.15.tgz#d355644c26832dc27f3e6cbf0c4f4603fc4ab7fe"
+  integrity sha512-iz3BtLuIYH1uWdsv6wXYdhozhqj20oD4/Hk2DNXIn1kFsmp9x8d9QB6FnPhfkbhd2PgEONt9Q1x/ebkwjfFLow==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1449,7 +1458,7 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/utils@5.30.5":
+"@typescript-eslint/utils@5.30.5", "@typescript-eslint/utils@^5.13.0":
   version "5.30.5"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.30.5.tgz#3999cbd06baad31b9e60d084f20714d1b2776765"
   integrity sha512-o4SSUH9IkuA7AYIfAvatldovurqTAHrfzPApOZvdUq01hHojZojCFXx06D/aFpKCgWbMPRdJBWAC3sWp3itwTA==
@@ -2340,6 +2349,11 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -3162,6 +3176,13 @@ eslint-plugin-react@^7.30.1:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.7"
 
+eslint-plugin-testing-library@^5.5.1:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-5.5.1.tgz#6fe602f9082a421b471bbae8aed692e26fe981b3"
+  integrity sha512-plLEkkbAKBjPxsLj7x4jNapcHAg2ernkQlKKrN2I8NrQwPISZHyCUNvg5Hv3EDqOQReToQb5bnqXYbkijJPE/g==
+  dependencies:
+    "@typescript-eslint/utils" "^5.13.0"
+
 eslint-scope@5.1.1, eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"
@@ -3550,10 +3571,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.6.tgz#022e9218c637f9f3fc9c35ab9c9193f05add60b2"
   integrity sha512-0sQoMh9s0BYsm+12Huy/rkKxVu4R1+r96YX5cG44rHV0pQ6iC3Q+mkoMFaGWObMFYQxCVT+ssG1ksneA2MI9KQ==
 
-flowbite-react@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/flowbite-react/-/flowbite-react-0.1.2.tgz#a008b386ccd0cd477fb059dc3dabd12448fc2c9b"
-  integrity sha512-pkdT7ZxPJ4a48lPn+Mk1WknG5qPP3b/LLjWq4JY9yulLk7rLRPkWCqq3C3DKeavDIq65Z6DpMQgFsae+DpGtPQ==
+flowbite-react@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/flowbite-react/-/flowbite-react-0.1.3.tgz#61e6c6d3411d042d90126a8b9f779a214f4f2593"
+  integrity sha512-bE1sEdntX0x8CAvWfoSzBpCSjU4heWkNmpV6lBu/CqbuYH/7Jb8vg9DVIvmNN5o0CJ08T3hy+eSQQqB2T2Ofug==
   dependencies:
     "@floating-ui/react-dom" "^0.6.3"
     "@floating-ui/react-dom-interactions" "^0.4.0"
@@ -6409,6 +6430,13 @@ react-router@6.3.0:
   integrity sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==
   dependencies:
     history "^5.2.0"
+
+react-toastify@^9.0.5:
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.5.tgz#310d7bcfcf3887c0e8461ac6068fe1abb8d720e1"
+  integrity sha512-dszPCeQINY+Nm6HmsiAXT/7wsazPqv0S/RuhIYLAW+fTKcd3T1iRjZG0XqrN9nvAzqaE5J6uxMaiBrOevxjY8g==
+  dependencies:
+    clsx "^1.1.1"
 
 react@18.2.0:
   version "18.2.0"

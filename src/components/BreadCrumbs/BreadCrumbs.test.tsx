@@ -1,12 +1,12 @@
+import { screen } from '@testing-library/react'
 import React from 'react'
-import { screen, waitFor } from '@testing-library/react'
-import { BreadCrumbs } from './BreadCrumbs'
 import { customRender } from '../../utils/testUtils/testUtils'
+import { BreadCrumbs } from './BreadCrumbs'
 
 describe('BreadCrumbs', () => {
   it('should render the component', async () => {
-    await waitFor(() => customRender(<BreadCrumbs />))
+    customRender(<BreadCrumbs />)
 
-    await waitFor(() => expect(screen.getByText('Dashboard')).toBeInTheDocument())
+    await screen.findByText('Dashboard')
   })
 })

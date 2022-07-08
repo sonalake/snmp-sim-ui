@@ -1,14 +1,16 @@
+import { Breadcrumb } from 'flowbite-react'
 import React, { useMemo } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import { Breadcrumb } from 'flowbite-react'
 import { StyledLink } from '../StyledLink/StyledLink'
 
 export const BreadCrumbs = () => {
   const location = useLocation()
   const { id } = useParams()
 
-  const breadcrumbNameMap: Record<string, string> = useMemo(
+  const breadcrumbNameMap = useMemo(
     () => ({
+      '/agents': 'Agents',
+      [`/agents/${id}`]: 'Agent details',
       '/devices': 'Devices',
       [`/devices/${id}`]: 'Device details',
     }),
@@ -25,17 +27,13 @@ export const BreadCrumbs = () => {
 
       const breadcrumbLabel = breadcrumbNameMap[url]
 
-      return isCurrentPathTheLast ? (
+      return (
         <Breadcrumb.Item key={url}>
-          <span>{breadcrumbLabel}</span>
-        </Breadcrumb.Item>
-      ) : (
-        <Breadcrumb.Item key={url}>
-          <StyledLink href={url} label={breadcrumbLabel} />
+          {isCurrentPathTheLast ? <span>{breadcrumbLabel}</span> : <StyledLink href={url} label={breadcrumbLabel} />}
         </Breadcrumb.Item>
       )
     })
-  }, [breadcrumbNameMap])
+  }, [breadcrumbNameMap, location.pathname])
 
   const breadcrumbItems = useMemo(
     () =>

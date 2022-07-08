@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Overrides necessary for displaying custom components in Toastify toasts */
+:root {
+  --toastify-toast-width: fit-content;
+}
+
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--default.Toastify--animate.Toastify__bounce-enter--top-right {
+  background: transparent;
+  box-shadow: none;
+}
+
+.Toastify__bounce-enter--top-right {
+  top: 3vh;
+}

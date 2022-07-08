@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from 'react'
-import { Button, Modal, TextInput, Label } from 'flowbite-react'
 import axios from 'axios'
+import { Button, Label, Modal, TextInput } from 'flowbite-react'
+import React, { FC, useCallback } from 'react'
 
 export const AddNewDeviceModal: FC<{ isVisible: boolean; onClose: () => void }> = ({ isVisible, onClose }) => {
   const createDevice = useCallback(async (values: unknown) => {

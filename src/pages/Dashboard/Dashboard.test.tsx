@@ -1,7 +1,7 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
-import { Dashboard } from './Dashboard'
+import React from 'react'
 import { customRender } from '../../utils/testUtils/testUtils'
+import { Dashboard } from './Dashboard'
 
 describe('Dashboard', () => {
   it('should render the component', () => {

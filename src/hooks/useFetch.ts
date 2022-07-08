@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export const useFetch = <T>(url: string) => {
   const [resource, setResource] = useState<T>()
@@ -20,7 +20,7 @@ export const useFetch = <T>(url: string) => {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [url])
 
   useEffect(() => {
     fetchData()

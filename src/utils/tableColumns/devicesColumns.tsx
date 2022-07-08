@@ -1,41 +1,40 @@
-import React from 'react'
-import { StatusIndicator, StyledLink } from '../components'
 import { ColumnDef } from '@tanstack/react-table'
+import React from 'react'
 import { AiOutlineCaretRight, AiOutlineClose, AiOutlinePause, AiOutlineTool } from 'react-icons/ai'
-import { Device } from '../models'
+import { StatusIndicator, StyledLink } from '../../components'
+import { Device } from '../../models'
 
-export const devicesColumns: ColumnDef<Device>[] = [
+export type DevicesColumns = Array<ColumnDef<Device>>
+
+export const devicesColumns: DevicesColumns = [
   {
     header: 'ID',
     cell: ({ row: { original } }) =>
       original?.id && <StyledLink href={`/devices/${original?.id}`} label={original.id} />,
-    footer: (props) => props.column.id,
+    accessorFn: (row) => row.id,
   },
   {
-    header: 'Address',
+    header: 'Name',
+    accessorFn: (row) => row.name,
+  },
+  {
+    header: 'Host',
     accessorFn: (row) => row.snmp_host,
-    footer: (props) => props.column.id,
-  },
-  {
-    header: 'Netmask',
-    cell: () => 22,
-    footer: (props) => props.column.id,
   },
   {
     header: 'Port',
     accessorFn: (row) => row.snmp_port,
-    footer: (props) => props.column.id,
   },
   {
     header: 'State',
-    cell: () => <StatusIndicator title={true ? 'Running' : 'Stopped'} isActive={true} />,
-    footer: (props) => props.column.id,
+    cell: ({ row: { original } }) => {
+      const isMockActive = original?.snmp_host.includes('14') || false
+
+      return <StatusIndicator title={isMockActive ? 'Running' : 'Stopped'} isActive={isMockActive} />
+    },
+    accessorFn: (row) => row.snmp_host.includes('14'),
   },
-  {
-    header: 'Type',
-    accessorFn: (row) => row.name,
-    footer: (props) => props.column.id,
-  },
+
   {
     header: 'Actions',
     cell: () => (
@@ -46,6 +45,5 @@ export const devicesColumns: ColumnDef<Device>[] = [
         <AiOutlineTool className="mr-2 h-5 w-5" />
       </div>
     ),
-    footer: (props) => props.column.id,
   },
 ]

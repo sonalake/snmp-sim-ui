@@ -1,9 +1,4 @@
-interface Agent {
-  id: string
-  name: string
-  description: string
-  snmp_data_url: string
-}
+import { Agent } from '.'
 
 interface SNMP_V1 {
   snmp_v1: {

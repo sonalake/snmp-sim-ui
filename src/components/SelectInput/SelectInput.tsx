@@ -1,21 +1,19 @@
-import React, { FC } from 'react'
 import { Label, Select } from 'flowbite-react'
+import React, { FC } from 'react'
 import { Device } from '../../models'
 
-export const SelectInput: FC<{ data: Device[] }> = ({ data }) => {
-  return (
-    <>
-      <Label htmlFor="countries" value="Device type:" />
+export const SelectInput: FC<{ selectOptions: Device[] }> = ({ selectOptions }) => (
+  <>
+    <Label htmlFor="countries" value="Device type:" />
 
-      <div id="select" className="w-1/5 ml-3 mr-auto">
-        <Select id="countries" defaultValue="All" required>
-          {data?.map((item) => (
-            <option key={item.id} value={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </Select>
-      </div>
-    </>
-  )
-}
+    <div id="select" className="w-1/5 ml-3 mr-auto">
+      <Select id="countries" defaultValue="All" required>
+        {selectOptions.map((option) => (
+          <option key={option.id} value={option.name}>
+            {option.name}
+          </option>
+        ))}
+      </Select>
+    </div>
+  </>
+)

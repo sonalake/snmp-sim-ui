@@ -2,12 +2,12 @@ import React from 'react'
 import { useParams } from 'react-router'
 import { BreadCrumbs, LoadingIndicator, PageWrapper } from '../../components'
 import { useFetch } from '../../hooks'
-import { Device } from '../../models'
+import { Agent } from '../../models'
 
-export const DeviceDetails = () => {
+export const AgentDetails = () => {
   const { id } = useParams()
 
-  const { resource: device, isLoading, error } = useFetch<Device>(`/api/devices/${id}`)
+  const { resource: device, isLoading, error } = useFetch<Agent>(`/api/agents/${id}`)
 
   if (error) {
     throw error
@@ -21,12 +21,10 @@ export const DeviceDetails = () => {
         <>
           <BreadCrumbs />
 
-          <h1 className="text-4xl font-bolder">Device Details - {device.name}</h1>
+          <h1 className="text-4xl font-bolder">Agent Details - {device.name}</h1>
 
           <p>Description: {device.description}</p>
-          <p>Host: {device.snmp_host}</p>
-          <p>Port: {device.snmp_port}</p>
-          <p>Agent: {JSON.stringify(device.agent, null, 2)}</p>
+          <p>Data URL: {device.snmp_data_url}</p>
         </>
       )}
     </PageWrapper>

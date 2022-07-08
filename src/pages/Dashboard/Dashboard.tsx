@@ -1,18 +1,20 @@
-import React from 'react'
-import { PageWrapper } from '../../components'
 import { Button } from 'flowbite-react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { PageWrapper } from '../../components'
 
-export const Dashboard = () => {
-  return (
-    <PageWrapper>
-      <div className="w-full flex flex-col justify-center items-center">
-        <h1 className="text-4xl font-bolder mb-16">Welcome to the SNMP Simulator Web Console</h1>
+export const Dashboard = () => (
+  <PageWrapper>
+    <div className="w-full flex flex-col justify-center items-center gap-5">
+      <h1 className="text-4xl font-bolder mb-16">Welcome to the SNMP Simulator Web Console</h1>
 
-        <Button>
-          <Link to="/devices">Devices</Link>
-        </Button>
-      </div>
-    </PageWrapper>
-  )
-}
+      <Link to="/agents">
+        <Button>Agents</Button>
+      </Link>
+
+      <Link to="/devices">
+        <Button>Devices</Button>
+      </Link>
+    </div>
+  </PageWrapper>
+)

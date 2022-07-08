@@ -11,7 +11,7 @@ export const mockDevices: Device[] = [
       description: 'Agent 1 description',
       snmp_data_url: '',
     },
-    snmp_host: '192.168.104.15',
+    snmp_host: '192.168.104.14',
     snmp_port: 169,
     snmp_protocol_attributes: {
       snmp_v1: {

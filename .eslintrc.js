@@ -11,16 +11,7 @@ module.exports = {
     'plugin:jest/style',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint',
-    'prettier',
-    'react',
-    'react-hooks',
-    'import',
-    'simple-import-sort',
-    'jest',
-    'testing-library',
-  ],
+  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'import', 'jest'],
   ignorePatterns: ['dist/'],
   env: {
     node: true,
@@ -100,18 +91,6 @@ module.exports = {
     'react/display-name': ['off'],
     'react/prop-types': ['off'],
     'jest/expect-expect': 'off',
-    'simple-import-sort/imports': [
-      'error',
-      {
-        groups: [
-          ['^react', '^@?\\w'],
-          ['^(@|@company|@ui|components|utils|config|vendored-lib)(/.*|$)'],
-          ['^\\u0000'],
-          ['^.+\\.s?css$'],
-          ['^\\.\\.(?!/?$)', '^\\.\\./?$', '^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-        ],
-      },
-    ],
   },
   settings: {
     react: {
@@ -121,6 +100,7 @@ module.exports = {
   overrides: [
     {
       files: ['**/__tests__/**/*', '**/*.{spec,test}.*', './webpack/*.config.js'],
+      extends: ['plugin:testing-library/react'],
       rules: {
         'testing-library/prefer-user-event': 'error',
         'testing-library/no-await-sync-events': 'error',

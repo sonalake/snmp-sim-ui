@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react'
 import { Button } from 'flowbite-react'
+import React, { Component, ReactNode } from 'react'
 import { AiFillCloseCircle, AiOutlineReload } from 'react-icons/ai'
 import { PageWrapper } from '..'
 
@@ -22,21 +22,20 @@ export class ErrorBoundary extends Component<Props, State> {
     return { error: null, hasError: true }
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo)
+  public componentDidCatch(error: Error) {
     this.setState({ error })
   }
 
   public render() {
-    if (this.state.hasError) {
+    if (this.state.hasError && this.state.error?.message) {
       return (
         <PageWrapper>
-          <div className="w-full h-full m-auto flex flex-col items-center justify-center">
-            <AiFillCloseCircle className="mb-2 h-10 w-10 text-red-600" />
+          <div className="flex flex-col items-center">
+            <AiFillCloseCircle className="w-24 h-24 mt-48 mb-2 text-red-600" />
 
-            <h1>Error</h1>
+            <h1 className="text-2xl mb-5">Error</h1>
 
-            <h4>{this.state.error?.message}</h4>
+            <h4 className="text-base mb-10">{this.state.error.message}</h4>
 
             <Button onClick={() => window.location.reload()}>
               <AiOutlineReload className="mr-2 h-5 w-5" />

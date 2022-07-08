@@ -1,4 +1,5 @@
 export * from './AddNewDeviceModal/AddNewDeviceModal'
+export * from './Alert/Alert'
 export * from './BreadCrumbs/BreadCrumbs'
 export * from './DataTable/DataTable'
 export * from './ErrorBoundary/ErrorBoundary'
