@@ -1,5 +1,5 @@
 import { Alert as FlowbiteAlert } from 'flowbite-react'
-import React, { FC, FunctionComponent, SVGProps } from 'react'
+import React, { FC, FunctionComponent, ReactNode, SVGProps } from 'react'
 import {
   AiFillCheckCircle,
   AiFillCloseCircle,
@@ -18,8 +18,12 @@ const icons: Record<AlertColors, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   failure: AiFillCloseCircle,
 }
 
-export const Alert: FC<{ message: string; color: AlertColors }> = ({ message, color }) => (
-  <FlowbiteAlert color={color} icon={icons[color]}>
+export const Alert: FC<{ message: string; color: AlertColors; additionalContent?: ReactNode }> = ({
+  message,
+  color,
+  additionalContent,
+}) => (
+  <FlowbiteAlert color={color} icon={icons[color]} additionalContent={additionalContent}>
     <span className="font-medium">{message}</span>
   </FlowbiteAlert>
 )

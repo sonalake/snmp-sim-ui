@@ -1,24 +1,24 @@
 import { screen } from '@testing-library/react'
 import axios from 'axios'
 import React from 'react'
-import { mockDevices } from '../../utils/testUtils/mockDevices'
+import { mockAgents } from '../../utils/testUtils/mockAgents'
 import { customRender } from '../../utils/testUtils/testUtils'
-import { Devices } from './Devices'
+import { Agents } from './Agents'
 
 jest.mock('axios')
 
-axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockDevices }))
+axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockAgents }))
 
 // @TODO: mock @tanstack/react-table
-describe('Devices', () => {
+describe('Agents', () => {
   it.skip('should render the component', async () => {
-    customRender(<Devices />)
+    customRender(<Agents />)
 
     expect(await screen.findByText('Add')).toBeInTheDocument()
   })
 
   it.skip('should render the table rows', async () => {
-    customRender(<Devices />)
+    customRender(<Agents />)
 
     expect(await screen.findByText('Name')).toBeInTheDocument()
   })

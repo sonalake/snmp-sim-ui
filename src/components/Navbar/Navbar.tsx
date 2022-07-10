@@ -2,10 +2,10 @@ import { Navbar as FlowbiteNavbar } from 'flowbite-react'
 import React from 'react'
 import { useLocation } from 'react-router'
 import Logo from '../../assets/images/sonalake_logo.jpeg'
-import { NAVBAR_LINKS } from '../../constants'
+import { NAVBAR_LINKS } from '../../config/constants'
 
 export const Navbar = () => {
-  const location = useLocation()
+  const { pathname } = useLocation()
 
   return (
     <FlowbiteNavbar fluid rounded>
@@ -19,7 +19,7 @@ export const Navbar = () => {
 
       <FlowbiteNavbar.Collapse>
         {NAVBAR_LINKS.map(({ label, href }) => (
-          <FlowbiteNavbar.Link key={label} href={href} active={location.pathname === href}>
+          <FlowbiteNavbar.Link key={label} href={href} active={pathname === href}>
             {label}
           </FlowbiteNavbar.Link>
         ))}

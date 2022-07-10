@@ -63,7 +63,7 @@ module.exports = {
     'react/button-has-type': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
-    'arrow-body-style': 'error',
+    'arrow-body-style': 'off',
     'jest/no-focused-tests': 'error',
     'import/first': 'error',
     'import/no-duplicates': 'error',

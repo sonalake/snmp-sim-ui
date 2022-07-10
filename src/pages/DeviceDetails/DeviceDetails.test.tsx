@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import axios from 'axios'
 import React from 'react'
-import { mockDevices } from '../../utils/testUtils/mocks/mockDevices'
+import { mockDevices } from '../../utils/testUtils/mockDevices'
 import { customRender } from '../../utils/testUtils/testUtils'
 import { DeviceDetails } from './DeviceDetails'
 

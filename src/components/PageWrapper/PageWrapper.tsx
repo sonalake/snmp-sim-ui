@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Navbar } from '..'
-import { ALERT_AUTO_CLOSE_TIME } from '../../constants'
+import { ALERT_AUTO_CLOSE_TIME } from '../../config/constants'
 
 export const PageWrapper: FC<{ children: ReactNode }> = ({ children }) => (
   <>

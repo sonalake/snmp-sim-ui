@@ -1,21 +1,15 @@
 import { Row } from '@tanstack/react-table'
+import axios, { AxiosError } from 'axios'
 import { Button } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { AiOutlineCaretRight, AiOutlinePause, AiOutlinePlusCircle, AiOutlineReload } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import {
-  AddNewDeviceModal,
-  Alert,
-  BreadCrumbs,
-  DataTable,
-  LoadingIndicator,
-  PageWrapper,
-  Pagination,
-} from '../../components'
-import { PAGINATION_PAGE_SIZE_OPTIONS } from '../../constants'
+import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
+import { deviceFormFields } from '../../components/Form/formFields'
+import { PAGINATION_PAGE_SIZE_OPTIONS } from '../../config/constants'
+import { devicesColumns } from '../../config/tableColumns/devicesColumns'
 import { useFetch } from '../../hooks'
-import { Device } from '../../models'
-import { devicesColumns } from '../../utils/tableColumns/devicesColumns'
+import { Device, DeviceResponse } from '../../models'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
@@ -28,7 +22,12 @@ export const Devices = () => {
     isLoading,
     error,
     fetchData,
-  } = useFetch<Device[]>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
+  } = useFetch<DeviceResponse>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
+
+  const onCloseModal = useCallback(() => {
+    setIsModalVisible(false)
+    fetchData()
+  }, [fetchData])
 
   if (error) {
     throw error
@@ -36,9 +35,13 @@ export const Devices = () => {
 
   return (
     <PageWrapper>
-      {isLoading && !devices?.length && <LoadingIndicator />}
+      {isLoading && !devices?.devices?.length && (
+        <div className="mt-64">
+          <LoadingIndicator />
+        </div>
+      )}
 
-      {!!devices && (
+      {!!devices?.devices?.length && (
         <>
           <BreadCrumbs />
 
@@ -51,9 +54,14 @@ export const Devices = () => {
               <Button
                 color="light"
                 onClick={() =>
-                  selectedDevices.length
-                    ? toast(<Alert message="The selected devices were started!" color="success" />)
-                    : toast(<Alert message="All devices were started!" color="success" />)
+                  toast(
+                    <Alert
+                      color="success"
+                      message={`${
+                        selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
+                      } - to be implemented`}
+                    />,
+                  )
                 }
               >
                 <AiOutlineCaretRight className="mr-2 h-5 w-5" />
@@ -63,15 +71,27 @@ export const Devices = () => {
               <Button
                 color="light"
                 onClick={() =>
-                  selectedDevices.length
-                    ? toast(<Alert message="The selected devices were stopped!" color="success" />)
-                    : toast(<Alert message="All devices were stopped!" color="success" />)
+                  toast(
+                    <Alert
+                      color="success"
+                      message={`${
+                        selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
+                      } - to be implemented`}
+                    />,
+                  )
                 }
               >
                 <AiOutlinePause className="mr-2 h-5 w-5" /> Stop all
               </Button>
 
-              <Button onClick={() => fetchData()} color="light">
+              <Button
+                onClick={() => {
+                  fetchData()
+
+                  toast(<Alert color="info" message="Data refreshed!" />)
+                }}
+                color="light"
+              >
                 <AiOutlineReload className="mr-2 h-5 w-5" /> Refresh
               </Button>
             </div>
@@ -79,7 +99,7 @@ export const Devices = () => {
 
           {/* @TODO: make DataTable properly generic and remove these castings */}
           <DataTable
-            data={devices}
+            data={devices.devices}
             columns={devicesColumns as []}
             isSelectable
             onSelection={(selectedRows) => setSelectedDevices(selectedRows as [])}
@@ -90,9 +110,35 @@ export const Devices = () => {
             onPageChange={(page) => setCurrentPage(page)}
             pageSize={pageSize}
             onPageSizeChange={(size) => setPageSize(size)}
+            totalCount={devices.num_items}
           />
 
-          <AddNewDeviceModal isVisible={isModalVisible} onClose={() => setIsModalVisible(false)} />
+          <Modal isVisible={isModalVisible} title="Add new device - to be implemented" onClose={onCloseModal}>
+            <Form
+              formFields={deviceFormFields}
+              onSubmit={async (values: Partial<Device>) => {
+                try {
+                  await axios.post('/api/devices', values)
+
+                  onCloseModal()
+                } catch (err) {
+                  toast(
+                    <Alert
+                      color="failure"
+                      message={(err as Error)?.message}
+                      additionalContent={
+                        <>
+                          <span>{(err as AxiosError).code}:</span>
+                          <br />
+                          <span>{(err as AxiosError<{ error: string }>)?.response?.data?.error}</span>
+                        </>
+                      }
+                    />,
+                  )
+                }
+              }}
+            />
+          </Modal>
         </>
       )}
     </PageWrapper>

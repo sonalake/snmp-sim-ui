@@ -21,6 +21,8 @@ describe('ErrorBoundary', () => {
     )
 
     expect(await screen.findByText(testError)).toBeInTheDocument()
+    expect(await screen.findByText('Error')).toBeInTheDocument()
+    expect(await screen.findByText('Refresh')).toBeInTheDocument()
 
     mock.mockRestore()
   })

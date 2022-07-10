@@ -2,10 +2,12 @@
 
 ## Starting the project locally
 
-Once you have cloned the repository, and have all the latest changes (`git pull`):
+For running this project, you will first need to install [yarn](https://classic.yarnpkg.com/lang/en/docs/install).
 
-- Install dependencies by using `yarn install`
+Once you have yarn installed, make sure you have all the latest changes of the repository (`git pull`), and follow these steps :
 
-- Start the dev server by using `yarn start`
+- Install dependencies with `yarn install`
 
-- Visit http://localhost:5000 to see the project
+- Start the dev server with `yarn start`
+
+- Visit <http://localhost:5000> to see the project

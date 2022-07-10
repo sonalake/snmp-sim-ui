@@ -9,6 +9,7 @@ module.exports = {
     '!dist/tests/**',
     '!**/index.ts',
     '!**/index.js',
+    '!**/src/config/**',
     '!**/src/models/**',
     '!**/src/assets/**',
     '!**/src/index.tsx',
@@ -19,7 +20,7 @@ module.exports = {
     '^.+\\.(ts|tsx|js)$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(jpe?g|svg)$': '<rootDir>/src/utils/testUtils/mocks/fileMock.ts',
+    '\\.(jpe?g|svg)$': '<rootDir>/src/utils/testUtils/__mocks__/fileMock.ts',
     '\\.(css|less)$': 'identity-obj-proxy',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js'],

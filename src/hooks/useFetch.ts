@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 
 export const useFetch = <T>(url: string) => {
   const [resource, setResource] = useState<T>()
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<Error | AxiosError | null>(null)
 
   const fetchData = useCallback(async () => {
     try {
