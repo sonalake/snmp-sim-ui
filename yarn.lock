@@ -902,17 +902,24 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tanstack/react-table@^8.1.4":
-  version "8.1.4"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.1.4.tgz#84fb62852afbad0fa8a5643207b529530a1c5813"
-  integrity sha512-WpPrZVbwrom2+8wZaM94OkVPfhMyzYvxyxPk2xfyFexjGorKl5erI/EnMme1EXTltsND5Jhsq/wnU6medaOQ9w==
+"@tanstack/match-sorter-utils@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.1.1.tgz#895f407813254a46082a6bbafad9b39b943dc834"
+  integrity sha512-IdmEekEYxQsoLOR0XQyw3jD1GujBpRRYaGJYQUw1eOT1eUugWxdc7jomh1VQ1EKHcdwDLpLaCz/8y4KraU4T9A==
   dependencies:
-    "@tanstack/table-core" "8.1.4"
+    remove-accents "0.4.2"
 
-"@tanstack/table-core@8.1.4":
-  version "8.1.4"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.1.4.tgz#799b2bc4ced5d8c4ee099ece513270c1b73f16a7"
-  integrity sha512-iSlAT2BpkBFayJBgVxqQNXOgnF2S1r8b3aS1QlRGIusc4iZP0lRr0ie0CJ7Jhp0BZ62UH10RBIoBYHVYkg8Ejw==
+"@tanstack/react-table@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.2.3.tgz#bc451497d53b788581c0c226626e625c904a2d20"
+  integrity sha512-48vfd1gOsjE6XCUrFQ8ZSUNRDEbDhFNmYgPlB8RkO+kyvOGut219lZ5rsu8Znw6YVU/WhUmsdE+GMGUeCjFdVQ==
+  dependencies:
+    "@tanstack/table-core" "8.2.3"
+
+"@tanstack/table-core@8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.2.3.tgz#2ca0c8564262a6624bfddfd9b8361c4b829621e9"
+  integrity sha512-jzWAXgoXj8OK5zCrUfApesZ0+Admley/+T+W21MQxkfFaPRyoz+wiM+3xARpwGkB7SPzc3FuAzF4Ae9JcKq6gw==
 
 "@testing-library/dom@^8.5.0":
   version "8.14.0"
@@ -3601,10 +3608,10 @@ follow-redirects@^1.0.0, follow-redirects@^1.14.9:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
 
-fork-ts-checker-webpack-plugin@^7.2.11:
-  version "7.2.11"
-  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-7.2.11.tgz#aff3febbc11544ba3ad0ae4d5aa4055bd15cd26d"
-  integrity sha512-2e5+NyTUTE1Xq4fWo7KFEQblCaIvvINQwUX3jRmEGlgCTc1Ecqw/975EfQrQ0GEraxJTnp8KB9d/c8hlCHUMJA==
+fork-ts-checker-webpack-plugin@^7.2.12:
+  version "7.2.12"
+  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-7.2.12.tgz#d15c48745f9092574b41138934aa3de504a39ba1"
+  integrity sha512-SCjmmjPXPgp5XRQ49hXd2Eqth8rz4+ggtOHygTzyaOn32oIIOd8Kw+xKcgXNkFGlZy5l03bHRYTkbQs+TWhaNA==
   dependencies:
     "@babel/code-frame" "^7.16.7"
     chalk "^4.1.2"
@@ -6562,6 +6569,11 @@ relateurl@^0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==
+
+remove-accents@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
+  integrity sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==
 
 renderkid@^3.0.0:
   version "3.0.0"

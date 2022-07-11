@@ -1,6 +1,6 @@
 import { Pagination as FlowbitePagination, Select } from 'flowbite-react'
 import React, { FC, useMemo } from 'react'
-import { PAGINATION_PAGE_SIZE_OPTIONS } from '../../config/constants'
+import { PAGINATION_PAGE_SIZE_OPTIONS } from '../../constants'
 
 export const Pagination: FC<{
   currentPage: number

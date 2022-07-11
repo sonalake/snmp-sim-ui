@@ -3,16 +3,16 @@ import axios from 'axios'
 import React from 'react'
 import { mockDevices } from '../../utils/testUtils/mockDevices'
 import { customRender } from '../../utils/testUtils/testUtils'
-import { DeviceDetails } from './DeviceDetails'
+import { AgentDetails } from './AgentDetails'
 
 jest.mock('axios')
 
 axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockDevices[0] }))
 
-describe('DeviceDetails', () => {
+describe('AgentDetails', () => {
   it('should render the component', async () => {
-    customRender(<DeviceDetails />)
+    customRender(<AgentDetails />)
 
-    expect(await screen.findByText(`Device Details - ${mockDevices[0].name} - WIP`)).toBeInTheDocument()
+    expect(await screen.findByText(`Agent Details - ${mockDevices[0].name} - WIP`)).toBeInTheDocument()
   })
 })

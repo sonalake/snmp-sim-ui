@@ -3,8 +3,8 @@ import { Tooltip } from 'flowbite-react'
 import React from 'react'
 import { AiOutlineClose, AiOutlineTool } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import { Alert, StyledLink } from '../../components'
-import { Agent } from '../../models'
+import { Alert, StyledLink } from '../..'
+import { Agent } from '../../../models'
 
 export type AgentsColumns = Array<ColumnDef<Agent>>
 

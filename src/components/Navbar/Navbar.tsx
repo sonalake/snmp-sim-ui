@@ -2,7 +2,7 @@ import { Navbar as FlowbiteNavbar } from 'flowbite-react'
 import React from 'react'
 import { useLocation } from 'react-router'
 import Logo from '../../assets/images/sonalake_logo.jpeg'
-import { NAVBAR_LINKS } from '../../config/constants'
+import { NAVBAR_LINKS } from '../../constants'
 
 export const Navbar = () => {
   const { pathname } = useLocation()

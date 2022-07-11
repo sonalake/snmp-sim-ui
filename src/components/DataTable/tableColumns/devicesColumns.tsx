@@ -3,8 +3,8 @@ import { Tooltip } from 'flowbite-react'
 import React from 'react'
 import { AiOutlineCaretRight, AiOutlineClose, AiOutlinePause, AiOutlineTool } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import { Alert, StatusIndicator, StyledLink } from '../../components'
-import { Device } from '../../models'
+import { Alert, StatusIndicator, StyledLink } from '../..'
+import { Device } from '../../../models'
 
 export type DevicesColumns = Array<ColumnDef<Device>>
 
