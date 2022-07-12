@@ -14,7 +14,7 @@ export const Pagination: FC<{
   const displayPagination = useMemo(() => totalCount >= PAGINATION_DEFAULT_PAGE_SIZE_OPTION, [totalCount])
 
   return displayPagination ? (
-    <div className="flex flex-row items-center gap-2 mt-3">
+    <div className="flex flex-row items-center gap-2 mt-3 pb-32">
       <FlowbitePagination currentPage={currentPage} onPageChange={onPageChange} totalPages={numberOfPages} />
 
       <div className="w-32 mt-2">

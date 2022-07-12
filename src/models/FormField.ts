@@ -3,7 +3,7 @@ export type FormField = {
   name: string
   label: string
   initialValue: string
-  type: 'TEXT'
+  type: 'TEXT' | 'SELECT'
   required: boolean
   validation: string
 }

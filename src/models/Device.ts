@@ -27,6 +27,7 @@ export interface Device {
   name: string
   description: string
   agent: Agent
+  agent_id?: string
   snmp_host: string
   snmp_port: number
   snmp_protocol_attributes: SNMP_V1 | SNMP_V2C | SNMP_V3

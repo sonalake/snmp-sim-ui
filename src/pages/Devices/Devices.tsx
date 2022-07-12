@@ -11,9 +11,8 @@ import {
 } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
-import { createResource } from '../../components/DataTable/tableColumns/createResource'
-import { deleteResource } from '../../components/DataTable/tableColumns/deleteResource'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
+import { createResource, deleteResource } from '../../components/DataTable/tableColumns/handleResourceMethods'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
@@ -33,9 +32,10 @@ export const Devices = () => {
   } = useFetch<DeviceResponse>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
 
   const onCloseModal = useCallback(() => {
-    setIsModalVisible(false)
-    fetchData()
-  }, [fetchData])
+    if (isModalVisible) {
+      setIsModalVisible(false)
+    }
+  }, [isModalVisible])
 
   const devicesActionsColumn: ColumnDef<Device> = useMemo(
     () => ({
@@ -63,10 +63,10 @@ export const Devices = () => {
             />
           </Tooltip>
 
-          <Tooltip content="Modify device">
+          <Tooltip content="Update device">
             <AiOutlineTool
               className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => toast(<Alert color="success" message="Device modified! - to be implemented" />)}
+              onClick={() => toast(<Alert color="success" message="Device updated! - to be implemented" />)}
             />
           </Tooltip>
         </div>
@@ -159,15 +159,28 @@ export const Devices = () => {
             totalCount={devices.num_items}
           />
 
-          <Modal isVisible={isModalVisible} title="Add new device - to be implemented" onClose={onCloseModal}>
-            <Form
-              formFields={deviceFormFields}
-              onSubmit={(formValues) => {
-                createResource(formValues, 'devices', fetchData)
-                setIsModalVisible(false)
-              }}
-            />
-          </Modal>
+          {isModalVisible && (
+            <Modal
+              isVisible={isModalVisible}
+              title="Add new device (WIP - feature works, but 'snmp_protocol_attributes' is hardcoded)"
+              onClose={onCloseModal}
+            >
+              <Form
+                formFields={deviceFormFields}
+                onSubmit={(formValues) => {
+                  const newDevice = {
+                    ...formValues,
+                    snmp_port: parseInt(formValues.snmp_port, 10),
+                    snmp_protocol_attributes: { snmp_v1: { community: '' } },
+                  }
+
+                  createResource(newDevice, 'devices', fetchData)
+
+                  onCloseModal()
+                }}
+              />
+            </Modal>
+          )}
         </>
       )}
     </PageWrapper>

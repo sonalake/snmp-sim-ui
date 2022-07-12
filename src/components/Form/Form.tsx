@@ -2,6 +2,7 @@ import { Button } from 'flowbite-react'
 import { Formik, FormikValues } from 'formik'
 import React, { FC, useMemo } from 'react'
 import { Agent, Device, FormField } from '../../models'
+import { SelectInput } from './SelectInput'
 import { TextInput } from './TextInput'
 
 type Resource = Agent | Device
@@ -43,19 +44,28 @@ export const Form: FC<{
     >
       {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          {Object.values(formFields).map(
-            (item) =>
-              item.type === 'TEXT' && (
-                <TextInput
-                  key={item.name}
-                  formItem={item}
-                  touched={touched}
-                  errors={errors}
-                  value={values[item.name]}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                />
-              ),
+          {Object.values(formFields).map((item) =>
+            item.type === 'TEXT' ? (
+              <TextInput
+                key={item.name}
+                formItem={item}
+                value={values[item.name]}
+                touched={touched}
+                errors={errors}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+            ) : (
+              <SelectInput
+                key={item.name}
+                formItem={item}
+                value={values[item.name]}
+                touched={touched}
+                errors={errors}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+            ),
           )}
 
           <div className="w-full flex justify-end gap-1 mt-3">
