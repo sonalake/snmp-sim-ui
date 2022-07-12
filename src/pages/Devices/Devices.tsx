@@ -1,20 +1,28 @@
-import { Row } from '@tanstack/react-table'
-import axios, { AxiosError } from 'axios'
-import { Button } from 'flowbite-react'
-import React, { useCallback, useState } from 'react'
-import { AiOutlineCaretRight, AiOutlinePause, AiOutlinePlusCircle, AiOutlineReload } from 'react-icons/ai'
+import { ColumnDef, Row } from '@tanstack/react-table'
+import { Button, Tooltip } from 'flowbite-react'
+import React, { useCallback, useMemo, useState } from 'react'
+import {
+  AiOutlineCaretRight,
+  AiOutlineClose,
+  AiOutlinePause,
+  AiOutlinePlusCircle,
+  AiOutlineReload,
+  AiOutlineTool,
+} from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
+import { createResource } from '../../components/DataTable/tableColumns/createResource'
+import { deleteResource } from '../../components/DataTable/tableColumns/deleteResource'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { deviceFormFields } from '../../components/Form/formFields'
-import { PAGINATION_PAGE_SIZE_OPTIONS } from '../../constants'
+import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Device, DeviceResponse } from '../../models'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(PAGINATION_PAGE_SIZE_OPTIONS[0])
+  const [pageSize, setPageSize] = useState(PAGINATION_DEFAULT_PAGE_SIZE_OPTION)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const {
@@ -28,6 +36,44 @@ export const Devices = () => {
     setIsModalVisible(false)
     fetchData()
   }, [fetchData])
+
+  const devicesActionsColumn: ColumnDef<Device> = useMemo(
+    () => ({
+      header: 'Actions',
+      cell: ({ row }) => (
+        <div className="flex flex-row">
+          <Tooltip content="Start device">
+            <AiOutlineCaretRight
+              className="mr-2 h-5 w-5 cursor-pointer"
+              onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
+            />
+          </Tooltip>
+
+          <Tooltip content="Stop running device">
+            <AiOutlinePause
+              className="mr-2 h-5 w-5 cursor-pointer"
+              onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
+            />
+          </Tooltip>
+
+          <Tooltip content="Delete device">
+            <AiOutlineClose
+              className="mr-2 h-5 w-5 cursor-pointer"
+              onClick={() => confirm('Delete device?') && deleteResource(row.original?.id, 'device', fetchData)}
+            />
+          </Tooltip>
+
+          <Tooltip content="Modify device">
+            <AiOutlineTool
+              className="mr-2 h-5 w-5 cursor-pointer"
+              onClick={() => toast(<Alert color="success" message="Device modified! - to be implemented" />)}
+            />
+          </Tooltip>
+        </div>
+      ),
+    }),
+    [fetchData],
+  )
 
   if (error) {
     throw error
@@ -100,7 +146,7 @@ export const Devices = () => {
           {/* @TODO: make DataTable properly generic and remove these castings */}
           <DataTable
             data={devices.devices}
-            columns={devicesColumns as []}
+            columns={devicesColumns.concat(devicesActionsColumn) as []}
             isSelectable
             onSelection={(selectedRows) => setSelectedDevices(selectedRows as [])}
           />
@@ -116,26 +162,9 @@ export const Devices = () => {
           <Modal isVisible={isModalVisible} title="Add new device - to be implemented" onClose={onCloseModal}>
             <Form
               formFields={deviceFormFields}
-              onSubmit={async (values: Partial<Device>) => {
-                try {
-                  await axios.post('/api/devices', values)
-
-                  onCloseModal()
-                } catch (err) {
-                  toast(
-                    <Alert
-                      color="failure"
-                      message={(err as Error)?.message}
-                      additionalContent={
-                        <>
-                          <span>{(err as AxiosError).code}:</span>
-                          <br />
-                          <span>{(err as AxiosError<{ error: string }>)?.response?.data?.error}</span>
-                        </>
-                      }
-                    />,
-                  )
-                }
+              onSubmit={(formValues) => {
+                createResource(formValues, 'devices', fetchData)
+                setIsModalVisible(false)
               }}
             />
           </Modal>

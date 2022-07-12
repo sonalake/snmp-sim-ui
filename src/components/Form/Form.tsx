@@ -1,20 +1,27 @@
 import { Button } from 'flowbite-react'
 import { Formik, FormikValues } from 'formik'
 import React, { FC, useMemo } from 'react'
-import { FormField } from '../../models'
+import { Agent, Device, FormField } from '../../models'
 import { TextInput } from './TextInput'
+
+type Resource = Agent | Device
 
 export const Form: FC<{
   formFields: Record<string, FormField>
+  selectedResource?: Resource
   onSubmit: (values: FormikValues) => void
-}> = ({ formFields, onSubmit }) => {
+}> = ({ formFields, selectedResource, onSubmit }) => {
   const initialValues = useMemo(
     () =>
       Object.keys(formFields).reduce((acc, key) => {
-        acc[key] = formFields[key].initialValue
+        if (selectedResource) {
+          acc[key] = selectedResource && selectedResource[key as keyof Resource]
+        } else {
+          acc[key] = formFields[key].initialValue
+        }
         return acc
       }, {} as Record<string, string>),
-    [formFields],
+    [formFields, selectedResource],
   )
 
   return (
@@ -34,7 +41,7 @@ export const Form: FC<{
         setSubmitting(false)
       }}
     >
-      {({ errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
+      {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           {Object.values(formFields).map(
             (item) =>
@@ -44,6 +51,7 @@ export const Form: FC<{
                   formItem={item}
                   touched={touched}
                   errors={errors}
+                  value={values[item.name]}
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                 />

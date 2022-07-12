@@ -21,7 +21,7 @@ export const AgentDetails = () => {
         <>
           <BreadCrumbs />
 
-          <h1 className="text-4xl font-bolder">Agent Details - {device.name} - WIP</h1>
+          <h1 className="text-4xl font-bolder mt-5 mb-32">Agent Details - {device.name} - WIP</h1>
 
           <p>Description: {device.description}</p>
           <p>Data URL: {device.snmp_data_url}</p>

@@ -5,11 +5,12 @@ import { FormField } from '../../models'
 
 export const TextInput: FC<{
   formItem: FormField
+  value: string
   touched: FormikTouched<Record<keyof FormField, string>>
   errors: FormikErrors<Record<keyof FormField, string>>
   handleChange: FormikHandlers['handleChange']
   handleBlur: FormikHandlers['handleBlur']
-}> = ({ formItem: { name, label, required, validation }, errors, touched, handleChange, handleBlur }) => (
+}> = ({ formItem: { name, label, required, validation }, value, errors, touched, handleChange, handleBlur }) => (
   <div className="my-1">
     <div className="mb-2 block">
       <Label htmlFor={name}>
@@ -21,6 +22,7 @@ export const TextInput: FC<{
     <FlowbiteTextInput
       type="text"
       name={name}
+      value={value}
       placeholder={label}
       onChange={handleChange}
       onBlur={handleBlur}

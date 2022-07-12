@@ -71,16 +71,18 @@ export const DataTable: FC<Props<Agent | Device>> = ({ data, columns, isSelectab
                     }}
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
-                    {{
-                      asc: <AiOutlineCaretUp />,
-                      desc: <AiOutlineCaretDown />,
-                    }[header.column.getIsSorted() as string] ?? null}
+                    {
+                      {
+                        asc: <AiOutlineCaretUp />,
+                        desc: <AiOutlineCaretDown />,
+                      }[header.column.getIsSorted() as string]
+                    }
                   </div>
 
                   {header.column.columnDef.header !== 'Actions' && (
                     <AiOutlineFilter
                       className="cursor-pointer"
-                      onClick={() => toast(<Alert color="info" message="To be implemented" />)}
+                      onClick={() => toast(<Alert color="info" message="Filtering - to be implemented" />)}
                     />
                   )}
                 </div>

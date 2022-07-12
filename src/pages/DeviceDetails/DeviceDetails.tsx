@@ -21,7 +21,7 @@ export const DeviceDetails = () => {
         <>
           <BreadCrumbs />
 
-          <h1 className="text-4xl font-bolder">Device Details - {device.name} - WIP</h1>
+          <h1 className="text-4xl font-bolder mt-5 mb-32">Device Details - {device.name} - WIP</h1>
 
           <p>Description: {device.description}</p>
           <p>Host: {device.snmp_host}</p>
