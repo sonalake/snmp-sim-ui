@@ -19,6 +19,8 @@ export const devicesColumns: DevicesColumns = [
   },
   {
     header: 'Name',
+    cell: ({ row: { original } }) =>
+      original?.name && <Tooltip content={`Description: ${original.description}`}>{original.name}</Tooltip>,
     accessorFn: (row) => row.name,
   },
   {
@@ -31,8 +33,8 @@ export const devicesColumns: DevicesColumns = [
   },
   {
     header: 'State',
-    cell: () => {
-      const isMockActive = false
+    cell: ({ row }) => {
+      const isMockActive = row.original.snmp_host === '127.0.0.1'
 
       return <StatusIndicator title={isMockActive ? 'Running' : 'Stopped'} isActive={isMockActive} />
     },

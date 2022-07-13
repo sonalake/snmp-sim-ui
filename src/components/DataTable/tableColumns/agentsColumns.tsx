@@ -19,11 +19,9 @@ export const agentsColumns: AgentsColumns = [
   },
   {
     header: 'Name',
+    cell: ({ row: { original } }) =>
+      original?.name && <Tooltip content={`Description: ${original.description}`}>{original.name}</Tooltip>,
     accessorFn: (row) => row.name,
-  },
-  {
-    header: 'Description',
-    accessorFn: (row) => row.description,
   },
   {
     header: 'SNMP data URL',

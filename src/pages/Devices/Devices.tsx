@@ -12,11 +12,13 @@ import {
 import { toast } from 'react-toastify'
 import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
-import { createResource, deleteResource } from '../../components/DataTable/tableColumns/handleResourceMethods'
+import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
-import { Device, DeviceResponse } from '../../models'
+import { Device, ResourceResponse } from '../../models'
+
+const resource = 'devices'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
@@ -29,7 +31,7 @@ export const Devices = () => {
     isLoading,
     error,
     fetchData,
-  } = useFetch<DeviceResponse>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
+  } = useFetch<ResourceResponse>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
 
   const onCloseModal = useCallback(() => {
     if (isModalVisible) {
@@ -42,24 +44,36 @@ export const Devices = () => {
       header: 'Actions',
       cell: ({ row }) => (
         <div className="flex flex-row">
-          <Tooltip content="Start device">
-            <AiOutlineCaretRight
-              className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
-            />
-          </Tooltip>
-
-          <Tooltip content="Stop running device">
-            <AiOutlinePause
-              className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
-            />
-          </Tooltip>
+          {row.original.snmp_host !== '127.0.0.1' ? (
+            <Tooltip content="Start device">
+              <AiOutlineCaretRight
+                className="mr-2 h-5 w-5 cursor-pointer"
+                onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip content="Stop running device">
+              <AiOutlinePause
+                className="mr-2 h-5 w-5 cursor-pointer"
+                onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
+              />
+            </Tooltip>
+          )}
 
           <Tooltip content="Delete device">
             <AiOutlineClose
               className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => confirm('Delete device?') && deleteResource(row.original?.id, 'device', fetchData)}
+              onClick={async () => {
+                if (confirm('Delete device?')) {
+                  await handleResource({
+                    resource,
+                    operation: 'delete',
+                    id: row.original?.id,
+                  })
+                }
+
+                fetchData()
+              }}
             />
           </Tooltip>
 
@@ -81,13 +95,13 @@ export const Devices = () => {
 
   return (
     <PageWrapper>
-      {isLoading && !devices?.devices?.length && (
+      {isLoading && !devices?.items?.length && (
         <div className="mt-64">
           <LoadingIndicator />
         </div>
       )}
 
-      {!!devices?.devices?.length && (
+      {!!devices?.items?.length && (
         <>
           <BreadCrumbs />
 
@@ -145,7 +159,7 @@ export const Devices = () => {
 
           {/* @TODO: make DataTable properly generic and remove these castings */}
           <DataTable
-            data={devices.devices}
+            data={devices.items}
             columns={devicesColumns.concat(devicesActionsColumn) as []}
             isSelectable
             onSelection={(selectedRows) => setSelectedDevices(selectedRows as [])}
@@ -156,7 +170,8 @@ export const Devices = () => {
             onPageChange={(page) => setCurrentPage(page)}
             pageSize={pageSize}
             onPageSizeChange={(size) => setPageSize(size)}
-            totalCount={devices.num_items}
+            totalCount={devices.count}
+            disabled={isLoading}
           />
 
           {isModalVisible && (
@@ -167,14 +182,21 @@ export const Devices = () => {
             >
               <Form
                 formFields={deviceFormFields}
-                onSubmit={(formValues) => {
+                onSubmit={async (formValues) => {
                   const newDevice = {
                     ...formValues,
+                    agent: { id: formValues['agent.id'] },
                     snmp_port: parseInt(formValues.snmp_port, 10),
-                    snmp_protocol_attributes: { snmp_v1: { community: '' } },
+                    snmp_protocol_attributes: { snmp_v1: {} },
                   }
 
-                  createResource(newDevice, 'devices', fetchData)
+                  await handleResource({
+                    resource,
+                    operation: 'post',
+                    body: newDevice,
+                  })
+
+                  fetchData()
 
                   onCloseModal()
                 }}

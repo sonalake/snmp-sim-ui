@@ -1,7 +1,7 @@
 import { Agent, Device, FormField } from '../../models'
 
 export const deviceFormFields: Record<
-  keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port' | 'agent_id'>,
+  keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port'> & Pick<Agent, 'id'>,
   FormField
 > = {
   name: {
@@ -17,7 +17,7 @@ export const deviceFormFields: Record<
     name: 'description',
     initialValue: '',
     type: 'TEXT',
-    required: true,
+    required: false,
     validation: 'Please provide a description',
   },
   snmp_host: {
@@ -36,9 +36,9 @@ export const deviceFormFields: Record<
     required: true,
     validation: 'Please provide an SNMP port',
   },
-  agent_id: {
+  'agent.id': {
     label: 'Agent',
-    name: 'agent_id',
+    name: 'agent.id',
     initialValue: '',
     type: 'SELECT',
     required: true,
@@ -60,7 +60,7 @@ export const agentFormFields: Record<keyof Pick<Agent, 'name' | 'description' | 
     name: 'description',
     initialValue: '',
     type: 'TEXT',
-    required: true,
+    required: false,
     validation: 'Please provide a description',
   },
   snmp_data_url: {

@@ -2,7 +2,7 @@ import { Label, Select } from 'flowbite-react'
 import { FormikErrors, FormikHandlers, FormikTouched, useFormikContext } from 'formik'
 import React, { FC, useEffect } from 'react'
 import { useFetch } from '../../hooks'
-import { AgentResponse, FormField } from '../../models'
+import { FormField, ResourceResponse } from '../../models'
 
 export const SelectInput: FC<{
   formItem: FormField
@@ -12,19 +12,23 @@ export const SelectInput: FC<{
   handleChange: FormikHandlers['handleChange']
   handleBlur: FormikHandlers['handleBlur']
 }> = ({ formItem: { name, label, required, validation }, value, touched, errors, handleChange, handleBlur }) => {
-  const { resource: agents } = useFetch<AgentResponse>(`/api/agents`)
+  const { resource: agents } = useFetch<ResourceResponse>(`/api/agents`)
 
   const { values } = useFormikContext<Record<keyof FormField, string>>()
 
   useEffect(() => {
-    if (!values.agent_id && !value && agents?.agents?.length) {
-      values.agent_id = agents.agents[0].id
+    if (!values['agent.id'] && !value && agents?.items?.length) {
+      values['agent.id'] = agents.items[0].id
     }
-  }, [agents?.agents, value, values])
+  }, [agents?.items, value, values])
 
   return (
     <>
-      <Label value={label} />
+      <div className="my-1">
+        <div className="mb-2 block">
+          <Label value={label} />
+        </div>
+      </div>
 
       <div id="select">
         <Select
@@ -39,7 +43,7 @@ export const SelectInput: FC<{
             </span>
           }
         >
-          {agents?.agents?.map((option) => (
+          {agents?.items?.map((option) => (
             <option key={option?.id} value={option?.id}>
               {option?.name}
             </option>

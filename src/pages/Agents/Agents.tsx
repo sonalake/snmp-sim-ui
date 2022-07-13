@@ -4,15 +4,13 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { AiOutlineClose, AiOutlinePlusCircle, AiOutlineTool } from 'react-icons/ai'
 import { BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
-import {
-  createResource,
-  deleteResource,
-  updateResource,
-} from '../../components/DataTable/tableColumns/handleResourceMethods'
+import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
-import { Agent, AgentResponse } from '../../models'
+import { Agent, ResourceResponse } from '../../models'
+
+const resource = 'agents'
 
 export const Agents = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -25,7 +23,7 @@ export const Agents = () => {
     isLoading,
     error,
     fetchData,
-  } = useFetch<AgentResponse>(`/api/agents?page=${currentPage}&page_size=${pageSize}`)
+  } = useFetch<ResourceResponse>(`/api/agents?page=${currentPage}&page_size=${pageSize}`)
 
   const onCloseModal = useCallback(() => {
     if (isModalVisible) {
@@ -43,7 +41,17 @@ export const Agents = () => {
           <Tooltip content="Delete agent">
             <AiOutlineClose
               className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => confirm('Delete agent?') && deleteResource(row.original?.id, 'agent', fetchData)}
+              onClick={async () => {
+                if (confirm('Delete agent?')) {
+                  await handleResource({
+                    resource,
+                    operation: 'delete',
+                    id: row.original?.id,
+                  })
+                }
+
+                fetchData()
+              }}
             />
           </Tooltip>
 
@@ -62,7 +70,7 @@ export const Agents = () => {
 
   return (
     <PageWrapper>
-      {isLoading && !agents?.agents?.length && (
+      {isLoading && !agents?.items?.length && (
         <div className="mt-64">
           <LoadingIndicator />
         </div>
@@ -80,7 +88,7 @@ export const Agents = () => {
 
           {/* @TODO: make DataTable properly generic and remove this casting */}
           <DataTable
-            data={agents.agents}
+            data={agents.items}
             columns={agentsColumns.concat(agentActionsColumn) as []}
             isSelectable={false}
           />
@@ -90,7 +98,8 @@ export const Agents = () => {
             onPageChange={(page) => setCurrentPage(page)}
             pageSize={pageSize}
             onPageSizeChange={(size) => setPageSize(size)}
-            totalCount={agents.num_items}
+            totalCount={agents.count}
+            disabled={isLoading}
           />
         </>
       )}
@@ -104,13 +113,23 @@ export const Agents = () => {
           <Form
             formFields={agentFormFields}
             selectedResource={selectedAgent}
-            onSubmit={(formValues) => {
+            onSubmit={async (formValues) => {
               if (selectedAgent) {
-                updateResource(formValues, selectedAgent.id, 'agents', fetchData)
+                await handleResource({
+                  resource,
+                  operation: 'put',
+                  id: selectedAgent.id,
+                  body: formValues,
+                })
               } else {
-                createResource(formValues, 'agents', fetchData)
+                await handleResource({
+                  resource,
+                  operation: 'post',
+                  body: formValues,
+                })
               }
 
+              fetchData()
               onCloseModal()
             }}
           />
