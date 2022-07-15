@@ -8,19 +8,15 @@ export type DevicesColumns = Array<ColumnDef<Device>>
 
 export const devicesColumns: DevicesColumns = [
   {
-    header: 'ID',
-    cell: ({ row: { original } }) =>
-      original?.id && (
-        <Tooltip content={original.id}>
-          <StyledLink href={`/devices/${original.id}`} label={`${original.id.slice(0, 8)}...`} />
-        </Tooltip>
-      ),
-    accessorFn: (row) => row.id,
-  },
-  {
     header: 'Name',
     cell: ({ row: { original } }) =>
-      original?.name && <Tooltip content={`Description: ${original.description}`}>{original.name}</Tooltip>,
+      original?.description ? (
+        <Tooltip content={original.description}>
+          <StyledLink href={`/devices/${original.id}`} label={original.name} />
+        </Tooltip>
+      ) : (
+        <StyledLink href={`/devices/${original?.id}`} label={original?.name} />
+      ),
     accessorFn: (row) => row.name,
   },
   {

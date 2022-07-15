@@ -52,7 +52,7 @@ export const Devices = () => {
               />
             </Tooltip>
           ) : (
-            <Tooltip content="Stop running device">
+            <Tooltip content="Stop device">
               <AiOutlinePause
                 className="mr-2 h-5 w-5 cursor-pointer"
                 onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
@@ -182,12 +182,12 @@ export const Devices = () => {
             >
               <Form
                 formFields={deviceFormFields}
+                withRadio
                 onSubmit={async (formValues) => {
                   const newDevice = {
                     ...formValues,
-                    agent: { id: formValues['agent.id'] },
                     snmp_port: parseInt(formValues.snmp_port, 10),
-                    snmp_protocol_attributes: { snmp_v1: {} },
+                    snmp_protocol_attributes: { snmp_v1: { community: 'Public' } },
                   }
 
                   await handleResource({

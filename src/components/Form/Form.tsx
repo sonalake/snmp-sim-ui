@@ -2,26 +2,34 @@ import { Button } from 'flowbite-react'
 import { Formik, FormikValues } from 'formik'
 import React, { FC, useMemo } from 'react'
 import { Agent, Device, FormField } from '../../models'
-import { SelectInput } from './SelectInput'
+import { AgentSelector } from './AgentSelector'
+import { SNMPVersionSelector } from './SNMPVersionSelector'
 import { TextInput } from './TextInput'
 
 type Resource = Agent | Device
 
+type InitialValues = Record<string, unknown>
+
 export const Form: FC<{
   formFields: Record<string, FormField>
   selectedResource?: Resource
+  withRadio?: boolean
   onSubmit: (values: FormikValues) => void
-}> = ({ formFields, selectedResource, onSubmit }) => {
+}> = ({ formFields, selectedResource, onSubmit, withRadio }) => {
   const initialValues = useMemo(
     () =>
       Object.keys(formFields).reduce((acc, key) => {
-        if (selectedResource) {
-          acc[key] = selectedResource && selectedResource[key as keyof Resource]
+        if (key.includes('.')) {
+          const [parent, child] = key.split('.') as [keyof Resource, keyof Resource['id']]
+
+          acc[parent] = {
+            [child]: selectedResource ? selectedResource[parent][child] : formFields[key].initialValue,
+          }
         } else {
-          acc[key] = formFields[key].initialValue
+          acc[key] = selectedResource ? selectedResource[key as keyof Resource] : formFields[key].initialValue
         }
         return acc
-      }, {} as Record<string, string>),
+      }, {} as InitialValues),
     [formFields, selectedResource],
   )
 
@@ -43,30 +51,34 @@ export const Form: FC<{
       }}
     >
       {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="overflow-scroll">
           {Object.values(formFields).map((item) =>
             item.type === 'TEXT' ? (
               <TextInput
                 key={item.name}
                 formItem={item}
-                value={values[item.name]}
+                value={values[item.name] as string}
                 touched={touched}
                 errors={errors}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
             ) : (
-              <SelectInput
-                key={item.name}
-                formItem={item}
-                value={values[item.name]}
-                touched={touched}
-                errors={errors}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-              />
+              item.type === 'AGENT_SELECT' && (
+                <AgentSelector
+                  key={item.name}
+                  formItem={item}
+                  value={(values.agent as Agent).id}
+                  touched={touched}
+                  errors={errors}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
+              )
             ),
           )}
+
+          {withRadio && <SNMPVersionSelector />}
 
           <div className="w-full flex justify-end gap-1 mt-3">
             <Button type="submit" disabled={isSubmitting}>

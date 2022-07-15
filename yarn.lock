@@ -909,17 +909,17 @@
   dependencies:
     remove-accents "0.4.2"
 
-"@tanstack/react-table@^8.2.3":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.2.3.tgz#bc451497d53b788581c0c226626e625c904a2d20"
-  integrity sha512-48vfd1gOsjE6XCUrFQ8ZSUNRDEbDhFNmYgPlB8RkO+kyvOGut219lZ5rsu8Znw6YVU/WhUmsdE+GMGUeCjFdVQ==
+"@tanstack/react-table@^8.2.6":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.2.6.tgz#a44855d1958d9e8fa7a34280f81f08d2ef7f8d4f"
+  integrity sha512-hHEKSqRPSojhFLosSpqKMRNDX8mk/UVvFdekXHai86NAg1WaLYB51hWVg18IqFe9PCaPZNpTPNguJ7u54ed8Gg==
   dependencies:
-    "@tanstack/table-core" "8.2.3"
+    "@tanstack/table-core" "8.2.6"
 
-"@tanstack/table-core@8.2.3":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.2.3.tgz#2ca0c8564262a6624bfddfd9b8361c4b829621e9"
-  integrity sha512-jzWAXgoXj8OK5zCrUfApesZ0+Admley/+T+W21MQxkfFaPRyoz+wiM+3xARpwGkB7SPzc3FuAzF4Ae9JcKq6gw==
+"@tanstack/table-core@8.2.6":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.2.6.tgz#7240ac14a43cc43adbe01fbc6ae4d8a2bf82541a"
+  integrity sha512-yHjKksyq5ZI4GoVJgR/+X8Z1gaZdOL1om3G9M4af6yTTyRP5ZquMlU5318MBtx2NzXl4BxtENLXBWYrcz5WKSA==
 
 "@testing-library/dom@^8.5.0":
   version "8.14.0"
@@ -1156,7 +1156,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*", "@types/jest@^28.1.4":
+"@types/jest@*":
   version "28.1.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-28.1.4.tgz#a11ee6c8fd0b52c19c9c18138b78bbcc201dad5a"
   integrity sha512-telv6G5N7zRJiLcI3Rs3o+ipZ28EnE+7EvF0pSrt2pZOMnAVI/f+6/LucDxOvcBcTeTL3JMF744BbVQAVBUQRA==
@@ -1171,6 +1171,14 @@
   dependencies:
     jest-matcher-utils "^27.0.0"
     pretty-format "^27.0.0"
+
+"@types/jest@^28.1.5":
+  version "28.1.5"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-28.1.5.tgz#4337404efa059adbf96c4ac53b28fdc0af514475"
+  integrity sha512-TLAC2zXxGnohSP3GxgIyJn7yrTeRPDEyVFyCY1NE2wzg392auI+69uk5EPGjUXuhkq/K208J/TWpLG7J8ebIEQ==
+  dependencies:
+    jest-matcher-utils "^28.0.0"
+    pretty-format "^28.0.0"
 
 "@types/jsdom@^16.2.4":
   version "16.2.14"

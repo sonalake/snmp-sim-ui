@@ -11,7 +11,9 @@ export const Modal: FC<{ children: ReactNode; title: string; isVisible: boolean;
     <FlowbiteModal show={isVisible} onClose={onClose}>
       <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
 
-      <FlowbiteModal.Body>{children}</FlowbiteModal.Body>
+      <FlowbiteModal.Body>
+        <div style={{ maxHeight: '70vh', overflow: 'scroll' }}>{children}</div>
+      </FlowbiteModal.Body>
     </FlowbiteModal>
   )
 }

@@ -11,7 +11,7 @@ export const TextInput: FC<{
   handleChange: FormikHandlers['handleChange']
   handleBlur: FormikHandlers['handleBlur']
 }> = ({ formItem: { name, label, required, validation }, value, errors, touched, handleChange, handleBlur }) => (
-  <div className="my-1">
+  <div className="m-1">
     <div className="mb-2 block">
       <Label htmlFor={name}>
         {label}

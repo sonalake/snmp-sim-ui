@@ -8,19 +8,15 @@ export type AgentsColumns = Array<ColumnDef<Agent>>
 
 export const agentsColumns: AgentsColumns = [
   {
-    header: 'ID',
-    cell: ({ row: { original } }) =>
-      original?.id && (
-        <Tooltip content={original.id}>
-          <StyledLink href={`/agents/${original?.id}`} label={`${original.id.slice(0, 8)}...`} />
-        </Tooltip>
-      ),
-    accessorFn: (row) => row.name,
-  },
-  {
     header: 'Name',
     cell: ({ row: { original } }) =>
-      original?.name && <Tooltip content={`Description: ${original.description}`}>{original.name}</Tooltip>,
+      original?.description ? (
+        <Tooltip content={original.description}>
+          <StyledLink href={`/agents/${original.id}`} label={original.name} />
+        </Tooltip>
+      ) : (
+        <StyledLink href={`/agents/${original?.id}`} label={original?.name} />
+      ),
     accessorFn: (row) => row.name,
   },
   {

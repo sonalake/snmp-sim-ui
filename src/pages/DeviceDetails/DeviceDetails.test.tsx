@@ -13,6 +13,6 @@ describe('DeviceDetails', () => {
   it('should render the component', async () => {
     customRender(<DeviceDetails />)
 
-    expect(await screen.findByText(`${mockDevices[0].name} - details - WIP`)).toBeInTheDocument()
+    expect(await screen.findByText(`${mockDevices[0].name} - WIP`)).toBeInTheDocument()
   })
 })

@@ -40,9 +40,56 @@ export const deviceFormFields: Record<
     label: 'Agent',
     name: 'agent.id',
     initialValue: '',
-    type: 'SELECT',
+    type: 'AGENT_SELECT',
     required: true,
     validation: 'Please provide an agent',
+  },
+}
+export const SNMP_V1_FormField: Record<
+  keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port'> & Pick<Agent, 'id'>,
+  FormField
+> = {
+  'snmp_protocol_attributes.snmp_v1.community': {
+    label: 'Community',
+    name: 'snmp_protocol_attributes.snmp_v1.community',
+    initialValue: '',
+    type: 'TEXT',
+    required: false,
+    validation: 'Please provide a community',
+  },
+}
+export const SNMP_V2C_FormField: Record<
+  keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port'> & Pick<Agent, 'id'>,
+  FormField
+> = {
+  'snmp_protocol_attributes.snmp_v2c.community': {
+    label: 'Community',
+    name: 'snmp_protocol_attributes.snmp_v2c.community',
+    initialValue: '',
+    type: 'TEXT',
+    required: false,
+    validation: 'Please provide a community',
+  },
+}
+export const SNMP_V3_FormField: Record<
+  keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port'> & Pick<Agent, 'id'>,
+  FormField
+> = {
+  'snmp_protocol_attributes.snmp_v3.authentication_password': {
+    label: 'Authentication password',
+    name: 'snmp_protocol_attributes.snmp_v3.authentication_password',
+    initialValue: '',
+    type: 'TEXT',
+    required: true,
+    validation: 'Please provide an authentication password',
+  },
+  'snmp_protocol_attributes.snmp_v3.encryption_key': {
+    label: 'Encryption key',
+    name: 'snmp_protocol_attributes.snmp_v3.encryption_key',
+    initialValue: '',
+    type: 'TEXT',
+    required: true,
+    validation: 'Please provide an encryption key',
   },
 }
 
