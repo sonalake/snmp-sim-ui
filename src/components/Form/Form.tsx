@@ -1,44 +1,26 @@
 import { Button } from 'flowbite-react'
-import { Formik, FormikValues } from 'formik'
-import React, { FC, useMemo } from 'react'
+import { Form as FormikForm, Formik, FormikValues } from 'formik'
+import React, { FC } from 'react'
 import { Agent, Device, FormField } from '../../models'
 import { AgentSelector } from './AgentSelector'
 import { SNMPVersionSelector } from './SNMPVersionSelector'
 import { TextInput } from './TextInput'
 
-type Resource = Agent | Device
-
-type InitialValues = Record<string, unknown>
+type InitialValues = Partial<Agent | Device>
 
 export const Form: FC<{
   formFields: Record<string, FormField>
-  selectedResource?: Resource
-  withRadio?: boolean
+  initialValues: InitialValues
+  snmpInputs?: boolean
   onSubmit: (values: FormikValues) => void
-}> = ({ formFields, selectedResource, onSubmit, withRadio }) => {
-  const initialValues = useMemo(
-    () =>
-      Object.keys(formFields).reduce((acc, key) => {
-        if (key.includes('.')) {
-          const [parent, child] = key.split('.') as [keyof Resource, keyof Resource['id']]
-
-          acc[parent] = {
-            [child]: selectedResource ? selectedResource[parent][child] : formFields[key].initialValue,
-          }
-        } else {
-          acc[key] = selectedResource ? selectedResource[key as keyof Resource] : formFields[key].initialValue
-        }
-        return acc
-      }, {} as InitialValues),
-    [formFields, selectedResource],
-  )
-
+}> = ({ formFields, initialValues, snmpInputs, onSubmit }) => {
   return (
     <Formik
       initialValues={initialValues}
+      enableReinitialize
       validate={(values) =>
         Object.keys(values).reduce((acc, key) => {
-          if (!values[key] && formFields[key].required) {
+          if (!values[key] && formFields[key]?.required) {
             acc[key] = 'Required'
           }
 
@@ -51,13 +33,12 @@ export const Form: FC<{
       }}
     >
       {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
-        <form onSubmit={handleSubmit} className="overflow-scroll">
-          {Object.values(formFields).map((item) =>
-            item.type === 'TEXT' ? (
+        <FormikForm>
+          {Object.values(formFields).map((item) => {
+            return item.type === 'TEXT' || item.type === 'NUMBER' ? (
               <TextInput
                 key={item.name}
                 formItem={item}
-                value={values[item.name] as string}
                 touched={touched}
                 errors={errors}
                 handleChange={handleChange}
@@ -75,17 +56,17 @@ export const Form: FC<{
                   handleBlur={handleBlur}
                 />
               )
-            ),
-          )}
+            )
+          })}
 
-          {withRadio && <SNMPVersionSelector />}
+          {snmpInputs && <SNMPVersionSelector />}
 
           <div className="w-full flex justify-end gap-1 mt-3">
             <Button type="submit" disabled={isSubmitting}>
               Submit
             </Button>
           </div>
-        </form>
+        </FormikForm>
       )}
     </Formik>
   )

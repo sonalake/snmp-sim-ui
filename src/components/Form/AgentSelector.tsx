@@ -7,7 +7,7 @@ import { Agent, FormField, ResourceResponse } from '../../models'
 import { handleResource } from '../DataTable/tableColumns/handleResource'
 import { Modal } from '../Modal/Modal'
 import { Form } from './Form'
-import { agentFormFields } from './formFields'
+import { agentFormFields, agentInitialValues } from './formFields'
 
 export const AgentSelector: FC<{
   formItem: FormField
@@ -69,6 +69,7 @@ export const AgentSelector: FC<{
         <Modal isVisible={isModalVisible} title="Add new agent" onClose={() => setIsModalVisible(false)}>
           <Form
             formFields={agentFormFields}
+            initialValues={agentInitialValues}
             onSubmit={async (formValues) => {
               await handleResource({
                 resource: 'agents',

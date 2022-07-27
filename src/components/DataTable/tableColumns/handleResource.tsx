@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Alert } from '../..'
 import { Agent, Device } from '../../../models'
 
-const getOperationProperties = (config: { id?: string; resource: 'agents' | 'devices' }) => {
+export const getOperationProperties = (config: { id?: string; resource: 'agents' | 'devices' }) => {
   const { id, resource } = config
 
   const messageResource = resource === 'agents' ? 'Agent' : 'Device'

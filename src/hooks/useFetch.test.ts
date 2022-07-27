@@ -5,9 +5,7 @@ import { useFetch } from './useFetch'
 
 // This is needed for suppressing the error related to "@testing-library/react-hooks" using React version < 18.0.0 and using ReactDOM.render instead of createRoot.
 // Once the package is update is released, this will be safe to remove.
-const mock = jest.spyOn(console, 'error').mockImplementation(() => null)
-beforeAll(() => mock)
-afterAll(() => mock.mockRestore())
+jest.spyOn(console, 'error').mockImplementation(() => null)
 
 describe('useFetch', () => {
   const axiosMock = new MockAdapter(axios)

@@ -51,7 +51,7 @@ export const AgentDetails = () => {
 
           <Form
             formFields={agentFormFields}
-            selectedResource={agent}
+            initialValues={agent}
             onSubmit={async (formValues) => {
               await handleResource({
                 resource,

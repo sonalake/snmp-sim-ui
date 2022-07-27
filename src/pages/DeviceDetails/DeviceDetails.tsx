@@ -31,7 +31,7 @@ export const DeviceDetails = () => {
         <div className="pb-32">
           <BreadCrumbs />
 
-          <h1 className="text-4xl font-bolder mt-5 mb-8">{device.name} - WIP</h1>
+          <h1 className="text-4xl font-bolder mt-5 mb-8">{device.name}</h1>
 
           <div className="flex items-center justify-between my-5">
             <div className="flex items-center gap-3">
@@ -84,20 +84,14 @@ export const DeviceDetails = () => {
 
           <Form
             formFields={deviceFormFields}
-            selectedResource={device}
-            withRadio
+            initialValues={{ ...device, agent: { id: device.agent.id } }}
+            snmpInputs
             onSubmit={async (formValues) => {
-              const newDevice = {
-                ...formValues,
-                snmp_port: parseInt(formValues.snmp_port, 10),
-                snmp_protocol_attributes: device.snmp_protocol_attributes,
-              }
-
               await handleResource({
                 resource,
                 operation: 'put',
                 id,
-                body: newDevice,
+                body: formValues,
               })
 
               fetchData()

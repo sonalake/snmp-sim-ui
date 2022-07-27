@@ -13,7 +13,7 @@ import { toast } from 'react-toastify'
 import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
-import { deviceFormFields } from '../../components/Form/formFields'
+import { deviceFormFields, deviceInitialValues } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Device, ResourceResponse } from '../../models'
@@ -22,6 +22,7 @@ const resource = 'devices'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
+  const [selectedDevice, setSelectedDevice] = useState<Device>()
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGINATION_DEFAULT_PAGE_SIZE_OPTION)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -32,12 +33,15 @@ export const Devices = () => {
     error,
     fetchData,
   } = useFetch<ResourceResponse>(`/api/devices?page=${currentPage}&page_size=${pageSize}`)
+  const { resource: agents } = useFetch<ResourceResponse>(`/api/agents`)
 
   const onCloseModal = useCallback(() => {
     if (isModalVisible) {
       setIsModalVisible(false)
+    } else if (selectedDevice) {
+      setSelectedDevice(undefined)
     }
-  }, [isModalVisible])
+  }, [isModalVisible, selectedDevice])
 
   const devicesActionsColumn: ColumnDef<Device> = useMemo(
     () => ({
@@ -78,10 +82,7 @@ export const Devices = () => {
           </Tooltip>
 
           <Tooltip content="Update device">
-            <AiOutlineTool
-              className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={() => toast(<Alert color="success" message="Device updated! - to be implemented" />)}
-            />
+            <AiOutlineTool className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedDevice(row.original)} />
           </Tooltip>
         </div>
       ),
@@ -101,7 +102,7 @@ export const Devices = () => {
         </div>
       )}
 
-      {!!devices?.items?.length && (
+      {!!devices && (
         <>
           <BreadCrumbs />
 
@@ -160,9 +161,9 @@ export const Devices = () => {
           {/* @TODO: make DataTable properly generic and remove these castings */}
           <DataTable
             data={devices.items}
-            columns={devicesColumns.concat(devicesActionsColumn) as []}
+            columns={devicesColumns.concat(devicesActionsColumn) as Array<Row<Device>>}
             isSelectable
-            onSelection={(selectedRows) => setSelectedDevices(selectedRows as [])}
+            onSelection={(selectedRows) => setSelectedDevices(selectedRows as Array<Row<Device>>)}
           />
 
           <Pagination
@@ -174,27 +175,36 @@ export const Devices = () => {
             disabled={isLoading}
           />
 
-          {isModalVisible && (
+          {(isModalVisible || !!selectedDevice) && agents?.items?.length && (
             <Modal
-              isVisible={isModalVisible}
-              title="Add new device (WIP - feature works, but 'snmp_protocol_attributes' is hardcoded)"
+              isVisible={isModalVisible || !!selectedDevice}
+              title={selectedDevice ? 'Update device' : 'Add new device'}
               onClose={onCloseModal}
             >
               <Form
                 formFields={deviceFormFields}
-                withRadio
-                onSubmit={async (formValues) => {
-                  const newDevice = {
-                    ...formValues,
-                    snmp_port: parseInt(formValues.snmp_port, 10),
-                    snmp_protocol_attributes: { snmp_v1: { community: 'Public' } },
+                initialValues={
+                  selectedDevice || {
+                    ...deviceInitialValues,
+                    agent: { id: agents.items[0].id },
                   }
-
-                  await handleResource({
-                    resource,
-                    operation: 'post',
-                    body: newDevice,
-                  })
+                }
+                snmpInputs
+                onSubmit={async (formValues) => {
+                  if (selectedDevice) {
+                    await handleResource({
+                      resource,
+                      operation: 'put',
+                      id: selectedDevice.id,
+                      body: formValues,
+                    })
+                  } else {
+                    await handleResource({
+                      resource,
+                      operation: 'post',
+                      body: formValues,
+                    })
+                  }
 
                   fetchData()
 

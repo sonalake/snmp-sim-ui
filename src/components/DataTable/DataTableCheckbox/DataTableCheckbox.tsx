@@ -1,10 +1,10 @@
-import React, { HTMLProps, useEffect, useRef } from 'react'
+import React, { FC, HTMLProps, useEffect, useRef } from 'react'
 
-export const DataTableCheckbox = ({
+export const DataTableCheckbox: FC<{ indeterminate?: boolean } & HTMLProps<HTMLInputElement>> = ({
   indeterminate,
   className = '',
   ...rest
-}: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) => {
+}) => {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {

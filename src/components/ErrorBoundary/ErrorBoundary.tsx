@@ -18,8 +18,8 @@ export class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   }
 
-  public static getDerivedStateFromError(_: Error): State {
-    return { error: null, hasError: true }
+  public static getDerivedStateFromError(error: Error): State {
+    return { error, hasError: true }
   }
 
   public componentDidCatch(error: Error) {

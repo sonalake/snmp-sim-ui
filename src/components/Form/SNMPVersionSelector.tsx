@@ -1,76 +1,88 @@
-import { Label, Radio, TextInput } from 'flowbite-react'
-import React, { useMemo, useState } from 'react'
+import { Checkbox, Label } from 'flowbite-react'
+import { useFormikContext } from 'formik'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import { Device, SMNPVersion } from '../../models'
+import { Alert } from '../Alert/Alert'
+import { deviceSNMPFormFields } from './formFields'
+import { TextInput } from './TextInput'
 
-type AcceptedVersions = 'snmp_v1' | 'snmp_v2c' | 'snmp_v3'
+const acceptedVersions: SMNPVersion[] = ['snmp_v1', 'snmp_v2c', 'snmp_v3']
 
-const values: Array<{ name: AcceptedVersions; label: string }> = [
-  {
-    name: 'snmp_v1',
-    label: 'SNMP v1',
-  },
-  {
-    name: 'snmp_v2c',
-    label: 'SNMP v2c',
-  },
-  {
-    name: 'snmp_v3',
-    label: 'SNMP v3',
-  },
-]
+const items = Object.keys(deviceSNMPFormFields) as Array<keyof typeof deviceSNMPFormFields>
 
-const inputs = {
-  snmp_v1: (
-    <div className="w-full mt-3">
-      <div className="mb-2 block">
-        <Label htmlFor="community" value="Community" />
-      </div>
-      <TextInput type="text" placeholder="Community" />
-    </div>
-  ),
-  snmp_v2c: (
-    <div className="w-full mt-3">
-      <div className="mb-2 block">
-        <Label htmlFor="community" value="Community" />
-      </div>
-      <TextInput type="text" placeholder="Community" />
-    </div>
-  ),
-  snmp_v3: (
-    <div className="w-full mt-3">
-      <div className="mb-5">
-        <div className="mb-2 block">
-          <Label htmlFor="authentication_password" value="Authentication password" />
-        </div>
-        <TextInput type="text" placeholder="Authentication password" />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="encryption_key" value="Encryption key" />
-        </div>
-        <TextInput type="text" placeholder="Encryption key" />
-      </div>
-    </div>
-  ),
-}
+const versions: Array<{
+  name: SMNPVersion
+  label: string
+}> = acceptedVersions.map((version) => ({ name: version, label: `SNMP ${version.split('_')[1]}` }))
 
 export const SNMPVersionSelector = () => {
-  const [selectedValue, setSelectedValue] = useState<AcceptedVersions>('snmp_v1')
+  const [selectedValues, setSelectedValues] = useState<SMNPVersion[]>([acceptedVersions[0]])
 
-  const input = useMemo(() => inputs[selectedValue], [selectedValue])
+  const { setFieldValue, values, setValues, touched, errors, handleChange, handleBlur } = useFormikContext<Device>()
 
   return (
     <fieldset className="m-1">
       <legend>SNMP version</legend>
-      <div className="flex gap-4 mt-3">
-        {values.map(({ name, label }) => (
-          <div key={label} className="flex items-center gap-2">
-            <Radio name={name} value={name} checked={selectedValue === name} onChange={() => setSelectedValue(name)} />
-            <Label htmlFor={name}>{label}</Label>
-          </div>
-        ))}
-      </div>
 
-      <div className="flex gap-4 mt-3 mb-5">{input}</div>
+      <div className="mt-3">
+        {versions.map(({ name, label }) => {
+          const disabled = selectedValues.length === 1 && selectedValues.includes(name)
+
+          return (
+            <div key={label}>
+              <div className="flex items-center gap-1">
+                <Checkbox
+                  name={name}
+                  value={name}
+                  style={{
+                    cursor: disabled ? 'not-allowed' : 'pointer',
+                    color: disabled ? '#6b6280' : '#1c64f2',
+                  }}
+                  onClick={() => disabled && toast(<Alert message="msg" color="info" />)}
+                  disabled={disabled}
+                  checked={selectedValues.includes(name)}
+                  onChange={() => {
+                    if (!selectedValues.includes(name)) {
+                      setSelectedValues([...selectedValues, name])
+                    } else {
+                      setSelectedValues(selectedValues.filter((value) => value !== name))
+
+                      const { [name]: currentSNMPVersion, ...snmp_protocol_attributes } =
+                        values.snmp_protocol_attributes
+
+                      setFieldValue(name, '')
+                      setValues({
+                        ...values,
+                        snmp_protocol_attributes,
+                      })
+                    }
+                  }}
+                />
+
+                <Label htmlFor={name}>{label}</Label>
+              </div>
+
+              <div className="mt-3 mb-5">
+                {items.map(
+                  (item) =>
+                    item.includes(name) && (
+                      <TextInput
+                        key={item}
+                        formItem={deviceSNMPFormFields[item]}
+                        disabled={!selectedValues.includes(name)}
+                        touched={touched}
+                        errors={errors}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                      />
+                    ),
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </fieldset>
   )
 }

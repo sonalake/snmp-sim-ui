@@ -5,7 +5,7 @@ import { AiOutlineClose, AiOutlinePlusCircle, AiOutlineTool } from 'react-icons/
 import { BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
-import { agentFormFields } from '../../components/Form/formFields'
+import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Agent, ResourceResponse } from '../../models'
@@ -112,7 +112,7 @@ export const Agents = () => {
         >
           <Form
             formFields={agentFormFields}
-            selectedResource={selectedAgent}
+            initialValues={selectedAgent || agentInitialValues}
             onSubmit={async (formValues) => {
               if (selectedAgent) {
                 await handleResource({

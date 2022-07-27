@@ -29,6 +29,7 @@ export const devicesColumns: DevicesColumns = [
   },
   {
     header: 'State',
+    accessorFn: (row) => row.snmp_host === '127.0.0.1',
     cell: ({ row }) => {
       const isMockActive = row.original.snmp_host === '127.0.0.1'
 

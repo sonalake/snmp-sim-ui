@@ -9,17 +9,16 @@ jest.mock('axios')
 
 axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockDevices }))
 
-// @TODO: mock @tanstack/react-table
 describe('Devices', () => {
-  it.skip('should render the component', async () => {
+  it('should render the component', async () => {
     customRender(<Devices />)
 
     expect(await screen.findByText('Add')).toBeInTheDocument()
   })
 
-  it.skip('should render the table rows', async () => {
+  it('should render the table rows', async () => {
     customRender(<Devices />)
 
-    expect(await screen.findByText('Name')).toBeInTheDocument()
+    expect(await screen.findByText('No data to display')).toBeInTheDocument()
   })
 })
