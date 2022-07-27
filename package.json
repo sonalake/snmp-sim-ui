@@ -9,7 +9,7 @@
     "clean": "rimraf bundle & rimraf dist",
     "build": "./node_modules/.bin/webpack --env NODE_ENV=production --mode production",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d bundle",
     "start": "./node_modules/.bin/webpack serve --mode development --hot --history-api-fallback",
     "test": "jest"
   },
