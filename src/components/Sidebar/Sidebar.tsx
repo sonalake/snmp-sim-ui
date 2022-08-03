@@ -2,7 +2,7 @@ import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
 import React from 'react'
 import { HiChartPie, HiDocumentReport } from 'react-icons/hi'
 import { useLocation } from 'react-router'
-import SidebarLogo from '../../assets/images/logo2.png'
+import SidebarLogo from '../../assets/images/logo.png'
 
 const { Logo, Items, Item, ItemGroup } = FlowbiteSidebar
 
