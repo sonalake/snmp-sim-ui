@@ -1,43 +1,42 @@
 import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
-import React, { FunctionComponent, SVGProps } from 'react'
-import { HiChartPie, HiDocumentReport, HiLogout } from 'react-icons/hi'
-import { toast } from 'react-toastify'
-import { Alert } from '..'
-import SidebarLogo from '../../assets/images/sonalake_logo.jpeg'
+import React from 'react'
+import { HiChartPie, HiDocumentReport } from 'react-icons/hi'
+import { useLocation } from 'react-router'
+import SidebarLogo from '../../assets/images/logo2.png'
 
 const { Logo, Items, Item, ItemGroup } = FlowbiteSidebar
 
-export const Sidebar = () => {
-  return (
-    <div className="bg-slate-600">
-      <FlowbiteSidebar aria-label="Sidebar menu">
-        <Logo href="/" img={SidebarLogo} imgAlt="SNMP Simulator logo">
-          SNMP Simulator
-        </Logo>
-        <Items>
-          <ItemGroup>
-            <Item href="/agents" icon={HiChartPie as FunctionComponent<SVGProps<SVGSVGElement>>}>
-              Agents
-            </Item>
-            <Item href="/devices" icon={HiDocumentReport as FunctionComponent<SVGProps<SVGSVGElement>>}>
-              Devices
-            </Item>
-          </ItemGroup>
+const sidebarItems = [
+  {
+    label: 'Agents',
+    url: '/agents',
+    icon: HiChartPie,
+  },
+  {
+    label: 'Devices',
+    url: '/devices',
+    icon: HiDocumentReport,
+  },
+]
 
-          <ItemGroup>
-            <Item
-              style={{ cursor: 'pointer' }}
-              icon={HiLogout as FunctionComponent<SVGProps<SVGSVGElement>>}
-              onClick={() =>
-                confirm('Are you sure you want to log out?') &&
-                toast(<Alert color="success" message="Logged out! - to be implemented" />)
-              }
-            >
-              Log out
+export const Sidebar = () => {
+  const location = useLocation()
+
+  return (
+    <FlowbiteSidebar aria-label="Sidebar menu">
+      <Logo href="/agents" img={SidebarLogo} imgAlt="SNMP Simulator logo">
+        SNMP Simulator
+      </Logo>
+
+      <Items>
+        <ItemGroup>
+          {sidebarItems.map(({ label, url, icon }) => (
+            <Item key={label} href={url} icon={icon} active={location.pathname.includes(url)}>
+              {label}
             </Item>
-          </ItemGroup>
-        </Items>
-      </FlowbiteSidebar>
-    </div>
+          ))}
+        </ItemGroup>
+      </Items>
+    </FlowbiteSidebar>
   )
 }

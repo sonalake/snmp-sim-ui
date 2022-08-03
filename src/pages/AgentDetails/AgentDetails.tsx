@@ -1,8 +1,8 @@
 import { Button } from 'flowbite-react'
 import React from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
+import { HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
-import { BreadCrumbs, Form, LoadingIndicator, PageWrapper } from '../../components'
+import { Form, LoadingIndicator, PageWrapper } from '../../components'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
@@ -25,12 +25,10 @@ export const AgentDetails = () => {
       {isLoading && <LoadingIndicator />}
 
       {agent && (
-        <>
-          <BreadCrumbs />
+        <div className="pb-32">
+          <h1 className="text-5xl font-semibold mb-7">{agent.name}</h1>
 
-          <h1 className="text-4xl font-bolder mt-5 mb-8">{agent.name}</h1>
-
-          <div className="flex flex-row items-center justify-end my-5">
+          <div className="flex flex-row items-center justify-end mb-5">
             <Button
               color="failure"
               onClick={async () => {
@@ -45,7 +43,7 @@ export const AgentDetails = () => {
                 }
               }}
             >
-              <AiOutlineClose className="mr-2 h-5 w-5 cursor-pointer" /> Delete
+              <HiTrash className="mr-2 h-5 w-5 cursor-pointer" /> Delete
             </Button>
           </div>
 
@@ -63,7 +61,7 @@ export const AgentDetails = () => {
               fetchData()
             }}
           />
-        </>
+        </div>
       )}
     </PageWrapper>
   )

@@ -1,4 +1,4 @@
-import { Badge, Pagination as FlowbitePagination, Select } from 'flowbite-react'
+import { Pagination as FlowbitePagination, Select } from 'flowbite-react'
 import React, { FC, useMemo } from 'react'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION, PAGINATION_PAGE_SIZE_OPTIONS } from '../../constants'
 
@@ -15,7 +15,7 @@ export const Pagination: FC<{
   const displayPagination = useMemo(() => totalCount >= PAGINATION_DEFAULT_PAGE_SIZE_OPTION, [totalCount])
 
   return displayPagination ? (
-    <div className="flex flex-row items-center gap-2 mt-3 pb-32">
+    <div className="flex justify-end items-center gap-2 mt-3 pb-32">
       <FlowbitePagination
         currentPage={currentPage}
         onPageChange={onPageChange}
@@ -23,7 +23,7 @@ export const Pagination: FC<{
         unselectable={disabled ? 'off' : 'on'}
       />
 
-      <div className="flex flex-row items-center gap-1 mt-2">
+      <div className="flex items-center mt-2">
         <div className="w-32">
           <Select
             sizing="sm"
@@ -38,10 +38,6 @@ export const Pagination: FC<{
             ))}
           </Select>
         </div>
-
-        <Badge color="info" size="sm">
-          of {totalCount} items
-        </Badge>
       </div>
     </div>
   ) : null

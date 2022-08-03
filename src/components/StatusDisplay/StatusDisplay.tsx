@@ -1,12 +1,12 @@
 import React, { FC, ReactNode } from 'react'
-import { AiFillCloseCircle, AiFillQuestionCircle, AiOutlineWifi } from 'react-icons/ai'
+import { HiOutlineWifi, HiQuestionMarkCircle, HiXCircle } from 'react-icons/hi'
 
 const iconClassNames = 'w-24 h-24 mt-48 mb-4'
 
 const icons = {
-  pageNotFound: <AiFillQuestionCircle className={`${iconClassNames} text-blue-700`} />,
-  noConnection: <AiOutlineWifi className={`${iconClassNames} text-gray-400`} />,
-  error: <AiFillCloseCircle className={`${iconClassNames} text-red-600`} />,
+  pageNotFound: <HiQuestionMarkCircle className={`${iconClassNames} text-blue-700`} />,
+  noConnection: <HiOutlineWifi className={`${iconClassNames} text-gray-400`} />,
+  error: <HiXCircle className={`${iconClassNames} text-red-600`} />,
 }
 
 export const StatusDisplay: FC<{

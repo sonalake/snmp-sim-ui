@@ -20,7 +20,7 @@ module.exports = {
     '^.+\\.(ts|tsx|js)$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(jpe?g|svg)$': '<rootDir>/src/utils/testUtils/__mocks__/fileMock.ts',
+    '\\.(jpe?g|svg|png)$': '<rootDir>/src/utils/testUtils/__mocks__/fileMock.ts',
     '\\.(css|less)$': 'identity-obj-proxy',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js'],

@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table'
 import { Card, Table, TextInput } from 'flowbite-react'
 import React, { FC, useEffect, useState } from 'react'
-import { AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineFilter } from 'react-icons/ai'
+import { HiChevronDown, HiChevronUp, HiOutlineFilter } from 'react-icons/hi'
 import { Agent, Device } from '../../models'
 import { DataTableCheckbox } from './DataTableCheckbox/DataTableCheckbox'
 
@@ -65,22 +65,29 @@ export const DataTable: FC<Props<Agent | Device>> = ({ data, columns, isSelectab
                     <div
                       {...{
                         className: header.column.getCanSort()
-                          ? 'cursor-pointer select-none flex gap-2'
-                          : 'flex justify-between gap-2',
+                          ? 'cursor-pointer select-none flex gap-1'
+                          : 'flex justify-between gap-1',
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {
                         {
-                          asc: <AiOutlineCaretUp />,
-                          desc: <AiOutlineCaretDown />,
+                          asc: <HiChevronUp />,
+                          desc: <HiChevronDown />,
                         }[header.column.getIsSorted() as string]
                       }
+
+                      {header.column.getCanSort() && !header.column.getIsSorted() && (
+                        <div className="flex flex-col h-4">
+                          <HiChevronUp style={{ marginBottom: '-2px' }} />
+                          <HiChevronDown style={{ marginTop: '-2px' }} />
+                        </div>
+                      )}
                     </div>
 
                     {header.column.columnDef.header !== 'Actions' && (
-                      <AiOutlineFilter
+                      <HiOutlineFilter
                         className="cursor-pointer"
                         onClick={() =>
                           filter === header.column.columnDef.header

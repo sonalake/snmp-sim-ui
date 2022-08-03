@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react'
 import React, { Component, ReactNode } from 'react'
-import { AiOutlineReload } from 'react-icons/ai'
+import { HiRefresh } from 'react-icons/hi'
 import { PageWrapper, StatusDisplay } from '..'
 
 interface Props {
@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<Props, State> {
             subTitle={this.state.error.message}
             extraContent={
               <Button onClick={() => window.location.reload()}>
-                <AiOutlineReload className="mr-2 h-5 w-5" />
+                <HiRefresh className="mr-2 h-5 w-5" />
                 Refresh
               </Button>
             }

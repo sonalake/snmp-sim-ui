@@ -1,8 +1,9 @@
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, Row } from '@tanstack/react-table'
 import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
-import { AiOutlineClose, AiOutlinePlusCircle, AiOutlineTool } from 'react-icons/ai'
-import { BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
+import { HiOutlinePencil, HiPlusCircle, HiTrash } from 'react-icons/hi'
+import { toast } from 'react-toastify'
+import { Alert, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
@@ -13,6 +14,7 @@ import { Agent, ResourceResponse } from '../../models'
 const resource = 'agents'
 
 export const Agents = () => {
+  const [selectedAgents, setSelectedAgents] = useState<Array<Row<Agent>>>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGINATION_DEFAULT_PAGE_SIZE_OPTION)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -38,30 +40,13 @@ export const Agents = () => {
       header: 'Actions',
       cell: ({ row }) => (
         <div className="flex flex-row">
-          <Tooltip content="Delete agent">
-            <AiOutlineClose
-              className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={async () => {
-                if (confirm('Delete agent?')) {
-                  await handleResource({
-                    resource,
-                    operation: 'delete',
-                    id: row.original?.id,
-                  })
-                }
-
-                fetchData()
-              }}
-            />
-          </Tooltip>
-
           <Tooltip content="Update agent">
-            <AiOutlineTool className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedAgent(row.original)} />
+            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedAgent(row.original)} />
           </Tooltip>
         </div>
       ),
     }),
-    [fetchData],
+    [],
   )
 
   if (error) {
@@ -78,11 +63,22 @@ export const Agents = () => {
 
       {!!agents && (
         <>
-          <BreadCrumbs />
+          <h1 className="text-5xl font-semibold mb-7">Agents</h1>
 
-          <div className="flex flex-row items-center gap-1 justify-end my-5">
-            <Button color="light" onClick={() => setIsModalVisible(true)}>
-              <AiOutlinePlusCircle className="mr-2 h-5 w-5" /> Add
+          <div className="flex items-center gap-1 justify-end mb-5">
+            <Button color="info" onClick={() => setIsModalVisible(true)}>
+              <HiPlusCircle className="mr-2 h-5 w-5" /> Add
+            </Button>
+
+            <Button
+              color="failure"
+              disabled={!selectedAgents.length}
+              onClick={() =>
+                confirm('Delete the selected agents? - to be implemented') &&
+                toast(<Alert color="success" message={'The selected agents were deleted! - to be implemented'} />)
+              }
+            >
+              <HiTrash className="mr-2 h-5 w-5" /> Delete
             </Button>
           </div>
 
@@ -90,7 +86,8 @@ export const Agents = () => {
           <DataTable
             data={agents.items}
             columns={agentsColumns.concat(agentActionsColumn) as []}
-            isSelectable={false}
+            onSelection={(selectedRows) => setSelectedAgents(selectedRows as Array<Row<Agent>>)}
+            isSelectable
           />
 
           <Pagination

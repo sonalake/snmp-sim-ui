@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react'
 import React from 'react'
-import { AiOutlineArrowLeft } from 'react-icons/ai'
+import { HiOutlineArrowLeft } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import { PageWrapper, StatusDisplay } from '../../components'
 
@@ -13,8 +13,8 @@ export const PageNotFound = () => (
       extraContent={
         <Link to="/">
           <Button>
-            <AiOutlineArrowLeft className="mr-2 h-5 w-5" />
-            Back to Dashboard
+            <HiOutlineArrowLeft className="mr-2 h-5 w-5" />
+            Back
           </Button>
         </Link>
       }

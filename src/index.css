@@ -15,3 +15,7 @@
 .Toastify__bounce-enter--top-right {
   top: 3vh;
 }
+
+aside div.bg-white {
+  background-color: #f8fafc;
+}

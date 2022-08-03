@@ -1,8 +1,9 @@
 import React from 'react'
+import { Navigate } from 'react-router'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from './components'
 import { useDetectUserConnection } from './hooks'
-import { AgentDetails, Agents, Dashboard, DeviceDetails, Devices, NoConnection, PageNotFound } from './pages'
+import { AgentDetails, Agents, DeviceDetails, Devices, NoConnection, PageNotFound } from './pages'
 
 export const Router = () => {
   const { isUserOnline } = useDetectUserConnection()
@@ -12,7 +13,7 @@ export const Router = () => {
       <ErrorBoundary>
         {isUserOnline ? (
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Navigate to="/agents" />} />
 
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:id" element={<AgentDetails />} />

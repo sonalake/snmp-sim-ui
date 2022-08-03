@@ -6,6 +6,6 @@ describe('Router', () => {
   it('should render the component', () => {
     render(<Router />)
 
-    expect(screen.getByText('Welcome to the SNMP Simulator Web Console')).toBeInTheDocument()
+    expect(screen.getByText('Agents')).toBeInTheDocument()
   })
 })

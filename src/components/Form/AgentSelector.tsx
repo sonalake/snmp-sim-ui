@@ -1,7 +1,7 @@
 import { Label, Select, Tooltip } from 'flowbite-react'
 import { FormikErrors, FormikHandlers, FormikTouched, useFormikContext } from 'formik'
 import React, { FC, useEffect, useState } from 'react'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { HiOutlinePlusCircle } from 'react-icons/hi'
 import { useFetch } from '../../hooks'
 import { Agent, FormField, ResourceResponse } from '../../models'
 import { handleResource } from '../DataTable/tableColumns/handleResource'
@@ -40,7 +40,7 @@ export const AgentSelector: FC<{
         </div>
 
         <Tooltip content="Add new agent">
-          <AiOutlinePlusCircle className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setIsModalVisible(true)} />
+          <HiOutlinePlusCircle className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setIsModalVisible(true)} />
         </Tooltip>
       </div>
 

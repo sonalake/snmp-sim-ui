@@ -1,16 +1,9 @@
 import { ColumnDef, Row } from '@tanstack/react-table'
 import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
-import {
-  AiOutlineCaretRight,
-  AiOutlineClose,
-  AiOutlinePause,
-  AiOutlinePlusCircle,
-  AiOutlineReload,
-  AiOutlineTool,
-} from 'react-icons/ai'
+import { HiOutlinePencil, HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, BreadCrumbs, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
+import { Alert, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { deviceFormFields, deviceInitialValues } from '../../components/Form/formFields'
@@ -50,44 +43,27 @@ export const Devices = () => {
         <div className="flex flex-row">
           {row.original.snmp_host !== '127.0.0.1' ? (
             <Tooltip content="Start device">
-              <AiOutlineCaretRight
-                className="mr-2 h-5 w-5 cursor-pointer"
+              <HiPlay
+                className="mr-2 h-5 w-5 cursor-pointer text-green-700"
                 onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
               />
             </Tooltip>
           ) : (
             <Tooltip content="Stop device">
-              <AiOutlinePause
-                className="mr-2 h-5 w-5 cursor-pointer"
+              <HiStop
+                className="mr-2 h-5 w-5 cursor-pointer text-red-700"
                 onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
               />
             </Tooltip>
           )}
 
-          <Tooltip content="Delete device">
-            <AiOutlineClose
-              className="mr-2 h-5 w-5 cursor-pointer"
-              onClick={async () => {
-                if (confirm('Delete device?')) {
-                  await handleResource({
-                    resource,
-                    operation: 'delete',
-                    id: row.original?.id,
-                  })
-                }
-
-                fetchData()
-              }}
-            />
-          </Tooltip>
-
           <Tooltip content="Update device">
-            <AiOutlineTool className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedDevice(row.original)} />
+            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedDevice(row.original)} />
           </Tooltip>
         </div>
       ),
     }),
-    [fetchData],
+    [],
   )
 
   if (error) {
@@ -104,58 +80,56 @@ export const Devices = () => {
 
       {!!devices && (
         <>
-          <BreadCrumbs />
+          <h1 className="text-5xl font-semibold mb-7">Devices</h1>
 
-          <div className="flex flex-row items-center justify-end mt-5 mb-5">
-            <div className="flex flex-row items-center gap-1">
-              <Button color="light" onClick={() => setIsModalVisible(true)}>
-                <AiOutlinePlusCircle className="mr-2 h-5 w-5" /> Add
-              </Button>
+          <div className="flex items-center gap-1 justify-end mb-5">
+            <Button color="info" onClick={() => setIsModalVisible(true)}>
+              <HiPlusCircle className="mr-2 h-5 w-5" /> Add
+            </Button>
 
-              <Button
-                color="light"
-                onClick={() =>
-                  toast(
-                    <Alert
-                      color="success"
-                      message={`${
-                        selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
-                      } - to be implemented`}
-                    />,
-                  )
-                }
-              >
-                <AiOutlineCaretRight className="mr-2 h-5 w-5" />
-                Start all
-              </Button>
+            <Button
+              color="success"
+              onClick={() =>
+                toast(
+                  <Alert
+                    color="success"
+                    message={`${
+                      selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
+                    } - to be implemented`}
+                  />,
+                )
+              }
+            >
+              <HiPlay className="mr-2 h-5 w-5" />
+              Start
+            </Button>
 
-              <Button
-                color="light"
-                onClick={() =>
-                  toast(
-                    <Alert
-                      color="success"
-                      message={`${
-                        selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
-                      } - to be implemented`}
-                    />,
-                  )
-                }
-              >
-                <AiOutlinePause className="mr-2 h-5 w-5" /> Stop all
-              </Button>
+            <Button
+              color="dark"
+              onClick={() =>
+                toast(
+                  <Alert
+                    color="success"
+                    message={`${
+                      selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
+                    } - to be implemented`}
+                  />,
+                )
+              }
+            >
+              <HiStop className="mr-2 h-5 w-5" /> Stop
+            </Button>
 
-              <Button
-                onClick={() => {
-                  fetchData()
-
-                  toast(<Alert color="info" message="Data refreshed!" />)
-                }}
-                color="light"
-              >
-                <AiOutlineReload className="mr-2 h-5 w-5" /> Refresh
-              </Button>
-            </div>
+            <Button
+              color="failure"
+              disabled={!selectedDevices.length}
+              onClick={() =>
+                confirm('Delete the selected devices? - to be implemented') &&
+                toast(<Alert color="success" message={'The selected devices were deleted! - to be implemented'} />)
+              }
+            >
+              <HiTrash className="mr-2 h-5 w-5" /> Delete
+            </Button>
           </div>
 
           {/* @TODO: make DataTable properly generic and remove these castings */}

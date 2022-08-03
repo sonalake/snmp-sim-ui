@@ -1,9 +1,9 @@
 import { Button } from 'flowbite-react'
 import React, { useState } from 'react'
-import { AiOutlineCaretRight, AiOutlineClose, AiOutlinePause } from 'react-icons/ai'
+import { HiPlay, HiStop, HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Alert, BreadCrumbs, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
+import { Alert, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
@@ -29,33 +29,31 @@ export const DeviceDetails = () => {
 
       {device && (
         <div className="pb-32">
-          <BreadCrumbs />
+          <h1 className="text-5xl font-semibold mb-7">{device.name}</h1>
 
-          <h1 className="text-4xl font-bolder mt-5 mb-8">{device.name}</h1>
-
-          <div className="flex items-center justify-between my-5">
+          <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               {!isRunning ? (
                 <Button
-                  color="light"
+                  color="success"
                   onClick={() => {
                     // runDevice(device.id, true)
                     setIsRunning(true)
                     toast(<Alert color="success" message="Device running! - to be implemented" />)
                   }}
                 >
-                  <AiOutlineCaretRight className="mr-2 h-5 w-5 cursor-pointer" /> Start
+                  <HiPlay className="mr-2 h-5 w-5 cursor-pointer" /> Start
                 </Button>
               ) : (
                 <Button
-                  color="light"
+                  color="failure"
                   onClick={() => {
                     // runDevice(device.id, false)
                     setIsRunning(false)
                     toast(<Alert color="success" message="Device stopped! - to be implemented" />)
                   }}
                 >
-                  <AiOutlinePause className="mr-2 h-5 w-5 cursor-pointer" /> Stop
+                  <HiStop className="mr-2 h-5 w-5 cursor-pointer" /> Stop
                 </Button>
               )}
 
@@ -78,7 +76,7 @@ export const DeviceDetails = () => {
                 }
               }}
             >
-              <AiOutlineClose className="mr-2 h-5 w-5 cursor-pointer" /> Delete
+              <HiTrash className="mr-2 h-5 w-5 cursor-pointer" /> Delete
             </Button>
           </div>
 
