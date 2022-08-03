@@ -1,0 +1,23 @@
+import { Button } from 'flowbite-react'
+import React from 'react'
+import { HiOutlineArrowLeft } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
+import { PageWrapper, StatusDisplay } from '../../components'
+
+export const PageNotFound = () => (
+  <PageWrapper>
+    <StatusDisplay
+      icon="pageNotFound"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extraContent={
+        <Link to="/">
+          <Button>
+            <HiOutlineArrowLeft className="mr-2 h-5 w-5" />
+            Back
+          </Button>
+        </Link>
+      }
+    />
+  </PageWrapper>
+)

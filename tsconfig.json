@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "sourceMap": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "target": "ES2019",
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "types": ["./typings", "jest"]
+  },
+  "include": ["src", "./jest-setup.ts"],
+  "exclude": ["node_modules"]
+}
