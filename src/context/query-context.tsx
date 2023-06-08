@@ -22,14 +22,14 @@ const queryConfig = {
       },
       onError: (error: unknown) => {
         if (error instanceof AxiosError) {
-          console.log('error', error)
+          console.error(error)
         }
       },
     },
     mutations: {
       onError: (error: unknown) => {
         if (error instanceof AxiosError) {
-          console.log('error', error)
+          console.error(error)
         }
       },
     },

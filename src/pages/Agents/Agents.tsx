@@ -3,12 +3,13 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlusCircle, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Pagination } from '../../components'
+import { Alert, DataTable, Form, LoadingIndicator, Modal, PageProps, PageWrapper, Pagination } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
-import { useFetch } from '../../hooks'
-import { Agent, ResourceResponse } from '../../models'
+import { Agent, AgentsQueryParams } from '../../models'
+import { useFetchAgents } from '../../api/agents/agents.api'
+import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 
 const resource = 'agents'
 
@@ -17,30 +18,26 @@ export const Agents = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedAgent, setSelectedAgent] = useState<Agent>()
 
-  const {
-    resource: agents,
-    isLoading,
-    error,
-    fetchData,
-  } = useFetch<ResourceResponse>(`/api/agents?page=${1}&page_size=${10}`)
+  const [agentQueryParams, setAgentQueryParams] = useState<AgentsQueryParams>({
+    page: 1,
+    pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
+  })
 
-  if (error) {
-    throw error
-  }
+  const { data: agents, isLoading, refetch: refetchAgents } = useFetchAgents(agentQueryParams)
+
+  const openModal = () => setIsModalOpen(true)
 
   const onCloseModal = useCallback(() => {
     setIsModalOpen(false)
     setSelectedAgent(undefined)
   }, [])
 
-  const openModal = () => {
-    setIsModalOpen(true)
-  }
-
   const handleSelectAgent = useCallback((agent: Agent) => {
     setSelectedAgent(agent)
     openModal()
   }, [])
+
+  const handlePaginationChange = (pageProps: PageProps) => setAgentQueryParams(pageProps)
 
   const agentActionsColumn: ColumnDef<Agent> = useMemo(
     () => ({
@@ -94,10 +91,10 @@ export const Agents = () => {
           />
 
           <Pagination
-            onPageChange={() => { console.log() }}
-            onPageSizeChange={() => { console.log() }}
+            onPaginationChange={handlePaginationChange}
             totalCount={agents.count}
             disabled={isLoading}
+            pageProps={agentQueryParams}
           />
         </>
       )}
@@ -122,7 +119,7 @@ export const Agents = () => {
               })
             }
 
-            fetchData()
+            refetchAgents()
             onCloseModal()
           }}
         />

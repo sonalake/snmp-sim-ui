@@ -5,3 +5,8 @@ export interface Agent {
   description: string
   snmp_data_url: string
 }
+
+export interface AgentsQueryParams {
+  page: number
+  pageSize: number
+}
