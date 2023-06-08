@@ -6,12 +6,12 @@ import { useDetectUserConnection } from './hooks'
 import { AgentDetails, Agents, DeviceDetails, Devices, NoConnection, PageNotFound } from './pages'
 
 export const Router = () => {
-  const { isUserOnline } = useDetectUserConnection()
+  const { isBrowserOnline } = useDetectUserConnection()
 
   return (
     <BrowserRouter>
       <ErrorBoundary>
-        {isUserOnline ? (
+        {isBrowserOnline ? (
           <Routes>
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:id" element={<AgentDetails />} />
