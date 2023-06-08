@@ -13,14 +13,13 @@ export const Router = () => {
       <ErrorBoundary>
         {isUserOnline ? (
           <Routes>
-            <Route path="/" element={<Navigate to="/agents" />} />
-
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:id" element={<AgentDetails />} />
 
             <Route path="/devices" element={<Devices />} />
             <Route path="/devices/:id" element={<DeviceDetails />} />
 
+            <Route path="/" element={<Navigate to="/agents" />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         ) : (
