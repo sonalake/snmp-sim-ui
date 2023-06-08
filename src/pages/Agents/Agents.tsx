@@ -7,7 +7,6 @@ import { Alert, DataTable, Form, LoadingIndicator, Modal, PageWrapper, Paginatio
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
-import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Agent, ResourceResponse } from '../../models'
 
@@ -15,9 +14,7 @@ const resource = 'agents'
 
 export const Agents = () => {
   const [selectedAgents, setSelectedAgents] = useState<Array<Row<Agent>>>([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(PAGINATION_DEFAULT_PAGE_SIZE_OPTION)
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedAgent, setSelectedAgent] = useState<Agent>()
 
   const {
@@ -25,15 +22,21 @@ export const Agents = () => {
     isLoading,
     error,
     fetchData,
-  } = useFetch<ResourceResponse>(`/api/agents?page=${currentPage}&page_size=${pageSize}`)
+  } = useFetch<ResourceResponse>(`/api/agents?page=${1}&page_size=${10}`)
 
   const onCloseModal = useCallback(() => {
-    if (isModalVisible) {
-      setIsModalVisible(false)
-    } else if (selectedAgent) {
-      setSelectedAgent(undefined)
-    }
-  }, [isModalVisible, selectedAgent])
+    setIsModalOpen(false)
+    setSelectedAgent(undefined)
+  }, [])
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleSelectAgent = useCallback((agent: Agent) => {
+    setSelectedAgent(agent)
+    openModal()
+  }, [])
 
   const agentActionsColumn: ColumnDef<Agent> = useMemo(
     () => ({
@@ -41,12 +44,12 @@ export const Agents = () => {
       cell: ({ row }) => (
         <div className="flex flex-row">
           <Tooltip content="Update agent">
-            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedAgent(row.original)} />
+            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => handleSelectAgent(row.original)} />
           </Tooltip>
         </div>
       ),
     }),
-    [],
+    [handleSelectAgent],
   )
 
   if (error) {
@@ -66,7 +69,7 @@ export const Agents = () => {
           <h1 className="text-5xl font-semibold mb-7">Agents</h1>
 
           <div className="flex items-center gap-1 justify-end mb-5">
-            <Button color="info" onClick={() => setIsModalVisible(true)}>
+            <Button color="info" onClick={openModal}>
               <HiPlusCircle className="mr-2 h-5 w-5" /> Add
             </Button>
 
@@ -91,47 +94,39 @@ export const Agents = () => {
           />
 
           <Pagination
-            currentPage={currentPage}
-            onPageChange={(page) => setCurrentPage(page)}
-            pageSize={pageSize}
-            onPageSizeChange={(size) => setPageSize(size)}
+            onPageChange={() => { console.log() }}
+            onPageSizeChange={() => { console.log() }}
             totalCount={agents.count}
             disabled={isLoading}
           />
         </>
       )}
 
-      {(isModalVisible || !!selectedAgent) && (
-        <Modal
-          isVisible={isModalVisible || !!selectedAgent}
-          title={selectedAgent ? 'Update agent' : 'Add new agent'}
-          onClose={onCloseModal}
-        >
-          <Form
-            formFields={agentFormFields}
-            initialValues={selectedAgent || agentInitialValues}
-            onSubmit={async (formValues) => {
-              if (selectedAgent) {
-                await handleResource({
-                  resource,
-                  operation: 'put',
-                  id: selectedAgent.id,
-                  body: formValues,
-                })
-              } else {
-                await handleResource({
-                  resource,
-                  operation: 'post',
-                  body: formValues,
-                })
-              }
+      <Modal isVisible={isModalOpen} title={selectedAgent ? 'Update agent' : 'Add new agent'} onClose={onCloseModal}>
+        <Form
+          formFields={agentFormFields}
+          initialValues={selectedAgent || agentInitialValues}
+          onSubmit={async (formValues) => {
+            if (selectedAgent) {
+              await handleResource({
+                resource,
+                operation: 'put',
+                id: selectedAgent.id,
+                body: formValues,
+              })
+            } else {
+              await handleResource({
+                resource,
+                operation: 'post',
+                body: formValues,
+              })
+            }
 
-              fetchData()
-              onCloseModal()
-            }}
-          />
-        </Modal>
-      )}
+            fetchData()
+            onCloseModal()
+          }}
+        />
+      </Modal>
     </PageWrapper>
   )
 }
