@@ -8,6 +8,7 @@ import { handleResource } from '../../components/DataTable/tableColumns/handleRe
 import { deviceFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
 import { Device } from '../../models'
+import { PageTitle } from '../../components/PageTitle/PageTitle'
 
 const resource = 'devices'
 
@@ -29,7 +30,7 @@ export const DeviceDetails = () => {
 
       {device && (
         <div className="pb-32">
-          <h1 className="text-5xl font-semibold mb-7">{device.name}</h1>
+          <PageTitle>{device.name}</PageTitle>
 
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">

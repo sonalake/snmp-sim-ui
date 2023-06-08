@@ -10,6 +10,7 @@ import { agentFormFields, agentInitialValues } from '../../components/Form/formF
 import { Agent, AgentsQueryParams } from '../../models'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
+import { PageTitle } from '../../components/PageTitle/PageTitle'
 
 const resource = 'agents'
 
@@ -63,7 +64,7 @@ export const Agents = () => {
 
       {!!agents && (
         <>
-          <h1 className="text-5xl font-semibold mb-7">Agents</h1>
+          <PageTitle>Agents</PageTitle>
 
           <div className="flex items-center gap-1 justify-end mb-5">
             <Button color="info" onClick={openModal}>

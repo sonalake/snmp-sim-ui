@@ -7,6 +7,7 @@ import { handleResource } from '../../components/DataTable/tableColumns/handleRe
 import { agentFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
 import { Agent } from '../../models'
+import { PageTitle } from '../../components/PageTitle/PageTitle'
 
 const resource = 'agents'
 
@@ -26,7 +27,7 @@ export const AgentDetails = () => {
 
       {agent && (
         <div className="pb-32">
-          <h1 className="text-5xl font-semibold mb-7">{agent.name}</h1>
+          <PageTitle>{agent.name}</PageTitle>
 
           <div className="flex flex-row items-center justify-end mb-5">
             <Button

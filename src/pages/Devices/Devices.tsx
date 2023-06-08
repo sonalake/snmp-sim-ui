@@ -10,6 +10,7 @@ import { deviceFormFields, deviceInitialValues } from '../../components/Form/for
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Device, ResourceResponse } from '../../models'
+import { PageTitle } from '../../components/PageTitle/PageTitle'
 
 const resource = 'devices'
 
@@ -80,7 +81,7 @@ export const Devices = () => {
 
       {!!devices && (
         <>
-          <h1 className="text-5xl font-semibold mb-7">Devices</h1>
+          <PageTitle>Devices</PageTitle>
 
           <div className="flex items-center gap-1 justify-end mb-5">
             <Button color="info" onClick={() => setIsModalVisible(true)}>
@@ -93,9 +94,8 @@ export const Devices = () => {
                 toast(
                   <Alert
                     color="success"
-                    message={`${
-                      selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
-                    } - to be implemented`}
+                    message={`${selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
+                      } - to be implemented`}
                   />,
                 )
               }
@@ -110,9 +110,8 @@ export const Devices = () => {
                 toast(
                   <Alert
                     color="success"
-                    message={`${
-                      selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
-                    } - to be implemented`}
+                    message={`${selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
+                      } - to be implemented`}
                   />,
                 )
               }
