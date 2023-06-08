@@ -24,6 +24,10 @@ export const Agents = () => {
     fetchData,
   } = useFetch<ResourceResponse>(`/api/agents?page=${1}&page_size=${10}`)
 
+  if (error) {
+    throw error
+  }
+
   const onCloseModal = useCallback(() => {
     setIsModalOpen(false)
     setSelectedAgent(undefined)
@@ -52,13 +56,9 @@ export const Agents = () => {
     [handleSelectAgent],
   )
 
-  if (error) {
-    throw error
-  }
-
   return (
     <PageWrapper>
-      {isLoading && !agents?.items?.length && (
+      {isLoading && (
         <div className="mt-64">
           <LoadingIndicator />
         </div>
