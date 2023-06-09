@@ -3,6 +3,7 @@ import React from 'react'
 import { HiOutlineArrowLeft } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import { PageWrapper, StatusDisplay } from '../../components'
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 
 export const PageNotFound = () => (
   <PageWrapper>
@@ -13,7 +14,7 @@ export const PageNotFound = () => (
       extraContent={
         <Link to="/">
           <Button>
-            <HiOutlineArrowLeft className="mr-2 h-5 w-5" />
+            <ButtonIcon as={HiOutlineArrowLeft} />
             Back
           </Button>
         </Link>

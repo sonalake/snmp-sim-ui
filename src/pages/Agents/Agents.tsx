@@ -11,6 +11,7 @@ import { Agent, AgentsQueryParams } from '../../models'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 
 const resource = 'agents'
 
@@ -68,7 +69,8 @@ export const Agents = () => {
 
           <div className="flex items-center gap-1 justify-end mb-5">
             <Button color="info" onClick={openModal}>
-              <HiPlusCircle className="mr-2 h-5 w-5" /> Add
+              <ButtonIcon as={HiPlusCircle} />
+              Add
             </Button>
 
             <Button
@@ -79,7 +81,8 @@ export const Agents = () => {
                 toast(<Alert color="success" message={'The selected agents were deleted! - to be implemented'} />)
               }
             >
-              <HiTrash className="mr-2 h-5 w-5" /> Delete
+              <ButtonIcon as={HiTrash} />
+              Delete
             </Button>
           </div>
 

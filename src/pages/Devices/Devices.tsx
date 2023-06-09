@@ -11,6 +11,7 @@ import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { useFetch } from '../../hooks'
 import { Device, ResourceResponse } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 
 const resource = 'devices'
 
@@ -85,7 +86,8 @@ export const Devices = () => {
 
           <div className="flex items-center gap-1 justify-end mb-5">
             <Button color="info" onClick={() => setIsModalVisible(true)}>
-              <HiPlusCircle className="mr-2 h-5 w-5" /> Add
+              <ButtonIcon as={HiPlusCircle} />
+              Add
             </Button>
 
             <Button
@@ -100,7 +102,7 @@ export const Devices = () => {
                 )
               }
             >
-              <HiPlay className="mr-2 h-5 w-5" />
+              <ButtonIcon as={HiPlay} />
               Start
             </Button>
 
@@ -116,7 +118,8 @@ export const Devices = () => {
                 )
               }
             >
-              <HiStop className="mr-2 h-5 w-5" /> Stop
+              <ButtonIcon as={HiStop} />
+              Stop
             </Button>
 
             <Button
@@ -127,7 +130,8 @@ export const Devices = () => {
                 toast(<Alert color="success" message={'The selected devices were deleted! - to be implemented'} />)
               }
             >
-              <HiTrash className="mr-2 h-5 w-5" /> Delete
+              <ButtonIcon as={HiTrash} />
+              Delete
             </Button>
           </div>
 
