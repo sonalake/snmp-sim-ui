@@ -60,7 +60,7 @@ export const Devices = () => {
           )}
 
           <Tooltip content="Update device">
-            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setSelectedDevice(row.original)} />
+            <ButtonIcon as={HiOutlinePencil} onClick={() => setSelectedDevice(row.original)} />
           </Tooltip>
         </div>
       ),
