@@ -1,7 +1,7 @@
 import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
 import React from 'react'
 import { HiChartPie, HiDocumentReport } from 'react-icons/hi'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import SidebarLogo from '../../assets/images/logo.png'
 
 const { Logo, Items, Item, ItemGroup } = FlowbiteSidebar
@@ -21,6 +21,9 @@ const sidebarItems = [
 
 export const Sidebar = () => {
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleNavigate = (url: string) => navigate(url)
 
   return (
     <FlowbiteSidebar aria-label="Sidebar menu">
@@ -31,7 +34,7 @@ export const Sidebar = () => {
       <Items>
         <ItemGroup>
           {sidebarItems.map(({ label, url, icon }) => (
-            <Item key={label} href={url} icon={icon} active={location.pathname.includes(url)}>
+            <Item key={label} onClick={() => handleNavigate(url)} icon={icon} active={location.pathname.includes(url)}>
               {label}
             </Item>
           ))}
