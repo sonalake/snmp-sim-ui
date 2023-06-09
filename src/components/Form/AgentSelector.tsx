@@ -66,7 +66,7 @@ export const AgentSelector: FC<{
       </div>
 
       {isModalVisible && (
-        <Modal isVisible={isModalVisible} title="Add new agent" onClose={() => setIsModalVisible(false)}>
+        <Modal isOpen={isModalVisible} title="Add new agent" onClose={() => setIsModalVisible(false)}>
           <Form
             formFields={agentFormFields}
             initialValues={agentInitialValues}

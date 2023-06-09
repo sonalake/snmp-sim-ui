@@ -154,7 +154,7 @@ export const Devices = () => {
 
           {(isModalVisible || !!selectedDevice) && agents?.items?.length && (
             <Modal
-              isVisible={isModalVisible || !!selectedDevice}
+              isOpen={isModalVisible || !!selectedDevice}
               title={selectedDevice ? 'Update device' : 'Add new device'}
               onClose={onCloseModal}
             >

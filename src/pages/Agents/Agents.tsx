@@ -103,7 +103,7 @@ export const Agents = () => {
         </>
       )}
 
-      <Modal isVisible={isModalOpen} title={selectedAgent ? 'Update agent' : 'Add new agent'} onClose={onCloseModal}>
+      <Modal isOpen={isModalOpen} title={selectedAgent ? 'Update agent' : 'Add new agent'} onClose={onCloseModal}>
         <Form
           formFields={agentFormFields}
           initialValues={selectedAgent || agentInitialValues}
