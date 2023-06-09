@@ -2,6 +2,7 @@ import { AxiosError } from 'axios'
 import React, { FC, ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { errorToast } from '../components/Toasts/toasts'
 
 interface QueryProviderProps {
   children: ReactNode
@@ -27,10 +28,8 @@ const queryConfig = {
       },
     },
     mutations: {
-      onError: (error: unknown) => {
-        if (error instanceof AxiosError) {
-          console.error(error)
-        }
+      onError: (err: unknown) => {
+        errorToast(err)
       },
     },
   },
