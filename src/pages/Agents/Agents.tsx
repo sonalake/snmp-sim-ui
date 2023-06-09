@@ -3,17 +3,14 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlusCircle, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, DataTable, Form, LoadingIndicator, Modal, PageProps, PageWrapper, Pagination } from '../../components'
+import { Alert, DataTable, LoadingIndicator, PageProps, PageWrapper, Pagination } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
-import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
-import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
 import { Agent, AgentsQueryParams } from '../../models'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
-
-const resource = 'agents'
+import { AgentsModal } from './AgentsModal'
 
 export const Agents = () => {
   const [selectedAgents, setSelectedAgents] = useState<Array<Row<Agent>>>([])
@@ -25,7 +22,7 @@ export const Agents = () => {
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
   })
 
-  const { data: agents, isLoading, refetch: refetchAgents } = useFetchAgents(agentQueryParams)
+  const { data: agents, isLoading } = useFetchAgents(agentQueryParams)
 
   const openModal = () => setIsModalOpen(true)
 
@@ -103,31 +100,7 @@ export const Agents = () => {
         </>
       )}
 
-      <Modal isOpen={isModalOpen} title={selectedAgent ? 'Update agent' : 'Add new agent'} onClose={onCloseModal}>
-        <Form
-          formFields={agentFormFields}
-          initialValues={selectedAgent || agentInitialValues}
-          onSubmit={async (formValues) => {
-            if (selectedAgent) {
-              await handleResource({
-                resource,
-                operation: 'put',
-                id: selectedAgent.id,
-                body: formValues,
-              })
-            } else {
-              await handleResource({
-                resource,
-                operation: 'post',
-                body: formValues,
-              })
-            }
-
-            refetchAgents()
-            onCloseModal()
-          }}
-        />
-      </Modal>
+      <AgentsModal isOpen={isModalOpen} onClose={onCloseModal} selectedAgent={selectedAgent} />
     </PageWrapper>
   )
 }
