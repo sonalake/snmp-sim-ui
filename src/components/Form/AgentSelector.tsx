@@ -6,6 +6,7 @@ import { useFetch } from '../../hooks'
 import { Agent, FormField, ResourceResponse } from '../../models'
 import { handleResource } from '../DataTable/tableColumns/handleResource'
 import { Modal } from '../Modal/Modal'
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon'
 import { Form } from './Form'
 import { agentFormFields, agentInitialValues } from './formFields'
 
@@ -40,7 +41,7 @@ export const AgentSelector: FC<{
         </div>
 
         <Tooltip content="Add new agent">
-          <HiOutlinePlusCircle className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setIsModalVisible(true)} />
+          <ButtonIcon as={HiOutlinePlusCircle} onClick={() => setIsModalVisible(true)} />
         </Tooltip>
       </div>
 

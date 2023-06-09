@@ -9,6 +9,7 @@ import { deviceFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
 import { Device } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 
 const resource = 'devices'
 
@@ -43,7 +44,8 @@ export const DeviceDetails = () => {
                     toast(<Alert color="success" message="Device running! - to be implemented" />)
                   }}
                 >
-                  <HiPlay className="mr-2 h-5 w-5 cursor-pointer" /> Start
+                  <ButtonIcon as={HiPlay} />
+                  Start
                 </Button>
               ) : (
                 <Button
@@ -54,7 +56,8 @@ export const DeviceDetails = () => {
                     toast(<Alert color="success" message="Device stopped! - to be implemented" />)
                   }}
                 >
-                  <HiStop className="mr-2 h-5 w-5 cursor-pointer" /> Stop
+                  <ButtonIcon as={HiStop} />
+                  Stop
                 </Button>
               )}
 
@@ -77,7 +80,8 @@ export const DeviceDetails = () => {
                 }
               }}
             >
-              <HiTrash className="mr-2 h-5 w-5 cursor-pointer" /> Delete
+              <ButtonIcon as={HiTrash} />
+              Delete
             </Button>
           </div>
 

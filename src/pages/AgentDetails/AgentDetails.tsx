@@ -8,6 +8,7 @@ import { agentFormFields } from '../../components/Form/formFields'
 import { useFetch } from '../../hooks'
 import { Agent } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 
 const resource = 'agents'
 
@@ -44,7 +45,8 @@ export const AgentDetails = () => {
                 }
               }}
             >
-              <HiTrash className="mr-2 h-5 w-5 cursor-pointer" /> Delete
+              <ButtonIcon as={HiTrash} />
+              Delete
             </Button>
           </div>
 

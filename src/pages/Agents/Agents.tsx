@@ -44,7 +44,7 @@ export const Agents = () => {
       cell: ({ row }) => (
         <div className="flex flex-row">
           <Tooltip content="Update agent">
-            <HiOutlinePencil className="mr-2 h-5 w-5 cursor-pointer" onClick={() => handleSelectAgent(row.original)} />
+            <ButtonIcon as={HiOutlinePencil} onClick={() => handleSelectAgent(row.original)} />
           </Tooltip>
         </div>
       ),
