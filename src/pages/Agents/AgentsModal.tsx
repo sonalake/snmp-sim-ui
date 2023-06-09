@@ -6,6 +6,7 @@ import { Agent } from '../../models'
 import { agentFormFields, agentInitialValues } from '../../components/Form/formFields'
 import { createAgent, updateAgent } from '../../api/agents/agents.api'
 import { QueryKey } from '../../api/query-keys'
+import { successToast } from '../../components/Toasts/toasts'
 
 interface AgentsModalProps {
   isOpen: boolean
@@ -23,6 +24,7 @@ export const AgentsModal: FC<AgentsModalProps> = ({ isOpen, onClose, selectedAge
   const { mutateAsync: createNewAgent } = useMutation({
     mutationFn: (agent: Omit<Agent, 'id'>) => createAgent(agent),
     onSuccess: () => {
+      successToast('Agent created!')
       refetchAgentsAndClose()
     },
   })
@@ -30,6 +32,7 @@ export const AgentsModal: FC<AgentsModalProps> = ({ isOpen, onClose, selectedAge
   const { mutateAsync: updateExistingAgent } = useMutation({
     mutationFn: (agent: Agent) => updateAgent(agent),
     onSuccess: () => {
+      successToast('Agent updated!')
       refetchAgentsAndClose()
     },
   })
