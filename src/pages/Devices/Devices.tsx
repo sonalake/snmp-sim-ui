@@ -3,23 +3,21 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, DataTable, Form, LoadingIndicator, Modal, PageProps, PageWrapper, Pagination } from '../../components'
+import { Alert, DataTable, LoadingIndicator, PageProps, PageWrapper, Pagination } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
-import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
-import { deviceFormFields, deviceInitialValues } from '../../components/Form/formFields'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
-import { useFetch } from '../../hooks'
-import { Device, DevicesQueryParams, ResourceResponse } from '../../models'
+import { Device, DevicesQueryParams } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
-
-const resource = 'devices'
+import { useFetchAgents } from '../../api/agents/agents.api'
+import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
   const [selectedDevice, setSelectedDevice] = useState<Device>()
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
 
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
@@ -27,17 +25,19 @@ export const Devices = () => {
   })
   const handlePaginationChange = (pageProps: PageProps) => setDeviceQueryParams(pageProps)
 
-  const { resource: agents } = useFetch<ResourceResponse>(`/api/agents`)
+  const { data: agents, isLoading: isAgentsLoading } = useFetchAgents()
+  const { data: devices, isLoading: isDevicesLoading } = useFetchDevices(deviceQueryParams)
 
-  const { data: devices, isLoading } = useFetchDevices(deviceQueryParams)
-
+  const isLoading = isAgentsLoading || isDevicesLoading
   const onCloseModal = useCallback(() => {
-    if (isModalVisible) {
-      setIsModalVisible(false)
-    } else if (selectedDevice) {
-      setSelectedDevice(undefined)
-    }
-  }, [isModalVisible, selectedDevice])
+    setIsModalOpen(false)
+    setSelectedDevice(undefined)
+  }, [])
+
+  const handleSelectDevice = (device: Device) => {
+    setSelectedDevice(device)
+    openModal()
+  }
 
   const devicesActionsColumn: ColumnDef<Device> = useMemo(
     () => ({
@@ -61,7 +61,7 @@ export const Devices = () => {
           )}
 
           <Tooltip content="Update device">
-            <ButtonIcon as={HiOutlinePencil} onClick={() => setSelectedDevice(row.original)} />
+            <ButtonIcon as={HiOutlinePencil} onClick={() => handleSelectDevice(row.original)} />
           </Tooltip>
         </div>
       ),
@@ -72,7 +72,7 @@ export const Devices = () => {
   return (
     <PageWrapper>
       <>
-        {isLoading && !devices?.items?.length && (
+        {isLoading && (
           <div className="mt-64">
             <LoadingIndicator />
           </div>
@@ -85,7 +85,7 @@ export const Devices = () => {
             <PageTitle>Devices</PageTitle>
 
             <div className="flex items-center gap-1 justify-end mb-5">
-              <Button color="info" onClick={() => setIsModalVisible(true)}>
+              <Button color="info" onClick={() => openModal()}>
                 <ButtonIcon as={HiPlusCircle} />
                 Add
               </Button>
@@ -145,58 +145,12 @@ export const Devices = () => {
 
             <Pagination
               onPaginationChange={handlePaginationChange}
-              totalCount={agents.count}
+              totalCount={devices.count}
               disabled={isLoading}
               pageProps={deviceQueryParams}
             />
-            {/* 
-            <Pagination
-              currentPage={currentPage}
-              onPageChange={(page) => setCurrentPage(page)}
-              pageSize={pageSize}
-              onPageSizeChange={(size) => setPageSize(size)}
-              totalCount={devices.count}
-              disabled={isLoading}
-            /> */}
 
-            {(isModalVisible || !!selectedDevice) && agents?.items?.length && (
-              <Modal
-                isOpen={isModalVisible || !!selectedDevice}
-                title={selectedDevice ? 'Update device' : 'Add new device'}
-                onClose={onCloseModal}
-              >
-                <Form
-                  formFields={deviceFormFields}
-                  initialValues={
-                    selectedDevice || {
-                      ...deviceInitialValues,
-                      agent: { id: agents.items[0].id },
-                    }
-                  }
-                  snmpInputs
-                  onSubmit={async (formValues) => {
-                    if (selectedDevice) {
-                      await handleResource({
-                        resource,
-                        operation: 'put',
-                        id: selectedDevice.id,
-                        body: formValues,
-                      })
-                    } else {
-                      await handleResource({
-                        resource,
-                        operation: 'post',
-                        body: formValues,
-                      })
-                    }
-
-                    fetchData()
-
-                    onCloseModal()
-                  }}
-                />
-              </Modal>
-            )}
+            <DevicesModal isOpen={isModalOpen} onClose={onCloseModal} selectedDevice={selectedDevice} agents={agents} />
           </>
         )}
       </>
