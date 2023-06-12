@@ -6,11 +6,12 @@ interface ModalProps {
   title: string
   isOpen: boolean
   onClose: () => void
+  id?: string
 }
 
-export const Modal: FC<ModalProps> = ({ children, title, isOpen, onClose }) => {
+export const Modal: FC<ModalProps> = ({ children, title, isOpen, onClose, id }) => {
   return (
-    <FlowbiteModal show={isOpen} onClose={onClose}>
+    <FlowbiteModal show={isOpen} onClose={onClose} id={id}>
       <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
 
       <FlowbiteModal.Body>

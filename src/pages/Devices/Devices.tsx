@@ -87,7 +87,7 @@ export const Devices = () => {
             <PageTitle>Devices</PageTitle>
 
             <div className="flex items-center gap-1 justify-end mb-5">
-              <Button color="info" onClick={() => openModal()}>
+              <Button color="info" onClick={openModal}>
                 <ButtonIcon as={HiPlusCircle} />
                 Add
               </Button>

@@ -46,7 +46,12 @@ export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedD
   }
 
   return (
-    <Modal isOpen={isOpen && !!agents} title={selectedDevice ? 'Update device' : 'Add new device'} onClose={onClose}>
+    <Modal
+      isOpen={isOpen && !!agents}
+      title={selectedDevice ? 'Update device' : 'Add new device'}
+      onClose={onClose}
+      id="device-modal"
+    >
       <Form
         formFields={deviceFormFields}
         initialValues={
