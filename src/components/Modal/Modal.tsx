@@ -12,11 +12,15 @@ interface ModalProps {
 export const Modal: FC<ModalProps> = ({ children, title, isOpen, onClose, id }) => {
   return (
     <FlowbiteModal show={isOpen} onClose={onClose} id={id}>
-      <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
+      {isOpen &&
+        <>
+          <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
 
-      <FlowbiteModal.Body>
-        <div className="m-h-[70vh] overflow-scroll">{children}</div>
-      </FlowbiteModal.Body>
+          <FlowbiteModal.Body>
+            <div className="m-h-[70vh] overflow-scroll">{children}</div>
+          </FlowbiteModal.Body>
+        </>
+      }
     </FlowbiteModal>
   )
 }
