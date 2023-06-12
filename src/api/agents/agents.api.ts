@@ -5,7 +5,7 @@ import { baseApi } from '../api'
 import { QueryKey } from '../query-keys'
 import { HTTPRequestMethod } from '../api.model'
 
-export async function fetchAgents(queryParams: AgentsQueryParams): Promise<ResourceResponse> {
+async function fetchAgents(queryParams: AgentsQueryParams): Promise<ResourceResponse> {
   const params = {
     page: queryParams.page,
     page_size: queryParams.pageSize,
