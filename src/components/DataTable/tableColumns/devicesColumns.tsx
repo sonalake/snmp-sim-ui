@@ -3,6 +3,7 @@ import { Tooltip } from 'flowbite-react'
 import React from 'react'
 import { StatusIndicator, StyledLink } from '../..'
 import { Device } from '../../../models'
+import { LOCALHOST } from '../../../constants'
 
 export type DevicesColumns = Array<ColumnDef<Device>>
 
@@ -29,9 +30,9 @@ export const devicesColumns: DevicesColumns = [
   },
   {
     header: 'State',
-    accessorFn: (row) => row.snmp_host === '127.0.0.1',
+    accessorFn: (row) => row.snmp_host === LOCALHOST,
     cell: ({ row }) => {
-      const isMockActive = row.original.snmp_host === '127.0.0.1'
+      const isMockActive = row.original.snmp_host === LOCALHOST
 
       return <StatusIndicator title={isMockActive ? 'Running' : 'Stopped'} isActive={isMockActive} />
     },

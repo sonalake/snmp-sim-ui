@@ -44,7 +44,7 @@ export const Devices = () => {
       header: 'Actions',
       cell: ({ row }) => (
         <div className="flex flex-row">
-          {row.original.snmp_host !== '127.0.0.1' ? (
+          {row.original.snmp_host !== LOCALHOST ? (
             <Tooltip content="Start device">
               <ButtonIcon
                 as={HiPlay}
