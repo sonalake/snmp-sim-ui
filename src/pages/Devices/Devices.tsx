@@ -46,15 +46,17 @@ export const Devices = () => {
         <div className="flex flex-row">
           {row.original.snmp_host !== '127.0.0.1' ? (
             <Tooltip content="Start device">
-              <HiPlay
-                className="mr-2 h-5 w-5 cursor-pointer text-green-700"
+              <ButtonIcon
+                as={HiPlay}
+                className="text-green-700"
                 onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
               />
             </Tooltip>
           ) : (
             <Tooltip content="Stop device">
-              <HiStop
-                className="mr-2 h-5 w-5 cursor-pointer text-red-700"
+              <ButtonIcon
+                as={HiStop}
+                className="text-red-700"
                 onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
               />
             </Tooltip>
