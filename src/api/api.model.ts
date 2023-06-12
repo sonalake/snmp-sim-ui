@@ -4,3 +4,9 @@ export enum HTTPRequestMethod {
   PUT = 'put',
   DELETE = 'delete',
 }
+
+export interface MutateResourceConfig<T> {
+  method: HTTPRequestMethod
+  url: string
+  body: T
+}
