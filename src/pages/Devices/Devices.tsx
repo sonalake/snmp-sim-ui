@@ -5,7 +5,7 @@ import { HiOutlinePencil, HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-ic
 import { toast } from 'react-toastify'
 import { Alert, DataTable, LoadingIndicator, PageProps, PageWrapper, Pagination } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
-import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
+import { LOCALHOST, PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DevicesQueryParams } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
