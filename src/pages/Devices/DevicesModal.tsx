@@ -17,7 +17,7 @@ interface DevicesModalProps {
 export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedDevice, agents }) => {
   const queryClient = useQueryClient()
 
-  const refetchAgentsAndClose = async () => {
+  const refetchDevicesAndClose = async () => {
     await queryClient.invalidateQueries({ queryKey: QueryKey.DEVICES })
     onClose()
   }
@@ -26,7 +26,7 @@ export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedD
     mutationFn: (device: Omit<Device, 'id'>) => createDevice(device),
     onSuccess: () => {
       successToast('Device created!')
-      refetchAgentsAndClose()
+      refetchDevicesAndClose()
     },
   })
 
@@ -34,7 +34,7 @@ export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedD
     mutationFn: (device: Device) => updateDevice(device),
     onSuccess: () => {
       successToast('Device updated!')
-      refetchAgentsAndClose()
+      refetchDevicesAndClose()
     },
   })
 
