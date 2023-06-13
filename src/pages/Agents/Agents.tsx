@@ -86,11 +86,10 @@ export const Agents = () => {
               </Button>
             </div>
 
-            {/* @TODO: make DataTable properly generic and remove this casting */}
             <DataTable
               data={agents.items}
-              columns={agentsColumns.concat(agentActionsColumn) as []}
-              onSelection={(selectedRows) => setSelectedAgents(selectedRows as Array<Row<Agent>>)}
+              columns={agentsColumns.concat(agentActionsColumn)}
+              onSelection={(selectedRows) => setSelectedAgents(selectedRows)}
               isSelectable
             />
 

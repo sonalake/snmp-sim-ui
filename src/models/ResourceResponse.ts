@@ -1,7 +1,4 @@
-import { Agent } from './Agent'
-import { Device } from './Device'
-
-export interface ResourceResponse {
-  items: Agent[] | Device[]
+export interface ResourceResponse<T> {
+  items: T[]
   count: number
 }

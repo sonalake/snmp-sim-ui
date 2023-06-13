@@ -5,7 +5,7 @@ import { QueryKey } from '../query-keys'
 import { HTTPRequestMethod } from '../api.model'
 import { mutateResource } from '../helpers'
 
-async function fetchAgents(queryParams?: AgentsQueryParams): Promise<ResourceResponse> {
+async function fetchAgents(queryParams?: AgentsQueryParams): Promise<ResourceResponse<Agent>> {
   const params = {
     page: queryParams?.page,
     page_size: queryParams?.pageSize,

@@ -5,7 +5,7 @@ import { baseApi } from '../api'
 import { mutateResource } from '../helpers'
 import { HTTPRequestMethod } from '../api.model'
 
-async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceResponse> {
+async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceResponse<Device>> {
   const params = {
     page: queryParams.page,
     page_size: queryParams.pageSize,

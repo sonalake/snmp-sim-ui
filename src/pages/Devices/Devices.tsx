@@ -137,12 +137,11 @@ export const Devices = () => {
               </Button>
             </div>
 
-            {/* @TODO: make DataTable properly generic and remove these castings */}
             <DataTable
               data={devices.items}
-              columns={devicesColumns.concat(devicesActionsColumn) as Array<Row<Device>>}
+              columns={devicesColumns.concat(devicesActionsColumn)}
               isSelectable
-              onSelection={(selectedRows) => setSelectedDevices(selectedRows as Array<Row<Device>>)}
+              onSelection={(selectedRows) => setSelectedDevices(selectedRows)}
             />
 
             <Pagination
