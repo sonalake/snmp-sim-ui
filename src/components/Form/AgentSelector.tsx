@@ -20,7 +20,7 @@ export const AgentSelector: FC<{
 }> = ({ formItem: { name, label, required, validation }, value, touched, errors, handleChange, handleBlur }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const { resource: agents } = useFetch<ResourceResponse>(`/api/agents`)
+  const { resource: agents } = useFetch<ResourceResponse<Agent>>(`/api/agents`)
 
   const { values } = useFormikContext<Record<keyof FormField, string | Partial<Agent>>>()
 

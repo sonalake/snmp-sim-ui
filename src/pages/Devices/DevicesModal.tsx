@@ -3,7 +3,7 @@ import { FormikValues } from 'formik'
 import { useMutation, useQueryClient } from 'react-query'
 import { Form, Modal } from '../../components'
 import { deviceFormFields, deviceInitialValues } from '../../components/Form/formFields'
-import { Device, ResourceResponse } from '../../models'
+import { Agent, Device, ResourceResponse } from '../../models'
 import { successToast } from '../../components/Toasts/toasts'
 import { QueryKey } from '../../api/query-keys'
 import { createDevice, updateDevice } from '../../api/devices/devices.api'
@@ -12,7 +12,7 @@ interface DevicesModalProps {
   isOpen: boolean
   onClose: () => void
   selectedDevice?: Device
-  agents?: ResourceResponse
+  agents?: ResourceResponse<Agent>
 }
 export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedDevice, agents }) => {
   const queryClient = useQueryClient()
