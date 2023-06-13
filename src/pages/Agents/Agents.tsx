@@ -3,13 +3,14 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlusCircle, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, DataTable, LoadingIndicator, PageProps, PageWrapper, Pagination } from '../../components'
+import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { agentsColumns } from '../../components/DataTable/tableColumns/agentsColumns'
 import { Agent, AgentsQueryParams } from '../../models'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
+import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
 import { AgentsModal } from './AgentsModal'
 
 export const Agents = () => {
@@ -86,15 +87,12 @@ export const Agents = () => {
               </Button>
             </div>
 
-            <DataTable
-              data={agents.items}
+            <DataTableWithPatination<Agent>
+              items={agents.items}
               columns={agentsColumns.concat(agentActionsColumn)}
-              onSelection={(selectedRows) => setSelectedAgents(selectedRows)}
+              handleSelectItems={setSelectedAgents}
               isSelectable
-            />
-
-            <Pagination
-              onPaginationChange={handlePaginationChange}
+              handlePaginationChange={handlePaginationChange}
               totalCount={agents.count}
               disabled={isLoading}
               pageProps={agentQueryParams}

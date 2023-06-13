@@ -3,7 +3,7 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
-import { Alert, DataTable, LoadingIndicator, PageProps, PageWrapper, Pagination } from '../../components'
+import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { LOCALHOST, PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DevicesQueryParams } from '../../models'
@@ -11,6 +11,7 @@ import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
+import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
 import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
@@ -137,15 +138,12 @@ export const Devices = () => {
               </Button>
             </div>
 
-            <DataTable
-              data={devices.items}
+            <DataTableWithPatination<Device>
+              items={devices.items}
               columns={devicesColumns.concat(devicesActionsColumn)}
+              handleSelectItems={setSelectedDevices}
               isSelectable
-              onSelection={(selectedRows) => setSelectedDevices(selectedRows)}
-            />
-
-            <Pagination
-              onPaginationChange={handlePaginationChange}
+              handlePaginationChange={handlePaginationChange}
               totalCount={devices.count}
               disabled={isLoading}
               pageProps={deviceQueryParams}
