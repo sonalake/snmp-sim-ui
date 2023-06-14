@@ -5,10 +5,11 @@ import { useNavigate, useParams } from 'react-router'
 import { Form, LoadingIndicator, PageWrapper } from '../../components'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields } from '../../components/Form/formFields'
-import { useFetch } from '../../hooks'
-import { Agent } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
+import { useFetchAgent } from '../../api/agents/agents.api'
+import { QueryKey } from '../../api/query-keys'
+import { useInvalidateQuery } from '../../hooks/useInvalidateQuery'
 
 const resource = 'agents'
 
@@ -16,7 +17,9 @@ export const AgentDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const { resource: agent, isLoading, error, fetchData } = useFetch<Agent>(`/api/agents/${id}`)
+  const { data: agent, isLoading, error } = useFetchAgent(id)
+
+  const { invalidateQuery: refetchAgents } = useInvalidateQuery([QueryKey.AGENT, id])
 
   if (error) {
     throw error
@@ -61,7 +64,7 @@ export const AgentDetails = () => {
                 body: formValues,
               })
 
-              fetchData()
+              refetchAgents()
             }}
           />
         </div>
