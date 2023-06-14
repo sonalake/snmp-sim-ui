@@ -20,7 +20,7 @@ export const AgentDetails = () => {
 
   const { data: agent, isLoading } = useFetchAgent(id)
 
-  const refetchAgents = () => {
+  const refetchAgent = () => {
     invalidateQueries([QueryKey.AGENT, id])
   }
 
@@ -63,7 +63,7 @@ export const AgentDetails = () => {
                 body: formValues,
               })
 
-              refetchAgents()
+              refetchAgent()
             }}
           />
         </div>

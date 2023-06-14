@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { HiPlay, HiStop, HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { useQueryClient } from 'react-query'
 import { Alert, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { deviceFormFields } from '../../components/Form/formFields'
-import { useFetch } from '../../hooks'
-import { Device } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
+import { useFetchDevice } from '../../api/devices/devices.api'
+import { QueryKey } from '../../api/query-keys'
 
 const resource = 'devices'
 
@@ -18,9 +19,13 @@ export const DeviceDetails = () => {
 
   const { id } = useParams()
   const navigate = useNavigate()
+  const { invalidateQueries } = useQueryClient()
 
-  const { resource: device, isLoading, fetchData } = useFetch<Device>(`/api/devices/${id}`)
+  const { data: device, isLoading } = useFetchDevice(id)
 
+  const refetchDevice = () => {
+    invalidateQueries([QueryKey.DEVICE, id])
+  }
 
   return (
     <PageWrapper>
@@ -94,7 +99,7 @@ export const DeviceDetails = () => {
                 body: formValues,
               })
 
-              fetchData()
+              refetchDevice()
             }}
           />
         </div>

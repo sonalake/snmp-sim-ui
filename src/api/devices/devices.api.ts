@@ -5,6 +5,13 @@ import { baseApi } from '../api'
 import { mutateResource } from '../helpers'
 import { HTTPRequestMethod } from '../api.model'
 
+async function fetchDevice(deviceId?: string): Promise<Device> {
+  return baseApi.get(`/api/device/${deviceId}`).then((res) => res.data)
+}
+
+export const useFetchDevice = (deviceId?: string) =>
+  useQuery([QueryKey.DEVICE, deviceId], () => fetchDevice(deviceId), { enabled: !!deviceId })
+
 async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceResponse<Device>> {
   const params = {
     page: queryParams.page,
