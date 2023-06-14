@@ -19,11 +19,8 @@ export const DeviceDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const { resource: device, isLoading, error, fetchData } = useFetch<Device>(`/api/devices/${id}`)
+  const { resource: device, isLoading, fetchData } = useFetch<Device>(`/api/devices/${id}`)
 
-  if (error) {
-    throw error
-  }
 
   return (
     <PageWrapper>

@@ -18,14 +18,10 @@ export const AgentDetails = () => {
   const navigate = useNavigate()
   const { invalidateQueries } = useQueryClient()
 
-  const { data: agent, isLoading, error } = useFetchAgent(id)
+  const { data: agent, isLoading } = useFetchAgent(id)
 
   const refetchAgents = () => {
     invalidateQueries([QueryKey.AGENT, id])
-  }
-
-  if (error) {
-    throw error
   }
 
   return (

@@ -25,6 +25,7 @@ const queryConfig = {
         if (error instanceof AxiosError) {
           console.error(error)
         }
+        throw error
       },
     },
     mutations: {
