@@ -1,12 +1,13 @@
 import { Label, Select, Tooltip } from 'flowbite-react'
-import { FormikErrors, FormikHandlers, FormikTouched, useFormikContext } from 'formik'
+import { FormikErrors, FormikHandlers, FormikTouched, FormikValues, useFormikContext } from 'formik'
 import React, { FC, useEffect, useState } from 'react'
 import { HiOutlinePlusCircle } from 'react-icons/hi'
+import { useMutation } from 'react-query'
 import { Agent, FormField } from '../../models'
-import { handleResource } from '../DataTable/tableColumns/handleResource'
 import { Modal } from '../Modal/Modal'
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon'
-import { useFetchAgents } from '../../api/agents/agents.api'
+import { createAgent, useFetchAgents } from '../../api/agents/agents.api'
+import { successToast } from '../Toasts/toasts'
 import { Form } from './Form'
 import { agentFormFields, agentInitialValues } from './formFields'
 
@@ -18,7 +19,9 @@ export const AgentSelector: FC<{
   handleChange: FormikHandlers['handleChange']
   handleBlur: FormikHandlers['handleBlur']
 }> = ({ formItem: { name, label, required, validation }, value, touched, errors, handleChange, handleBlur }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
   const { data: agents } = useFetchAgents()
 
@@ -32,6 +35,19 @@ export const AgentSelector: FC<{
     }
   }, [agents?.items, value, values])
 
+  const { mutateAsync: createNewAgent } = useMutation({
+    mutationFn: (agent: Omit<Agent, 'id'>) => createAgent(agent),
+    onSuccess: () => {
+      successToast('Agent created!')
+      closeModal()
+    },
+  })
+
+  const handleSubmitAndCloseModal = async (formValues: FormikValues) => {
+    const newAgentValues = formValues as unknown as Omit<Agent, 'id'>
+    createNewAgent(newAgentValues)
+  }
+
   return (
     <div className="m-1">
       <div className="mb-2 flex items-center gap-1">
@@ -41,7 +57,7 @@ export const AgentSelector: FC<{
         </div>
 
         <Tooltip content="Add new agent">
-          <ButtonIcon as={HiOutlinePlusCircle} onClick={() => setIsModalVisible(true)} />
+          <ButtonIcon as={HiOutlinePlusCircle} onClick={openModal} />
         </Tooltip>
       </div>
 
@@ -66,21 +82,9 @@ export const AgentSelector: FC<{
         </Select>
       </div>
 
-      {isModalVisible && (
-        <Modal isOpen={isModalVisible} title="Add new agent" onClose={() => setIsModalVisible(false)}>
-          <Form
-            formFields={agentFormFields}
-            initialValues={agentInitialValues}
-            onSubmit={async (formValues) => {
-              await handleResource({
-                resource: 'agents',
-                operation: 'post',
-                body: formValues,
-              })
-
-              setIsModalVisible(false)
-            }}
-          />
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} title="Add new agent" onClose={closeModal}>
+          <Form formFields={agentFormFields} initialValues={agentInitialValues} onSubmit={handleSubmitAndCloseModal} />
         </Modal>
       )}
     </div>
