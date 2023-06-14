@@ -21,7 +21,9 @@ async function fetchAgents(queryParams?: AgentsQueryParams): Promise<ResourceRes
 }
 
 export const useFetchAgents = (queryParams?: AgentsQueryParams) =>
-  useQuery([QueryKey.AGENTS, queryParams?.page, queryParams?.pageSize], () => fetchAgents(queryParams))
+  useQuery([QueryKey.AGENTS, { page: queryParams?.page, pageSize: queryParams?.pageSize }], () =>
+    fetchAgents(queryParams),
+  )
 
 export function createAgent(agent: Omit<Agent, 'id'>): Promise<Agent> {
   return mutateResource<Omit<Agent, 'id'>, Agent>({ method: HTTPRequestMethod.POST, url: '/api/agents', body: agent })

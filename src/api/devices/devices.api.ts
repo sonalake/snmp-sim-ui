@@ -21,7 +21,9 @@ async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceRe
 }
 
 export const useFetchDevices = (queryParams: DevicesQueryParams) =>
-  useQuery([QueryKey.DEVICES, queryParams.page, queryParams.pageSize], () => fetchDevices(queryParams))
+  useQuery([QueryKey.DEVICES, { page: queryParams.page, pageSize: queryParams.pageSize }], () =>
+    fetchDevices(queryParams),
+  )
 
 export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
   return mutateResource<Omit<Device, 'id'>, Device>({

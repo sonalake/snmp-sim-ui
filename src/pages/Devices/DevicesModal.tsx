@@ -15,10 +15,10 @@ interface DevicesModalProps {
   agents?: ResourceResponse<Agent>
 }
 export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedDevice, agents }) => {
-  const { invalidateQueries } = useQueryClient()
+  const queryCache = useQueryClient()
 
   const refetchDevicesAndClose = async () => {
-    await invalidateQueries({ queryKey: QueryKey.DEVICES })
+    await queryCache.invalidateQueries({ queryKey: [QueryKey.DEVICES] })
     onClose()
   }
 

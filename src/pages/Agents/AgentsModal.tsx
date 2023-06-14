@@ -14,10 +14,10 @@ interface AgentsModalProps {
   selectedAgent?: Agent
 }
 export const AgentsModal: FC<AgentsModalProps> = ({ isOpen, onClose, selectedAgent }) => {
-  const { invalidateQueries } = useQueryClient()
+  const queryCache = useQueryClient()
 
   const refetchAgentsAndClose = async () => {
-    await invalidateQueries({ queryKey: QueryKey.AGENTS })
+    await queryCache.invalidateQueries({ queryKey: [QueryKey.AGENTS] })
     onClose()
   }
 
