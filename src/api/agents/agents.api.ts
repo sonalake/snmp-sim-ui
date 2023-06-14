@@ -5,6 +5,13 @@ import { QueryKey } from '../query-keys'
 import { HTTPRequestMethod } from '../api.model'
 import { mutateResource } from '../helpers'
 
+async function fetchAgent(agentId?: string): Promise<Agent> {
+  return baseApi.get(`/api/agents/${agentId}`).then((res) => res.data)
+}
+
+export const useFetchAgent = (agentId?: string) =>
+  useQuery([QueryKey.AGENT, agentId], () => fetchAgent(agentId), { enabled: !!agentId })
+
 async function fetchAgents(queryParams?: AgentsQueryParams): Promise<ResourceResponse<Agent>> {
   const params = {
     page: queryParams?.page,
