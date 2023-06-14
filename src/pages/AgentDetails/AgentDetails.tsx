@@ -24,18 +24,14 @@ export const AgentDetails = () => {
     invalidateQueries([QueryKey.AGENTS])
   }
 
-  const { mutateAsync: removeAgentAndRedirect } = useMutation({
-    mutationFn: (agentId: string) => deleteAgent(agentId),
+  const { mutateAsync: deleteAgentAndRedirect } = useMutation({
+    mutationFn: id ? () => deleteAgent(id) : undefined,
     onSuccess: () => {
       successToast('Agent deleted!')
       refetchAgents()
       navigate('/agents', { replace: true })
     },
   })
-
-  const deleteAgentAndRedirect = () => {
-    id && removeAgentAndRedirect(id)
-  }
 
   const { mutateAsync: updateExistingAgent } = useMutation({
     mutationFn: (updatedAgent: Agent) => updateAgent(updatedAgent),
@@ -45,6 +41,7 @@ export const AgentDetails = () => {
   })
 
   const handleSubmit = (formValues: FormikValues) => {
+    // TODO: formi should be generic
     const agentValues = formValues as unknown as Agent
     updateExistingAgent(agentValues)
   }

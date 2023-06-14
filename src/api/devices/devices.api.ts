@@ -38,3 +38,7 @@ export function updateDevice(device: Device): Promise<Device> {
     body: device,
   })
 }
+
+export function deleteDevice(deviceId: string): Promise<Device> {
+  return mutateResource<Device, Device>({ method: HTTPRequestMethod.DELETE, url: `/api/devices/${deviceId}` })
+}

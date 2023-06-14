@@ -3,16 +3,16 @@ import React, { useState } from 'react'
 import { HiPlay, HiStop, HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
+import { FormikValues } from 'formik'
 import { Alert, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
-import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
-import { useFetchDevice } from '../../api/devices/devices.api'
+import { deleteDevice, updateDevice, useFetchDevice } from '../../api/devices/devices.api'
 import { QueryKey } from '../../api/query-keys'
-
-const resource = 'devices'
+import { successToast } from '../../components/Toasts/toasts'
+import { Device } from '../../models'
 
 export const DeviceDetails = () => {
   const [isRunning, setIsRunning] = useState(false)
@@ -23,8 +23,29 @@ export const DeviceDetails = () => {
 
   const { data: device, isLoading } = useFetchDevice(id)
 
-  const refetchDevice = () => {
-    invalidateQueries([QueryKey.DEVICE, id])
+  const refetchDevices = () => {
+    invalidateQueries([QueryKey.DEVICES])
+  }
+
+  const { mutateAsync: deleteDeviceAndRedirect } = useMutation({
+    mutationFn: id ? () => deleteDevice(id) : undefined,
+    onSuccess: () => {
+      successToast('Device deleted!')
+      refetchDevices()
+      navigate('/devices', { replace: true })
+    },
+  })
+
+  const { mutateAsync: updateExistingDevice } = useMutation({
+    mutationFn: (updatedDevice: Device) => updateDevice(updatedDevice),
+    onSuccess: () => {
+      successToast('Device updated!')
+    },
+  })
+
+  const handleSubmit = (formValues: FormikValues) => {
+    const deviceValues = formValues as unknown as Device
+    updateExistingDevice(deviceValues)
   }
 
   return (
@@ -72,13 +93,7 @@ export const DeviceDetails = () => {
               color="failure"
               onClick={async () => {
                 if (confirm('Delete device?')) {
-                  await handleResource({
-                    resource,
-                    operation: 'delete',
-                    id,
-                  })
-
-                  navigate('/devices', { replace: true })
+                  deleteDeviceAndRedirect()
                 }
               }}
             >
@@ -91,16 +106,7 @@ export const DeviceDetails = () => {
             formFields={deviceFormFields}
             initialValues={{ ...device, agent: { id: device.agent.id } }}
             snmpInputs
-            onSubmit={async (formValues) => {
-              await handleResource({
-                resource,
-                operation: 'put',
-                id,
-                body: formValues,
-              })
-
-              refetchDevice()
-            }}
+            onSubmit={handleSubmit}
           />
         </div>
       )}
