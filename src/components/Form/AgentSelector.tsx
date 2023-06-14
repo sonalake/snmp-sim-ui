@@ -10,6 +10,7 @@ import { createAgent, useFetchAgents } from '../../api/agents/agents.api'
 import { successToast } from '../Toasts/toasts'
 import { Form } from './Form'
 import { agentFormFields, agentInitialValues } from './formFields'
+import { HelperText } from './HelperText'
 
 export const AgentSelector: FC<{
   formItem: FormField
@@ -68,11 +69,7 @@ export const AgentSelector: FC<{
           required={required}
           onChange={handleChange}
           onBlur={handleBlur}
-          helperText={
-            <span style={{ visibility: errors[name] && touched[name] ? 'visible' : 'hidden' }} className="text-red-600">
-              {validation}
-            </span>
-          }
+          helperText={<HelperText errors={errors} touched={touched} name={name} validation={validation} />}
         >
           {agents?.items?.map((option) => (
             <option key={option?.id} value={option?.id}>
