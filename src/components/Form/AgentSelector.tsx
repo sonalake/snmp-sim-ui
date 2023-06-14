@@ -2,11 +2,11 @@ import { Label, Select, Tooltip } from 'flowbite-react'
 import { FormikErrors, FormikHandlers, FormikTouched, useFormikContext } from 'formik'
 import React, { FC, useEffect, useState } from 'react'
 import { HiOutlinePlusCircle } from 'react-icons/hi'
-import { useFetch } from '../../hooks'
-import { Agent, FormField, ResourceResponse } from '../../models'
+import { Agent, FormField } from '../../models'
 import { handleResource } from '../DataTable/tableColumns/handleResource'
 import { Modal } from '../Modal/Modal'
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon'
+import { useFetchAgents } from '../../api/agents/agents.api'
 import { Form } from './Form'
 import { agentFormFields, agentInitialValues } from './formFields'
 
@@ -20,7 +20,7 @@ export const AgentSelector: FC<{
 }> = ({ formItem: { name, label, required, validation }, value, touched, errors, handleChange, handleBlur }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const { resource: agents } = useFetch<ResourceResponse<Agent>>(`/api/agents`)
+  const { data: agents } = useFetchAgents()
 
   const { values } = useFormikContext<Record<keyof FormField, string | Partial<Agent>>>()
 
