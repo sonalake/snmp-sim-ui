@@ -31,3 +31,7 @@ export function updateAgent(agent: Agent): Promise<Agent> {
   // should be PATCH method...
   return mutateResource<Agent, Agent>({ method: HTTPRequestMethod.PUT, url: `/api/agents/${agent.id}`, body: agent })
 }
+
+export function deleteAgent(agentId: string): Promise<Agent> {
+  return mutateResource<Agent, Agent>({ method: HTTPRequestMethod.DELETE, url: `/api/agents/${agentId}` })
+}

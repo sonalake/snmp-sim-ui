@@ -2,16 +2,16 @@ import { Button } from 'flowbite-react'
 import React from 'react'
 import { HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
-import { useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
+import { FormikValues } from 'formik'
 import { Form, LoadingIndicator, PageWrapper } from '../../components'
-import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields } from '../../components/Form/formFields'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
-import { useFetchAgent } from '../../api/agents/agents.api'
+import { deleteAgent, updateAgent, useFetchAgent } from '../../api/agents/agents.api'
 import { QueryKey } from '../../api/query-keys'
-
-const resource = 'agents'
+import { successToast } from '../../components/Toasts/toasts'
+import { Agent } from '../../models'
 
 export const AgentDetails = () => {
   const { id } = useParams()
@@ -20,8 +20,33 @@ export const AgentDetails = () => {
 
   const { data: agent, isLoading } = useFetchAgent(id)
 
-  const refetchAgent = () => {
-    invalidateQueries([QueryKey.AGENT, id])
+  const refetchAgents = () => {
+    invalidateQueries([QueryKey.AGENTS])
+  }
+
+  const { mutateAsync: removeAgentAndRedirect } = useMutation({
+    mutationFn: (agentId: string) => deleteAgent(agentId),
+    onSuccess: () => {
+      successToast('Agent deleted!')
+      refetchAgents()
+      navigate('/agents', { replace: true })
+    },
+  })
+
+  const deleteAgentAndRedirect = () => {
+    id && removeAgentAndRedirect(id)
+  }
+
+  const { mutateAsync: updateExistingAgent } = useMutation({
+    mutationFn: (updatedAgent: Agent) => updateAgent(updatedAgent),
+    onSuccess: () => {
+      successToast('Agent updated!')
+    },
+  })
+
+  const handleSubmit = (formValues: FormikValues) => {
+    const agentValues = formValues as unknown as Agent
+    updateExistingAgent(agentValues)
   }
 
   return (
@@ -35,17 +60,7 @@ export const AgentDetails = () => {
           <div className="flex flex-row items-center justify-end mb-5">
             <Button
               color="failure"
-              onClick={async () => {
-                if (confirm('Delete agent?')) {
-                  await handleResource({
-                    resource,
-                    operation: 'delete',
-                    id,
-                  })
-
-                  navigate('/agents', { replace: true })
-                }
-              }}
+              onClick={deleteAgentAndRedirect}
             >
               <ButtonIcon as={HiTrash} />
               Delete
@@ -55,16 +70,7 @@ export const AgentDetails = () => {
           <Form
             formFields={agentFormFields}
             initialValues={agent}
-            onSubmit={async (formValues) => {
-              await handleResource({
-                resource,
-                operation: 'put',
-                id,
-                body: formValues,
-              })
-
-              refetchAgent()
-            }}
+            onSubmit={handleSubmit}
           />
         </div>
       )}

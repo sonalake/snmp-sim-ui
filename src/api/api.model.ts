@@ -8,5 +8,5 @@ export enum HTTPRequestMethod {
 export interface MutateResourceConfig<T> {
   method: HTTPRequestMethod
   url: string
-  body: T
+  body?: T
 }
