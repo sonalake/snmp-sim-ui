@@ -2,6 +2,7 @@ import { Button } from 'flowbite-react'
 import React from 'react'
 import { HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
+import { useQueryClient } from 'react-query'
 import { Form, LoadingIndicator, PageWrapper } from '../../components'
 import { handleResource } from '../../components/DataTable/tableColumns/handleResource'
 import { agentFormFields } from '../../components/Form/formFields'
@@ -9,17 +10,19 @@ import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchAgent } from '../../api/agents/agents.api'
 import { QueryKey } from '../../api/query-keys'
-import { useInvalidateQuery } from '../../hooks/useInvalidateQuery'
 
 const resource = 'agents'
 
 export const AgentDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { invalidateQueries } = useQueryClient()
 
   const { data: agent, isLoading, error } = useFetchAgent(id)
 
-  const { invalidateQuery: refetchAgents } = useInvalidateQuery([QueryKey.AGENT, id])
+  const refetchAgents = () => {
+    invalidateQueries([QueryKey.AGENT, id])
+  }
 
   if (error) {
     throw error
