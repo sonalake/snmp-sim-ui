@@ -3,14 +3,13 @@ import React, { useState } from 'react'
 import { HiPlay, HiStop, HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import { FormikValues } from 'formik'
 import { Alert, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { deleteDevice, updateDevice, useFetchDevice } from '../../api/devices/devices.api'
-import { QueryKey } from '../../api/query-keys'
 import { successToast } from '../../components/Toasts/toasts'
 import { Device } from '../../models'
 
@@ -19,19 +18,13 @@ export const DeviceDetails = () => {
 
   const { id } = useParams()
   const navigate = useNavigate()
-  const { invalidateQueries } = useQueryClient()
 
   const { data: device, isLoading } = useFetchDevice(id)
-
-  const refetchDevices = () => {
-    invalidateQueries([QueryKey.DEVICES])
-  }
 
   const { mutateAsync: deleteDeviceAndRedirect } = useMutation({
     mutationFn: id ? () => deleteDevice(id) : undefined,
     onSuccess: () => {
       successToast('Device deleted!')
-      refetchDevices()
       navigate('/devices', { replace: true })
     },
   })

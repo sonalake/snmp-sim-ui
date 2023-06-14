@@ -6,7 +6,7 @@ import { mutateResource } from '../helpers'
 import { HTTPRequestMethod } from '../api.model'
 
 async function fetchDevice(deviceId?: string): Promise<Device> {
-  return baseApi.get(`/api/device/${deviceId}`).then((res) => res.data)
+  return baseApi.get(`/api/devices/${deviceId}`).then((res) => res.data)
 }
 
 export const useFetchDevice = (deviceId?: string) =>
@@ -40,5 +40,5 @@ export function updateDevice(device: Device): Promise<Device> {
 }
 
 export function deleteDevice(deviceId: string): Promise<Device> {
-  return mutateResource<Device, Device>({ method: HTTPRequestMethod.DELETE, url: `/api/devices/${deviceId}` })
+  return mutateResource<undefined, Device>({ method: HTTPRequestMethod.DELETE, url: `/api/devices/${deviceId}` })
 }

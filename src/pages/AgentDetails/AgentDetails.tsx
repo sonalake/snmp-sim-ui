@@ -2,33 +2,26 @@ import { Button } from 'flowbite-react'
 import React from 'react'
 import { HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import { FormikValues } from 'formik'
 import { Form, LoadingIndicator, PageWrapper } from '../../components'
 import { agentFormFields } from '../../components/Form/formFields'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { deleteAgent, updateAgent, useFetchAgent } from '../../api/agents/agents.api'
-import { QueryKey } from '../../api/query-keys'
 import { successToast } from '../../components/Toasts/toasts'
 import { Agent } from '../../models'
 
 export const AgentDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { invalidateQueries } = useQueryClient()
 
   const { data: agent, isLoading } = useFetchAgent(id)
 
-  const refetchAgents = () => {
-    invalidateQueries([QueryKey.AGENTS])
-  }
-
   const { mutateAsync: deleteAgentAndRedirect } = useMutation({
     mutationFn: id ? () => deleteAgent(id) : undefined,
-    onSuccess: () => {
+    onSuccess: async () => {
       successToast('Agent deleted!')
-      refetchAgents()
       navigate('/agents', { replace: true })
     },
   })

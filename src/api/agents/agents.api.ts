@@ -33,5 +33,5 @@ export function updateAgent(agent: Agent): Promise<Agent> {
 }
 
 export function deleteAgent(agentId: string): Promise<Agent> {
-  return mutateResource<Agent, Agent>({ method: HTTPRequestMethod.DELETE, url: `/api/agents/${agentId}` })
+  return mutateResource<undefined, Agent>({ method: HTTPRequestMethod.DELETE, url: `/api/agents/${agentId}` })
 }
