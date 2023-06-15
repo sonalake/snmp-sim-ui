@@ -1,6 +1,5 @@
-import { screen } from '@testing-library/react'
 import React from 'react'
-import { customRender } from '../../utils/testUtils/testUtils'
+import { render, screen } from '../../utils/testUtils/testUtils'
 import { ErrorBoundary } from './ErrorBoundary'
 
 const testError = 'testError'
@@ -14,7 +13,7 @@ describe('ErrorBoundary', () => {
     // This is needed for suppressing the testError appearing as uncaught
     jest.spyOn(console, 'error').mockImplementation(() => null)
 
-    customRender(
+    render(
       <ErrorBoundary>
         <ProblemChild />
       </ErrorBoundary>,
