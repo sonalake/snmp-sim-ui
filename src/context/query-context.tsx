@@ -21,12 +21,6 @@ const queryConfig = {
         }
         return false
       },
-      onError: (error: unknown) => {
-        if (error instanceof AxiosError) {
-          console.error(error)
-        }
-        throw error
-      },
     },
     mutations: {
       onError: (err: unknown) => {
