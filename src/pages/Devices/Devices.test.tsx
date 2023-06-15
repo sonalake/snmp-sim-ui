@@ -1,24 +1,32 @@
-import { screen } from '@testing-library/react'
-import axios from 'axios'
 import React from 'react'
+import MockAdapter from 'axios-mock-adapter'
 import { mockDevices } from '../../utils/testUtils/mockDevices'
-import { customRender } from '../../utils/testUtils/testUtils'
+import { render, screen } from '../../utils/testUtils/testUtils'
+import { baseApi } from '../../api/api'
+import { mockAgents } from '../../utils/testUtils/mockAgents'
 import { Devices } from './Devices'
 
-jest.mock('axios')
-
-axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockDevices }))
-
 describe('Devices', () => {
+  let baseApiMock: MockAdapter
+
+  beforeEach(() => {
+    baseApiMock = new MockAdapter(baseApi)
+    baseApiMock.onGet('api/agents').reply(200, mockAgents)
+    baseApiMock.onGet('api/devices').reply(200, mockDevices)
+  })
+
+  afterEach(() => {
+    baseApiMock.restore()
+  })
+
   it('should render the component', async () => {
-    customRender(<Devices />)
+    render(<Devices />)
 
     expect(await screen.findByText('Add')).toBeInTheDocument()
   })
 
   it('should render the table rows', async () => {
-    customRender(<Devices />)
-
+    render(<Devices />)
     expect(await screen.findByText('No data to display')).toBeInTheDocument()
   })
 })
