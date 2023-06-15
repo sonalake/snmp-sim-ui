@@ -43,66 +43,68 @@ export const DeviceDetails = () => {
 
   return (
     <PageWrapper>
-      {isLoading && <LoadingIndicator />}
+      <>{isLoading && <LoadingIndicator />}</>
 
-      {device && (
-        <div className="pb-32">
-          <PageTitle>{device.name}</PageTitle>
+      <>
+        {device && (
+          <div className="pb-32">
+            <PageTitle>{device.name}</PageTitle>
 
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-3">
-              {!isRunning ? (
-                <Button
-                  color="success"
-                  onClick={() => {
-                    // runDevice(device.id, true)
-                    setIsRunning(true)
-                    toast(<Alert color="success" message="Device running! - to be implemented" />)
-                  }}
-                >
-                  <ButtonIcon as={HiPlay} />
-                  Start
-                </Button>
-              ) : (
-                <Button
-                  color="failure"
-                  onClick={() => {
-                    // runDevice(device.id, false)
-                    setIsRunning(false)
-                    toast(<Alert color="success" message="Device stopped! - to be implemented" />)
-                  }}
-                >
-                  <ButtonIcon as={HiStop} />
-                  Stop
-                </Button>
-              )}
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-3">
+                {!isRunning ? (
+                  <Button
+                    color="success"
+                    onClick={() => {
+                      // runDevice(device.id, true)
+                      setIsRunning(true)
+                      toast(<Alert color="success" message="Device running! - to be implemented" />)
+                    }}
+                  >
+                    <ButtonIcon as={HiPlay} />
+                    Start
+                  </Button>
+                ) : (
+                  <Button
+                    color="failure"
+                    onClick={() => {
+                      // runDevice(device.id, false)
+                      setIsRunning(false)
+                      toast(<Alert color="success" message="Device stopped! - to be implemented" />)
+                    }}
+                  >
+                    <ButtonIcon as={HiStop} />
+                    Stop
+                  </Button>
+                )}
 
-              <p className="flex gap-1">
-                <StatusIndicator title={isRunning ? 'Running' : 'Stopped'} isActive={isRunning} />
-              </p>
+                <p className="flex gap-1">
+                  <StatusIndicator title={isRunning ? 'Running' : 'Stopped'} isActive={isRunning} />
+                </p>
+              </div>
+
+              <Button
+                color="failure"
+                onClick={async () => {
+                  if (confirm('Delete device?')) {
+                    deleteDeviceAndRedirect()
+                  }
+                }}
+              >
+                <ButtonIcon as={HiTrash} />
+                Delete
+              </Button>
             </div>
 
-            <Button
-              color="failure"
-              onClick={async () => {
-                if (confirm('Delete device?')) {
-                  deleteDeviceAndRedirect()
-                }
-              }}
-            >
-              <ButtonIcon as={HiTrash} />
-              Delete
-            </Button>
+            <Form
+              formFields={deviceFormFields}
+              initialValues={{ ...device, agent: { id: device.agent.id } }}
+              snmpInputs
+              onSubmit={handleSubmit}
+            />
           </div>
-
-          <Form
-            formFields={deviceFormFields}
-            initialValues={{ ...device, agent: { id: device.agent.id } }}
-            snmpInputs
-            onSubmit={handleSubmit}
-          />
-        </div>
-      )}
+        )}
+      </>
     </PageWrapper>
   )
 }

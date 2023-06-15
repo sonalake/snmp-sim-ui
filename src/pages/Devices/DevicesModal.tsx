@@ -52,17 +52,21 @@ export const DevicesModal: FC<DevicesModalProps> = ({ isOpen, onClose, selectedD
       onClose={onClose}
       id="device-modal"
     >
-      <Form
-        formFields={deviceFormFields}
-        initialValues={
-          selectedDevice || {
-            ...deviceInitialValues,
-            agent: { id: agents.items[0].id },
-          }
-        }
-        snmpInputs
-        onSubmit={handleSubmit}
-      />
+      <>
+        {!!agents && (
+          <Form
+            formFields={deviceFormFields}
+            initialValues={
+              selectedDevice || {
+                ...deviceInitialValues,
+                agent: { id: agents.items[0].id },
+              }
+            }
+            snmpInputs
+            onSubmit={handleSubmit}
+          />
+        )}
+      </>
     </Modal>
   )
 }
