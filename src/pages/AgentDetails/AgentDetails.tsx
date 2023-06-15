@@ -41,29 +41,24 @@ export const AgentDetails = () => {
 
   return (
     <PageWrapper>
-      {isLoading && <LoadingIndicator />}
+      <>{isLoading && <LoadingIndicator />}</>
 
-      {agent && (
-        <div className="pb-32">
-          <PageTitle>{agent.name}</PageTitle>
+      <>
+        {agent && (
+          <div className="pb-32">
+            <PageTitle>{agent.name}</PageTitle>
 
-          <div className="flex flex-row items-center justify-end mb-5">
-            <Button
-              color="failure"
-              onClick={deleteAgentAndRedirect}
-            >
-              <ButtonIcon as={HiTrash} />
-              Delete
-            </Button>
+            <div className="flex flex-row items-center justify-end mb-5">
+              <Button color="failure" onClick={() => deleteAgentAndRedirect()}>
+                <ButtonIcon as={HiTrash} />
+                Delete
+              </Button>
+            </div>
+
+            <Form formFields={agentFormFields} initialValues={agent} onSubmit={handleSubmit} />
           </div>
-
-          <Form
-            formFields={agentFormFields}
-            initialValues={agent}
-            onSubmit={handleSubmit}
-          />
-        </div>
-      )}
+        )}
+      </>
     </PageWrapper>
   )
 }
