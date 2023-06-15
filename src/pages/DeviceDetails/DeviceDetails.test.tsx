@@ -1,17 +1,32 @@
 import { screen } from '@testing-library/react'
-import axios from 'axios'
 import React from 'react'
+import MockAdapter from 'axios-mock-adapter'
 import { mockDevices } from '../../utils/testUtils/mockDevices'
-import { customRender } from '../../utils/testUtils/testUtils'
+import { render } from '../../utils/testUtils/testUtils'
+import { baseApi } from '../../api/api'
 import { DeviceDetails } from './DeviceDetails'
 
-jest.mock('axios')
-
-axios.get = jest.fn().mockImplementation(() => Promise.resolve({ data: mockDevices[0] }))
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
+  useParams: () => ({
+    id: 'device-id',
+  }),
+}))
 
 describe('DeviceDetails', () => {
+  let baseApiMock: MockAdapter
+
+  beforeEach(() => {
+    baseApiMock = new MockAdapter(baseApi)
+    baseApiMock.onGet('api/devices/device-id').reply(200, mockDevices[0])
+  })
+
+  afterEach(() => {
+    baseApiMock.restore()
+  })
+
   it('should render the component', async () => {
-    customRender(<DeviceDetails />)
+    render(<DeviceDetails />)
 
     expect(await screen.findByText(mockDevices[0].name)).toBeInTheDocument()
   })
