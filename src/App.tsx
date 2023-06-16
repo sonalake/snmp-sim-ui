@@ -6,7 +6,7 @@ import { useDetectUserConnection } from './hooks'
 import { AgentDetails, Agents, DeviceDetails, Devices, NoConnection, PageNotFound } from './pages'
 import { Providers } from './context/providers'
 
-export const Router = () => {
+export const App = () => {
   const { isBrowserOnline } = useDetectUserConnection()
 
   return (
