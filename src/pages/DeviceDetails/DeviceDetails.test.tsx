@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { mockDevices } from '../../utils/testUtils/mockDevices'
 import { render } from '../../utils/testUtils/testUtils'
 import { baseApi } from '../../api/api'
+import { mockAgents } from '../../utils/testUtils/mockAgents'
 import { DeviceDetails } from './DeviceDetails'
 
 jest.mock('react-router', () => ({
@@ -19,6 +20,7 @@ describe('DeviceDetails', () => {
   beforeEach(() => {
     baseApiMock = new MockAdapter(baseApi)
     baseApiMock.onGet('api/devices/device-id').reply(200, mockDevices[0])
+    baseApiMock.onGet('api/agents').reply(200, mockAgents)
   })
 
   afterEach(() => {
