@@ -3,21 +3,26 @@ import { Button, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
+import { useMutation, useQueryClient } from 'react-query'
 import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { LOCALHOST, PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DevicesQueryParams } from '../../models'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
-import { useFetchDevices } from '../../api/devices/devices.api'
+import { startDevice, stopDevice, useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
+import { successToast } from '../../components/Toasts/toasts'
+import { QueryKey } from '../../api/query-keys'
 import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
   const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
   const [selectedDevice, setSelectedDevice] = useState<Device>()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const queryCache = useQueryClient()
+
   const openModal = () => setIsModalOpen(true)
 
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
@@ -40,6 +45,27 @@ export const Devices = () => {
     openModal()
   }
 
+  const refetchDevices = async () => await queryCache.invalidateQueries({ queryKey: [QueryKey.DEVICES] })
+
+  const { mutateAsync: start } = useMutation({
+    mutationFn: (deviceId: string) => startDevice(deviceId),
+    onSuccess: async () => {
+      successToast('Device started!')
+      await refetchDevices()
+    },
+  })
+
+  const { mutateAsync: stop } = useMutation({
+    mutationFn: (deviceId: string) => stopDevice(deviceId),
+    onSuccess: async () => {
+      successToast('Device stopped!')
+      await refetchDevices()
+    },
+  })
+
+  const handleStartDevice = (deviceId: string) => start(deviceId)
+  const handleStopDevice = (deviceId: string) => stop(deviceId)
+
   const devicesActionsColumn: ColumnDef<Device> = useMemo(
     () => ({
       header: 'Actions',
@@ -47,19 +73,11 @@ export const Devices = () => {
         <div className="flex flex-row">
           {row.original.snmp_host !== LOCALHOST ? (
             <Tooltip content="Start device">
-              <ButtonIcon
-                as={HiPlay}
-                className="text-green-700"
-                onClick={() => toast(<Alert color="success" message="Device started! - to be implemented" />)}
-              />
+              <ButtonIcon as={HiPlay} className="text-green-700" onClick={() => handleStartDevice(row.original.id)} />
             </Tooltip>
           ) : (
             <Tooltip content="Stop device">
-              <ButtonIcon
-                as={HiStop}
-                className="text-red-700"
-                onClick={() => toast(<Alert color="success" message="Device stopped! - to be implemented" />)}
-              />
+              <ButtonIcon as={HiStop} className="text-red-700" onClick={() => handleStopDevice(row.original.id)} />
             </Tooltip>
           )}
 

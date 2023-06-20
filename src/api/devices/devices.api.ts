@@ -44,3 +44,11 @@ export function updateDevice(device: Device): Promise<Device> {
 export function deleteDevice(deviceId: string): Promise<Device> {
   return mutateResource<undefined, Device>({ method: HTTPRequestMethod.DELETE, url: `/api/devices/${deviceId}` })
 }
+
+export function startDevice(deviceId: string): Promise<unknown> {
+  return mutateResource<undefined, Device>({ method: HTTPRequestMethod.PUT, url: `/api/devices/${deviceId}/start` })
+}
+
+export function stopDevice(deviceId: string): Promise<unknown> {
+  return mutateResource<undefined, Device>({ method: HTTPRequestMethod.PUT, url: `/api/devices/${deviceId}/stop` })
+}
