@@ -10,7 +10,7 @@ async function fetchDevice(deviceId?: string): Promise<Device> {
 }
 
 export const useFetchDevice = (deviceId?: string) =>
-  useQuery([QueryKey.DEVICE, deviceId], () => fetchDevice(deviceId), { enabled: !!deviceId })
+  useQuery([QueryKey.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId })
 
 async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceResponse<Device>> {
   const params = {

@@ -2,14 +2,13 @@ import { Button } from 'flowbite-react'
 import React, { useState } from 'react'
 import { HiPlay, HiStop, HiTrash } from 'react-icons/hi'
 import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
 import { useMutation } from 'react-query'
 import { FormikValues } from 'formik'
-import { Alert, Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
+import { Form, LoadingIndicator, PageWrapper, StatusIndicator } from '../../components'
 import { deviceFormFields } from '../../components/Form/formFields'
 import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
-import { deleteDevice, updateDevice, useFetchDevice } from '../../api/devices/devices.api'
+import { deleteDevice, startDevice, stopDevice, updateDevice, useFetchDevice } from '../../api/devices/devices.api'
 import { successToast } from '../../components/Toasts/toasts'
 import { Device } from '../../models'
 
@@ -41,6 +40,22 @@ export const DeviceDetails = () => {
     updateExistingDevice(deviceValues)
   }
 
+  const { mutateAsync: start } = useMutation({
+    mutationFn: (deviceId: string) => startDevice(deviceId),
+    onSuccess: async () => {
+      successToast('Device running!')
+      setIsRunning(true)
+    },
+  })
+
+  const { mutateAsync: stop } = useMutation({
+    mutationFn: (deviceId: string) => stopDevice(deviceId),
+    onSuccess: async () => {
+      successToast('Device stopped!')
+      setIsRunning(false)
+    },
+  })
+
   return (
     <PageWrapper>
       <>{isLoading && <LoadingIndicator />}</>
@@ -53,26 +68,12 @@ export const DeviceDetails = () => {
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
                 {!isRunning ? (
-                  <Button
-                    color="success"
-                    onClick={() => {
-                      // runDevice(device.id, true)
-                      setIsRunning(true)
-                      toast(<Alert color="success" message="Device running! - to be implemented" />)
-                    }}
-                  >
+                  <Button color="success" onClick={() => id && start(id)}>
                     <ButtonIcon as={HiPlay} />
                     Start
                   </Button>
                 ) : (
-                  <Button
-                    color="failure"
-                    onClick={() => {
-                      // runDevice(device.id, false)
-                      setIsRunning(false)
-                      toast(<Alert color="success" message="Device stopped! - to be implemented" />)
-                    }}
-                  >
+                  <Button color="failure" onClick={() => id && stop(id)}>
                     <ButtonIcon as={HiStop} />
                     Stop
                   </Button>
