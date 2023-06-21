@@ -19,3 +19,7 @@
 aside div.bg-white {
   background-color: #f8fafc;
 }
+
+#device-modal > div {
+  height: 100% !important;
+}

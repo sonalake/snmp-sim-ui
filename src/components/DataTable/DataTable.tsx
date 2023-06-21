@@ -8,19 +8,18 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { Card, Table, TextInput } from 'flowbite-react'
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiChevronDown, HiChevronUp, HiOutlineFilter } from 'react-icons/hi'
-import { Agent, Device } from '../../models'
 import { DataTableCheckbox } from './DataTableCheckbox/DataTableCheckbox'
 
-interface Props<T extends Agent | Device> {
+interface Props<T> {
   data: T[]
   columns: Array<ColumnDef<T>>
   isSelectable: boolean
   onSelection?: (val: Array<Row<T>>) => void
 }
 
-export const DataTable: FC<Props<Agent | Device>> = ({ data, columns, isSelectable, onSelection }) => {
+export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Props<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [rowSelection, setRowSelection] = useState({})
   const [filter, setFilter] = useState('')

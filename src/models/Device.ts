@@ -41,3 +41,8 @@ export interface Device {
   snmp_port: number
   snmp_protocol_attributes: SNMPProtocolAttributes
 }
+
+export interface DevicesQueryParams {
+  page: number
+  pageSize: number
+}

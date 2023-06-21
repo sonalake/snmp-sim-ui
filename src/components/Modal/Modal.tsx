@@ -1,19 +1,26 @@
 import { Modal as FlowbiteModal } from 'flowbite-react'
-import React, { FC, ReactNode } from 'react'
+import React, { FC } from 'react'
 
-export const Modal: FC<{ children: ReactNode; title: string; isVisible: boolean; onClose: () => void }> = ({
-  children,
-  title,
-  isVisible,
-  onClose,
-}) => {
+interface ModalProps {
+  children: JSX.Element | JSX.Element[]
+  title: string
+  isOpen: boolean
+  onClose: () => void
+  id?: string
+}
+
+export const Modal: FC<ModalProps> = ({ children, title, isOpen, onClose, id }) => {
   return (
-    <FlowbiteModal show={isVisible} onClose={onClose}>
-      <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
+    <FlowbiteModal show={isOpen} onClose={onClose} id={id}>
+      {isOpen &&
+        <>
+          <FlowbiteModal.Header>{title}</FlowbiteModal.Header>
 
-      <FlowbiteModal.Body>
-        <div style={{ maxHeight: '70vh', overflow: 'scroll' }}>{children}</div>
-      </FlowbiteModal.Body>
+          <FlowbiteModal.Body>
+            <div className="m-h-[70vh] overflow-scroll">{children}</div>
+          </FlowbiteModal.Body>
+        </>
+      }
     </FlowbiteModal>
   )
 }

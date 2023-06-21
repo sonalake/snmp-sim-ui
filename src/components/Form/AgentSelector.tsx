@@ -1,13 +1,16 @@
 import { Label, Select, Tooltip } from 'flowbite-react'
-import { FormikErrors, FormikHandlers, FormikTouched, useFormikContext } from 'formik'
+import { FormikErrors, FormikHandlers, FormikTouched, FormikValues, useFormikContext } from 'formik'
 import React, { FC, useEffect, useState } from 'react'
 import { HiOutlinePlusCircle } from 'react-icons/hi'
-import { useFetch } from '../../hooks'
-import { Agent, FormField, ResourceResponse } from '../../models'
-import { handleResource } from '../DataTable/tableColumns/handleResource'
+import { useMutation } from 'react-query'
+import { Agent, FormField } from '../../models'
 import { Modal } from '../Modal/Modal'
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon'
+import { createAgent, useFetchAgents } from '../../api/agents/agents.api'
+import { successToast } from '../Toasts/toasts'
 import { Form } from './Form'
 import { agentFormFields, agentInitialValues } from './formFields'
+import { HelperText } from './HelperText'
 
 export const AgentSelector: FC<{
   formItem: FormField
@@ -17,9 +20,11 @@ export const AgentSelector: FC<{
   handleChange: FormikHandlers['handleChange']
   handleBlur: FormikHandlers['handleBlur']
 }> = ({ formItem: { name, label, required, validation }, value, touched, errors, handleChange, handleBlur }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
-  const { resource: agents } = useFetch<ResourceResponse>(`/api/agents`)
+  const { data: agents } = useFetchAgents()
 
   const { values } = useFormikContext<Record<keyof FormField, string | Partial<Agent>>>()
 
@@ -31,6 +36,19 @@ export const AgentSelector: FC<{
     }
   }, [agents?.items, value, values])
 
+  const { mutateAsync: createNewAgent } = useMutation({
+    mutationFn: (agent: Omit<Agent, 'id'>) => createAgent(agent),
+    onSuccess: () => {
+      successToast('Agent created!')
+      closeModal()
+    },
+  })
+
+  const handleSubmitAndCloseModal = async (formValues: FormikValues) => {
+    const newAgentValues = formValues as unknown as Omit<Agent, 'id'>
+    createNewAgent(newAgentValues)
+  }
+
   return (
     <div className="m-1">
       <div className="mb-2 flex items-center gap-1">
@@ -40,7 +58,7 @@ export const AgentSelector: FC<{
         </div>
 
         <Tooltip content="Add new agent">
-          <HiOutlinePlusCircle className="mr-2 h-5 w-5 cursor-pointer" onClick={() => setIsModalVisible(true)} />
+          <ButtonIcon as={HiOutlinePlusCircle} onClick={openModal} />
         </Tooltip>
       </div>
 
@@ -51,11 +69,7 @@ export const AgentSelector: FC<{
           required={required}
           onChange={handleChange}
           onBlur={handleBlur}
-          helperText={
-            <span style={{ visibility: errors[name] && touched[name] ? 'visible' : 'hidden' }} className="text-red-600">
-              {validation}
-            </span>
-          }
+          helperText={<HelperText errors={errors} touched={touched} name={name} validation={validation} />}
         >
           {agents?.items?.map((option) => (
             <option key={option?.id} value={option?.id}>
@@ -65,21 +79,9 @@ export const AgentSelector: FC<{
         </Select>
       </div>
 
-      {isModalVisible && (
-        <Modal isVisible={isModalVisible} title="Add new agent" onClose={() => setIsModalVisible(false)}>
-          <Form
-            formFields={agentFormFields}
-            initialValues={agentInitialValues}
-            onSubmit={async (formValues) => {
-              await handleResource({
-                resource: 'agents',
-                operation: 'post',
-                body: formValues,
-              })
-
-              setIsModalVisible(false)
-            }}
-          />
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} title="Add new agent" onClose={closeModal}>
+          <Form formFields={agentFormFields} initialValues={agentInitialValues} onSubmit={handleSubmitAndCloseModal} />
         </Modal>
       )}
     </div>

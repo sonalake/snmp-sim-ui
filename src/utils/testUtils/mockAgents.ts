@@ -12,3 +12,8 @@ export const mockAgents = [
     snmp_data_url: 'http://localhost:2000',
   },
 ]
+
+export const agentsMockedResponse = {
+  count: 2,
+  items: mockAgents,
+}

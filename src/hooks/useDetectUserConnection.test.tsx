@@ -10,10 +10,10 @@ describe('useDetectUserConnection', () => {
     const { result } = renderHook(() => useDetectUserConnection())
 
     const {
-      current: { isUserOnline },
+      current: { isBrowserOnline },
     } = result
 
-    expect(isUserOnline).toBe(true)
+    expect(isBrowserOnline).toBe(true)
   })
 
   it('should set the state to false if the user is offline', () => {
@@ -22,10 +22,10 @@ describe('useDetectUserConnection', () => {
     const { result } = renderHook(() => useDetectUserConnection())
 
     const {
-      current: { isUserOnline },
+      current: { isBrowserOnline },
     } = result
 
-    expect(isUserOnline).toBe(false)
+    expect(isBrowserOnline).toBe(false)
 
     mockNavigator.mockRestore()
   })

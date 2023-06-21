@@ -52,3 +52,8 @@ export const mockDevices: Device[] = [
     },
   },
 ]
+
+export const devicesMockedResponse = {
+  count: 2,
+  items: mockDevices,
+}

@@ -1,9 +1,13 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Sidebar } from '..'
 import { ALERT_AUTO_CLOSE_TIME } from '../../constants'
 
-export const PageWrapper: FC<{ children: ReactNode }> = ({ children }) => (
+interface PageWrapperProps {
+  children: JSX.Element | JSX.Element[]
+}
+
+export const PageWrapper: FC<PageWrapperProps> = ({ children }) => (
   <>
     <ToastContainer autoClose={ALERT_AUTO_CLOSE_TIME} closeButton={false} pauseOnHover hideProgressBar />
 
