@@ -10,7 +10,7 @@ interface DataTableWithPatination<T> {
   pageProps: PageProps
   handlePaginationChange: (pageProps: PageProps) => void
   handleSelectItems: (val: Array<Row<T>>) => void
-  isSelectable: boolean
+  isSelectable?: boolean
   disabled: boolean
 }
 export const DataTableWithPatination = <T,>({
