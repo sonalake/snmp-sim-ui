@@ -106,7 +106,7 @@ export const Devices = () => {
               items={devices.items}
               columns={devicesColumns}
               handleSelectItems={setSelectedDevices}
-              isSelectable
+              isSelectable={false}
               handlePaginationChange={handlePaginationChange}
               totalCount={devices.count}
               disabled={isLoading}
