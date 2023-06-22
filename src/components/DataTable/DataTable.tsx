@@ -41,7 +41,7 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
   }, [onSelection, flatRows])
 
   return (
-    <Table hoverable>
+    <Table hoverable className="shadow-md">
       <Table.Head>
         {isSelectable && !!table.getRowModel().rows.length && (
           <Table.HeadCell className="!p-4">
