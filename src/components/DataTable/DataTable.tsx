@@ -7,22 +7,21 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
-import { Card, Table, TextInput } from 'flowbite-react'
+import { Table } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
-import { HiChevronDown, HiChevronUp, HiOutlineFilter } from 'react-icons/hi'
+import { HiChevronDown, HiChevronUp } from 'react-icons/hi'
 import { DataTableCheckbox } from './DataTableCheckbox/DataTableCheckbox'
 
 interface Props<T> {
   data: T[]
   columns: Array<ColumnDef<T>>
-  isSelectable: boolean
+  isSelectable?: boolean
   onSelection?: (val: Array<Row<T>>) => void
 }
 
 export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Props<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [rowSelection, setRowSelection] = useState({})
-  const [filter, setFilter] = useState('')
 
   const table = useReactTable({
     data,
@@ -69,7 +68,9 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      <div className="text-gray-500 font-semibold">
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                      </div>
                       {
                         {
                           asc: <HiChevronUp />,
@@ -84,24 +85,7 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
                         </div>
                       )}
                     </div>
-
-                    {header.column.columnDef.header !== 'Actions' && (
-                      <HiOutlineFilter
-                        className="cursor-pointer"
-                        onClick={() =>
-                          filter === header.column.columnDef.header
-                            ? setFilter('')
-                            : setFilter(header.column.columnDef.header as string)
-                        }
-                      />
-                    )}
                   </div>
-                  {filter === header.column.columnDef.header && (
-                    <Card style={{ position: 'absolute', top: 20, left: 0, width: '20vw' }}>
-                      <p>Filter by {header.column.columnDef.header} - to be implemented</p>
-                      <TextInput />
-                    </Card>
-                  )}
                 </div>
               )}
             </Table.HeadCell>
