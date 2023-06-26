@@ -1,5 +1,5 @@
 import { ColumnDef, Row } from '@tanstack/react-table'
-import { Button, Tooltip } from 'flowbite-react'
+import { Button, DarkThemeToggle, Tooltip } from 'flowbite-react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { HiOutlinePencil, HiPlusCircle, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
@@ -85,6 +85,7 @@ export const Agents = () => {
                 <ButtonIcon as={HiTrash} />
                 Delete
               </Button>
+              <DarkThemeToggle />
             </div>
 
             <DataTableWithPatination<Agent>

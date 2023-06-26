@@ -11,12 +11,14 @@ export const devicesColumns: DevicesColumns = [
   {
     header: 'Name',
     accessorFn: (row) => row.name,
-    cell: ({ row: { original } }) => <div className="font-normal text-gray-900 text-sm">{original.name}</div>,
+    cell: ({ row: { original } }) => (
+      <div className="font-normal text-gray-900 text-sm dark:text-gray-200">{original.name}</div>
+    ),
   },
   {
     header: 'Type',
     accessorFn: (row) => row.type,
-    cell: ({ row: { original } }) => <div className="font-bold text-gray-900 text-sm">{''}</div>,
+    cell: ({ row: { original } }) => <div className="font-bold text-gray-900 text-sm dark:text-gray-200">{''}</div>,
   },
   {
     header: 'IP address',
