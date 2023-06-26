@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { Tooltip } from 'flowbite-react'
 import React from 'react'
-import { StatusIndicator, StyledLink } from '../..'
+import { Badge } from 'flowbite-react'
+import { StatusIndicator } from '../..'
 import { Device } from '../../../models'
 import { LOCALHOST } from '../../../constants'
 
@@ -10,26 +10,34 @@ export type DevicesColumns = Array<ColumnDef<Device>>
 export const devicesColumns: DevicesColumns = [
   {
     header: 'Name',
-    cell: ({ row: { original } }) =>
-      original?.description ? (
-        <Tooltip content={original.description}>
-          <StyledLink href={`/devices/${original.id}`} label={original.name} />
-        </Tooltip>
-      ) : (
-        <StyledLink href={`/devices/${original?.id}`} label={original?.name} />
-      ),
     accessorFn: (row) => row.name,
+    cell: ({ row: { original } }) => <div className="font-normal text-gray-900 text-sm">{original.name}</div>,
   },
   {
-    header: 'Host',
+    header: 'Type',
+    accessorFn: (row) => row.type,
+    cell: ({ row: { original } }) => <div className="font-bold text-gray-900 text-sm">{''}</div>,
+  },
+  {
+    header: 'IP address',
     accessorFn: (row) => row.snmp_host,
+    cell: ({ row: { original } }) => (
+      <Badge style={{ width: 'fit-content' }}>
+        <div className="font-medium text-sm leading-5s">{original.snmp_host}</div>
+      </Badge>
+    ),
   },
   {
     header: 'Port',
     accessorFn: (row) => row.snmp_port,
+    cell: ({ row: { original } }) => (
+      <Badge style={{ width: 'fit-content' }}>
+        <div className="font-medium text-sm leading-5s">{original.snmp_port}</div>
+      </Badge>
+    ),
   },
   {
-    header: 'State',
+    header: 'Status',
     accessorFn: (row) => row.snmp_host === LOCALHOST,
     cell: ({ row }) => {
       const isMockActive = row.original.snmp_host === LOCALHOST
