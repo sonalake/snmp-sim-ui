@@ -11,10 +11,10 @@ export const PageWrapper: FC<PageWrapperProps> = ({ children }) => (
   <>
     <ToastContainer autoClose={ALERT_AUTO_CLOSE_TIME} closeButton={false} pauseOnHover hideProgressBar />
 
-    <div className="w-full h-screen flex">
+    <div className="w-full h-screen flex dark:bg-gray-900">
       <Sidebar />
 
-      <div className="w-10/12 p-8 overflow-scroll">{children}</div>
+      <div className="w-10/12 p-8 overflow-auto">{children}</div>
     </div>
   </>
 )

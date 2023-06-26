@@ -1,5 +1,5 @@
 import { Row } from '@tanstack/react-table'
-import { Button } from 'flowbite-react'
+import { Button, DarkThemeToggle } from 'flowbite-react'
 import React, { useCallback, useState } from 'react'
 import { HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
 import { toast } from 'react-toastify'
@@ -7,7 +7,6 @@ import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../component
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DevicesQueryParams } from '../../models'
-import { PageTitle } from '../../components/PageTitle/PageTitle'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
@@ -49,8 +48,6 @@ export const Devices = () => {
       <>
         {!!devices && (
           <>
-            <PageTitle>Devices</PageTitle>
-
             <div className="flex items-center gap-1 justify-end mb-5">
               <Button color="info" onClick={openModal}>
                 <ButtonIcon as={HiPlusCircle} />
@@ -100,6 +97,8 @@ export const Devices = () => {
                 <ButtonIcon as={HiTrash} />
                 Delete
               </Button>
+              <DarkThemeToggle />
+
             </div>
 
             <DataTableWithPatination<Device>
