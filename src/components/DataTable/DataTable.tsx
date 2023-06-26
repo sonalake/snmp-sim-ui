@@ -41,7 +41,7 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
 
   return (
     <Table hoverable className="shadow-md">
-      <Table.Head>
+      <Table.Head className="border-b-[1px]">
         {isSelectable && !!table.getRowModel().rows.length && (
           <Table.HeadCell className="!p-4">
             <DataTableCheckbox
@@ -56,7 +56,7 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
 
         {table.getHeaderGroups().map((headerGroup) =>
           headerGroup.headers.map((header) => (
-            <Table.HeadCell key={header.id} colSpan={header.colSpan}>
+            <Table.HeadCell key={header.id} colSpan={header.colSpan} className="bg-white">
               {!header.isPlaceholder && (
                 <div className="flex flex-col relative" style={{ minWidth: '5vw' }}>
                   <div className="flex gap-1 items-center">
