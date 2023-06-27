@@ -30,6 +30,7 @@ export interface Device {
   [key: string]: string | number | Partial<Agent> | SNMPProtocolAttributes
   id: string
   name: string
+  type: string
   description: string
   agent: {
     id: string
@@ -45,4 +46,5 @@ export interface Device {
 export interface DevicesQueryParams {
   page: number
   pageSize: number
+  types: string[]
 }

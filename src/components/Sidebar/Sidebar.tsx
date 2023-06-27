@@ -1,45 +1,24 @@
 import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
-import React from 'react'
-import { HiChartPie, HiDocumentReport } from 'react-icons/hi'
-import { useLocation, useNavigate } from 'react-router'
+import React, { FC } from 'react'
 import SidebarLogo from '../../assets/images/logo.png'
+import { Divider } from '../Divider/Divider'
+import { TypeCheck, Types } from './Types'
 
-const { Logo, Items, Item, ItemGroup } = FlowbiteSidebar
+const { Logo } = FlowbiteSidebar
 
-const sidebarItems = [
-  {
-    label: 'Agents',
-    url: '/agents',
-    icon: HiChartPie,
-  },
-  {
-    label: 'Devices',
-    url: '/devices',
-    icon: HiDocumentReport,
-  },
-]
+interface SidebarProps {
+  handleSelectedTypes?: ({ type, checked }: TypeCheck) => void
+}
 
-export const Sidebar = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const handleNavigate = (url: string) => navigate(url)
-
+export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes }) => {
   return (
     <FlowbiteSidebar aria-label="Sidebar menu">
       <Logo href="/agents" img={SidebarLogo} imgAlt="SNMP Simulator logo">
         SNMP Simulator
       </Logo>
-
-      <Items>
-        <ItemGroup>
-          {sidebarItems.map(({ label, url, icon }) => (
-            <Item key={label} onClick={() => handleNavigate(url)} icon={icon} active={location.pathname.includes(url)}>
-              {label}
-            </Item>
-          ))}
-        </ItemGroup>
-      </Items>
+      <Divider />
+      <Types handleSelectedTypes={handleSelectedTypes} />
+      <Divider />
     </FlowbiteSidebar>
   )
 }

@@ -18,7 +18,9 @@ export const devicesColumns: DevicesColumns = [
   {
     header: 'Type',
     accessorFn: (row) => row.type,
-    cell: ({ row: { original } }) => <div className="font-bold text-gray-900 text-sm dark:text-gray-200">{''}</div>,
+    cell: ({ row: { original } }) => (
+      <div className="font-bold text-gray-900 text-sm dark:text-gray-200">{original.type}</div>
+    ),
   },
   {
     header: 'IP address',

@@ -4,6 +4,7 @@ import { QueryKey } from '../query-keys'
 import { baseApi } from '../api'
 import { mutateResource } from '../helpers'
 import { HTTPRequestMethod } from '../api.model'
+import { mockedDevices } from './mocked-devices'
 
 async function fetchDevice(deviceId?: string): Promise<Device> {
   return baseApi.get(`/api/devices/${deviceId}`).then((res) => res.data)
@@ -12,17 +13,19 @@ async function fetchDevice(deviceId?: string): Promise<Device> {
 export const useFetchDevice = (deviceId?: string) =>
   useQuery([QueryKey.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId })
 
-async function fetchDevices(queryParams: DevicesQueryParams): Promise<ResourceResponse<Device>> {
+async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceResponse<Device>> {
   const params = {
-    page: queryParams.page,
-    page_size: queryParams.pageSize,
+    page: queryParams?.page,
+    page_size: queryParams?.pageSize,
+    types: queryParams?.types,
   }
-  return baseApi.get('/api/devices', { params }).then((res) => res.data)
+  return baseApi.get('/api/devices', { params }).then((res) => mockedDevices)
 }
 
-export const useFetchDevices = (queryParams: DevicesQueryParams) =>
-  useQuery([QueryKey.DEVICES, { page: queryParams.page, pageSize: queryParams.pageSize }], () =>
-    fetchDevices(queryParams),
+export const useFetchDevices = (queryParams?: DevicesQueryParams) =>
+  useQuery(
+    [QueryKey.DEVICES, { page: queryParams?.page, pageSize: queryParams?.pageSize, types: queryParams?.types }],
+    () => fetchDevices(queryParams),
   )
 
 export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {

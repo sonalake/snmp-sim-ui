@@ -4,6 +4,7 @@ export const mockDevices: Device[] = [
   {
     id: '8879489',
     name: 'Device 1',
+    type: 'OS Windows Server',
     description: 'Device 1 description',
     agent: {
       id: '1',
@@ -32,6 +33,7 @@ export const mockDevices: Device[] = [
   {
     id: '776539',
     name: 'Device 2',
+    type: 'Dell 5448',
     description: 'Device 2 description',
     agent: {
       id: '2',
