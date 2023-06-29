@@ -1,45 +1,36 @@
-import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
-import React from 'react'
-import { HiChartPie, HiDocumentReport } from 'react-icons/hi'
-import { useLocation, useNavigate } from 'react-router'
-import SidebarLogo from '../../assets/images/logo.png'
+import { Sidebar as FlowbiteSidebar, useTheme } from 'flowbite-react'
+import React, { FC } from 'react'
+import SidebarLogoBlack from '../../assets/images/logo-black.svg'
+import SidebarLogoWhite from '../../assets/images/logo-white.svg'
 
-const { Logo, Items, Item, ItemGroup } = FlowbiteSidebar
+import { Divider } from '../Divider/Divider'
+import { DeviceStatus } from '../../models'
+import { DeviceTypeCheck, DeviceTypes } from './DeviceTypes'
+import { DeviceStatusComponent } from './DeviceStatus'
+import { HelpNav } from './HelpNav'
 
-const sidebarItems = [
-  {
-    label: 'Agents',
-    url: '/agents',
-    icon: HiChartPie,
-  },
-  {
-    label: 'Devices',
-    url: '/devices',
-    icon: HiDocumentReport,
-  },
-]
+interface SidebarProps {
+  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
+  handleSelectStatus?: (deviceStatus: DeviceStatus) => void
+}
 
-export const Sidebar = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const handleNavigate = (url: string) => navigate(url)
-
+export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectStatus }) => {
+  const { mode } = useTheme()
+  const logo = mode === 'dark' ? SidebarLogoWhite : SidebarLogoBlack
+  const customTheme = {
+    root: {
+      inner: 'h-full overflow-y-auto overflow-x-hidden rounded bg-white py-4 px-3 dark:bg-gray-800',
+    },
+  }
   return (
-    <FlowbiteSidebar aria-label="Sidebar menu">
-      <Logo href="/agents" img={SidebarLogo} imgAlt="SNMP Simulator logo">
-        SNMP Simulator
-      </Logo>
-
-      <Items>
-        <ItemGroup>
-          {sidebarItems.map(({ label, url, icon }) => (
-            <Item key={label} onClick={() => handleNavigate(url)} icon={icon} active={location.pathname.includes(url)}>
-              {label}
-            </Item>
-          ))}
-        </ItemGroup>
-      </Items>
+    <FlowbiteSidebar aria-label="Sidebar menu" theme={customTheme}>
+      <img src={logo} className="mx-auto" />
+      <Divider />
+      <DeviceTypes handleSelectedTypes={handleSelectedTypes} />
+      <Divider />
+      <DeviceStatus handleSelectStatus={handleSelectStatus} />
+      <Divider />
+      <HelpNav />
     </FlowbiteSidebar>
   )
 }

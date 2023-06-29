@@ -6,11 +6,12 @@ import { toast } from 'react-toastify'
 import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
-import { Device, DevicesQueryParams } from '../../models'
+import { Device, DeviceStatus, DevicesQueryParams } from '../../models'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
+import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes'
 import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
@@ -23,8 +24,15 @@ export const Devices = () => {
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
+    types: [],
+    status: DeviceStatus.ALL,
   })
-  const handlePaginationChange = (pageProps: PageProps) => setDeviceQueryParams(pageProps)
+  const handlePaginationChange = (pageProps: PageProps) => {
+    setDeviceQueryParams((query) => ({
+      ...query,
+      ...pageProps,
+    }))
+  }
 
   const { data: agents, isLoading: isAgentsLoading } = useFetchAgents()
   const { data: devices, isLoading: isDevicesLoading } = useFetchDevices(deviceQueryParams)
@@ -35,8 +43,28 @@ export const Devices = () => {
     setSelectedDevice(undefined)
   }, [])
 
+  const handleSelectedTypes = (payload: DeviceTypeCheck) => {
+    const types = [...deviceQueryParams.types]
+    if (payload.checked && !types.includes(payload.type)) {
+      types.push(payload.type)
+    } else if (!payload.checked && types.includes(payload.type)) {
+      types.filter((type) => type !== payload.type)
+    }
+    setDeviceQueryParams((query) => ({
+      ...query,
+      types,
+    }))
+  }
+
+  const handleSelectStatus = (deviceStatus: DeviceStatus) => {
+    setDeviceQueryParams((params) => ({
+      ...params,
+      status: deviceStatus,
+    }))
+  }
+
   return (
-    <PageWrapper>
+    <PageWrapper handleSelectedTypes={handleSelectedTypes} handleSelectStatus={handleSelectStatus}>
       <>
         {isLoading && (
           <div className="mt-64">
@@ -98,7 +126,6 @@ export const Devices = () => {
                 Delete
               </Button>
               <DarkThemeToggle />
-
             </div>
 
             <DataTableWithPatination<Device>
