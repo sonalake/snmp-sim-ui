@@ -4,20 +4,20 @@ import { Device } from '../../models'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { Checkbox } from '../Form/Checkbox'
 
-export type TypeCheck = {
+export type DeviceTypeCheck = {
   type: string
   checked: boolean
 }
 
-interface TypesProps {
-  handleSelectedTypes?: ({ type, checked }: TypeCheck) => void
+interface DeviceTypesProps {
+  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
 }
 
 interface DevicesByType {
   [key: string]: Device[]
 }
 
-export const Types: FC<TypesProps> = ({ handleSelectedTypes }) => {
+export const DeviceTypes: FC<DeviceTypesProps> = ({ handleSelectedTypes }) => {
   const { data: devices } = useFetchDevices()
 
   const deviceGroupsByType = useMemo(
@@ -40,7 +40,7 @@ export const Types: FC<TypesProps> = ({ handleSelectedTypes }) => {
 
   return (
     <div>
-      <h3 className="font-medium text-gray-800 dark:text-white mb-4">Devices</h3>
+      <h3 className="font-medium text-gray-800 dark:text-white mb-4">Device Types</h3>
       <form className="flex max-w-md flex-col gap-4">
         {deviceGroupsByType &&
           Object.entries(deviceGroupsByType).map(([type, devices]) => (

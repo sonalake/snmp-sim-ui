@@ -2,7 +2,7 @@ import { Button } from 'flowbite-react'
 import React, { FC } from 'react'
 import { DeviceStatus } from '../../models'
 
-interface StatusProps {
+interface DeviceStatusProps {
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
 }
 
@@ -12,7 +12,7 @@ const buttons = [
   { status: DeviceStatus.STOPPED, name: 'Stopped' },
 ]
 
-export const Status: FC<StatusProps> = ({ handleSelectStatus }) => {
+export const DeviceStatusComponent: FC<DeviceStatusProps> = ({ handleSelectStatus }) => {
   return (
     <div>
       <h3 className="font-medium text-gray-800 dark:text-white mb-4">Status</h3>

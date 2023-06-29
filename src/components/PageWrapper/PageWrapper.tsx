@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Sidebar } from '..'
 import { ALERT_AUTO_CLOSE_TIME } from '../../constants'
-import { TypeCheck } from '../Sidebar/Types'
+import { DeviceTypeCheck } from '../Sidebar/DeviceTypes'
 import { DeviceStatus } from '../../models'
 
 interface PageWrapperProps {
   children: JSX.Element | JSX.Element[]
-  handleSelectedTypes?: ({ type, checked }: TypeCheck) => void
+  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
 }
 

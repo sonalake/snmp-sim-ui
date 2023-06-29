@@ -5,12 +5,12 @@ import SidebarLogoWhite from '../../assets/images/logo-white.svg'
 
 import { Divider } from '../Divider/Divider'
 import { DeviceStatus } from '../../models'
-import { TypeCheck, Types } from './Types'
-import { Status } from './Status'
+import { DeviceTypeCheck, DeviceTypes } from './DeviceTypes'
+import { DeviceStatusComponent } from './DeviceStatus'
 import { HelpNav } from './HelpNav'
 
 interface SidebarProps {
-  handleSelectedTypes?: ({ type, checked }: TypeCheck) => void
+  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
 }
 
@@ -26,9 +26,9 @@ export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectSta
     <FlowbiteSidebar aria-label="Sidebar menu" theme={customTheme}>
       <img src={logo} className="mx-auto" />
       <Divider />
-      <Types handleSelectedTypes={handleSelectedTypes} />
+      <DeviceTypes handleSelectedTypes={handleSelectedTypes} />
       <Divider />
-      <Status handleSelectStatus={handleSelectStatus} />
+      <DeviceStatus handleSelectStatus={handleSelectStatus} />
       <Divider />
       <HelpNav />
     </FlowbiteSidebar>

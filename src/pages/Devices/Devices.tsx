@@ -11,7 +11,7 @@ import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
-import { TypeCheck } from '../../components/Sidebar/Types'
+import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes'
 import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
@@ -43,7 +43,7 @@ export const Devices = () => {
     setSelectedDevice(undefined)
   }, [])
 
-  const handleSelectedTypes = (payload: TypeCheck) => {
+  const handleSelectedTypes = (payload: DeviceTypeCheck) => {
     const types = [...deviceQueryParams.types]
     if (payload.checked && !types.includes(payload.type)) {
       types.push(payload.type)
