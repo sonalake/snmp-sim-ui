@@ -6,7 +6,7 @@ import SidebarLogoWhite from '../../assets/images/logo-white.svg'
 import { Divider } from '../Divider/Divider'
 import { DeviceStatus } from '../../models'
 import { DeviceTypeCheck, DeviceTypes } from './DeviceTypes'
-import { DeviceStatusComponent } from './DeviceStatus'
+import { DeviceStatusSelection } from './DeviceStatusSelection'
 import { HelpNav } from './HelpNav'
 
 interface SidebarProps {
@@ -28,7 +28,7 @@ export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectSta
       <Divider />
       <DeviceTypes handleSelectedTypes={handleSelectedTypes} />
       <Divider />
-      <DeviceStatus handleSelectStatus={handleSelectStatus} />
+      <DeviceStatusSelection handleSelectStatus={handleSelectStatus} />
       <Divider />
       <HelpNav />
     </FlowbiteSidebar>

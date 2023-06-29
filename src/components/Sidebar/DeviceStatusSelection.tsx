@@ -12,7 +12,7 @@ const buttons = [
   { status: DeviceStatus.STOPPED, name: 'Stopped' },
 ]
 
-export const DeviceStatusComponent: FC<DeviceStatusProps> = ({ handleSelectStatus }) => {
+export const DeviceStatusSelection: FC<DeviceStatusProps> = ({ handleSelectStatus }) => {
   return (
     <div>
       <h3 className="font-medium text-gray-800 dark:text-white mb-4">Status</h3>
