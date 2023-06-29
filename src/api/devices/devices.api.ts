@@ -18,13 +18,22 @@ async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceR
     page: queryParams?.page,
     page_size: queryParams?.pageSize,
     types: queryParams?.types,
+    status: queryParams?.status,
   }
   return baseApi.get('/api/devices', { params }).then((res) => mockedDevices)
 }
 
 export const useFetchDevices = (queryParams?: DevicesQueryParams) =>
   useQuery(
-    [QueryKey.DEVICES, { page: queryParams?.page, pageSize: queryParams?.pageSize, types: queryParams?.types }],
+    [
+      QueryKey.DEVICES,
+      {
+        page: queryParams?.page,
+        pageSize: queryParams?.pageSize,
+        types: queryParams?.types,
+        status: queryParams?.status,
+      },
+    ],
     () => fetchDevices(queryParams),
   )
 

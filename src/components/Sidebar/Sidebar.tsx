@@ -1,24 +1,36 @@
-import { Sidebar as FlowbiteSidebar } from 'flowbite-react'
+import { Sidebar as FlowbiteSidebar, useTheme } from 'flowbite-react'
 import React, { FC } from 'react'
-import SidebarLogo from '../../assets/images/logo.png'
-import { Divider } from '../Divider/Divider'
-import { TypeCheck, Types } from './Types'
+import SidebarLogoBlack from '../../assets/images/logo-black.svg'
+import SidebarLogoWhite from '../../assets/images/logo-white.svg'
 
-const { Logo } = FlowbiteSidebar
+import { Divider } from '../Divider/Divider'
+import { DeviceStatus } from '../../models'
+import { TypeCheck, Types } from './Types'
+import { Status } from './Status'
+import { HelpNav } from './HelpNav'
 
 interface SidebarProps {
   handleSelectedTypes?: ({ type, checked }: TypeCheck) => void
+  handleSelectStatus?: (deviceStatus: DeviceStatus) => void
 }
 
-export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes }) => {
+export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectStatus }) => {
+  const { mode } = useTheme()
+  const logo = mode === 'dark' ? SidebarLogoWhite : SidebarLogoBlack
+  const customTheme = {
+    root: {
+      inner: 'h-full overflow-y-auto overflow-x-hidden rounded bg-white py-4 px-3 dark:bg-gray-800',
+    },
+  }
   return (
-    <FlowbiteSidebar aria-label="Sidebar menu">
-      <Logo href="/agents" img={SidebarLogo} imgAlt="SNMP Simulator logo">
-        SNMP Simulator
-      </Logo>
+    <FlowbiteSidebar aria-label="Sidebar menu" theme={customTheme}>
+      <img src={logo} className="mx-auto" />
       <Divider />
       <Types handleSelectedTypes={handleSelectedTypes} />
       <Divider />
+      <Status handleSelectStatus={handleSelectStatus} />
+      <Divider />
+      <HelpNav />
     </FlowbiteSidebar>
   )
 }

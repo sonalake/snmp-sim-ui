@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
-import { Device, DevicesQueryParams } from '../../models'
+import { Device, DeviceStatus, DevicesQueryParams } from '../../models'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
@@ -25,6 +25,7 @@ export const Devices = () => {
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
     types: [],
+    status: DeviceStatus.ALL,
   })
   const handlePaginationChange = (pageProps: PageProps) => {
     setDeviceQueryParams((query) => ({
@@ -55,8 +56,15 @@ export const Devices = () => {
     }))
   }
 
+  const handleSelectStatus = (deviceStatus: DeviceStatus) => {
+    setDeviceQueryParams((params) => ({
+      ...params,
+      status: deviceStatus,
+    }))
+  }
+
   return (
-    <PageWrapper handleSelectedTypes={handleSelectedTypes}>
+    <PageWrapper handleSelectedTypes={handleSelectedTypes} handleSelectStatus={handleSelectStatus}>
       <>
         {isLoading && (
           <div className="mt-64">

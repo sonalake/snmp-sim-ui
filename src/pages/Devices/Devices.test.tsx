@@ -30,7 +30,7 @@ describe('Devices', () => {
     expect(await screen.findByText('No data to display')).toBeInTheDocument()
   })
 
-  it('should show left panel', async () => {
+  it('should show left panel and selection of device and status working', async () => {
     render(<Devices />)
     expect(await screen.findByText('Devices')).toBeInTheDocument()
     expect(await screen.findByText('OS Windows Server')).toBeInTheDocument()
@@ -47,6 +47,19 @@ describe('Devices', () => {
         page: 1,
         page_size: 10,
         types: ['OS Windows Server'],
+        status: 'all',
+      })
+    })
+
+    expect(await screen.findByText(/stopped/i)).toBeInTheDocument()
+
+    userEvent.click(screen.getByText(/stopped/i))
+    await waitFor(() => {
+      expect(baseApiMock.history.get[4].params).toEqual({
+        page: 1,
+        page_size: 10,
+        types: ['OS Windows Server'],
+        status: 'stopped',
       })
     })
   })
