@@ -1,9 +1,7 @@
-import { Row } from '@tanstack/react-table'
-import { Button, DarkThemeToggle } from 'flowbite-react'
-import React, { useCallback, useState } from 'react'
-import { HiPlay, HiPlusCircle, HiStop, HiTrash } from 'react-icons/hi'
-import { toast } from 'react-toastify'
-import { Alert, LoadingIndicator, PageProps, PageWrapper } from '../../components'
+import { Button, DarkThemeToggle, TextInput } from 'flowbite-react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { HiPlay, HiPlus, HiStop } from 'react-icons/hi'
+import { LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DeviceStatus, DevicesQueryParams } from '../../models'
@@ -12,21 +10,31 @@ import { useFetchDevices } from '../../api/devices/devices.api'
 import { useFetchAgents } from '../../api/agents/agents.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
 import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes'
+import { useDebounce } from '../../hooks/useDebounce'
 import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
-  const [selectedDevices, setSelectedDevices] = useState<Array<Row<Device>>>([])
   const [selectedDevice, setSelectedDevice] = useState<Device>()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState<string>()
 
-  const openModal = () => setIsModalOpen(true)
+  const debouncedSearchValue = useDebounce(searchValue)
+
 
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
     types: [],
     status: DeviceStatus.ALL,
+    search: '',
   })
+
+  useEffect(() => {
+    if (debouncedSearchValue !== deviceQueryParams.search && debouncedSearchValue !== undefined) {
+      setDeviceQueryParams((query) => ({ ...query, search: debouncedSearchValue }))
+    }
+  }, [debouncedSearchValue])
+
   const handlePaginationChange = (pageProps: PageProps) => {
     setDeviceQueryParams((query) => ({
       ...query,
@@ -63,6 +71,8 @@ export const Devices = () => {
     }))
   }
 
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => setSearchValue(event.target.value)
+
   return (
     <PageWrapper handleSelectedTypes={handleSelectedTypes} handleSelectStatus={handleSelectStatus}>
       <>
@@ -76,62 +86,37 @@ export const Devices = () => {
       <>
         {!!devices && (
           <>
-            <div className="flex items-center gap-1 justify-end mb-5">
-              <Button color="info" onClick={openModal}>
-                <ButtonIcon as={HiPlusCircle} />
-                Add
-              </Button>
-
-              <Button
-                color="success"
-                onClick={() =>
-                  toast(
-                    <Alert
-                      color="success"
-                      message={`${selectedDevices.length ? 'The selected devices were started!' : 'All devices were started!'
-                        } - to be implemented`}
-                    />,
-                  )
-                }
-              >
-                <ButtonIcon as={HiPlay} />
-                Start
-              </Button>
-
-              <Button
-                color="dark"
-                onClick={() =>
-                  toast(
-                    <Alert
-                      color="success"
-                      message={`${selectedDevices.length ? 'The selected devices were stopped!' : 'All devices were stopped!'
-                        } - to be implemented`}
-                    />,
-                  )
-                }
-              >
-                <ButtonIcon as={HiStop} />
-                Stop
-              </Button>
-
-              <Button
-                color="failure"
-                disabled={!selectedDevices.length}
-                onClick={() =>
-                  confirm('Delete the selected devices? - to be implemented') &&
-                  toast(<Alert color="success" message={'The selected devices were deleted! - to be implemented'} />)
-                }
-              >
-                <ButtonIcon as={HiTrash} />
-                Delete
-              </Button>
-              <DarkThemeToggle />
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <TextInput
+                  className="w-[520px]"
+                  placeholder="Search devices"
+                  value={debouncedSearchValue}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="flex items-center gap-2 justify-between">
+                <Button className="bg-blue-700 dark:bg-blue-700 text-white">
+                  <ButtonIcon as={HiPlus} />
+                  Add device
+                </Button>
+                <Button color="gray">
+                  <ButtonIcon as={HiPlay} />
+                  Start all
+                </Button>
+                <Button color="gray">
+                  <ButtonIcon as={HiStop} />
+                  Stop all
+                </Button>
+              </div>
+              <div>
+                <DarkThemeToggle />
+              </div>
             </div>
 
             <DataTableWithPatination<Device>
               items={devices.items}
               columns={devicesColumns}
-              handleSelectItems={setSelectedDevices}
               isSelectable={false}
               handlePaginationChange={handlePaginationChange}
               totalCount={devices.count}

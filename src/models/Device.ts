@@ -54,4 +54,5 @@ export interface DevicesQueryParams {
   pageSize: number
   types: string[]
   status: DeviceStatus
+  search: string
 }

@@ -22,7 +22,7 @@ describe('Devices', () => {
   it('should render the component', async () => {
     render(<Devices />)
 
-    expect(await screen.findByText('Add')).toBeInTheDocument()
+    expect(await screen.findByText('Add device')).toBeInTheDocument()
   })
 
   it('should render the table rows', async () => {
@@ -32,7 +32,7 @@ describe('Devices', () => {
 
   it('should show left panel and selection of device and status working', async () => {
     render(<Devices />)
-    expect(await screen.findByText('Devices')).toBeInTheDocument()
+    expect(await screen.findByText('Device Types')).toBeInTheDocument()
     expect(await screen.findByText('OS Windows Server')).toBeInTheDocument()
     expect(await screen.findByText('Dell 5448')).toBeInTheDocument()
     expect(await screen.findAllByText('1 device')).toHaveLength(2)
@@ -48,6 +48,7 @@ describe('Devices', () => {
         page_size: 10,
         types: ['OS Windows Server'],
         status: 'all',
+        search: '',
       })
     })
 
@@ -60,6 +61,20 @@ describe('Devices', () => {
         page_size: 10,
         types: ['OS Windows Server'],
         status: 'stopped',
+        search: '',
+      })
+    })
+
+    expect(screen.getByPlaceholderText(/search devices/i)).toBeInTheDocument()
+    userEvent.type(screen.getByPlaceholderText(/search devices/i), 'test')
+
+    await waitFor(() => {
+      expect(baseApiMock.history.get[5].params).toEqual({
+        page: 1,
+        page_size: 10,
+        types: ['OS Windows Server'],
+        status: 'stopped',
+        search: 'test',
       })
     })
   })

@@ -9,7 +9,7 @@ interface DataTableWithPatination<T> {
   totalCount: number
   pageProps: PageProps
   handlePaginationChange: (pageProps: PageProps) => void
-  handleSelectItems: (val: Array<Row<T>>) => void
+  handleSelectItems?: (val: Array<Row<T>>) => void
   isSelectable?: boolean
   disabled: boolean
 }
