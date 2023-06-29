@@ -19,6 +19,7 @@ async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceR
     page_size: queryParams?.pageSize,
     types: queryParams?.types,
     status: queryParams?.status,
+    search: queryParams?.search,
   }
   return baseApi.get('/api/devices', { params }).then((res) => mockedDevices)
 }
@@ -32,6 +33,7 @@ export const useFetchDevices = (queryParams?: DevicesQueryParams) =>
         pageSize: queryParams?.pageSize,
         types: queryParams?.types,
         status: queryParams?.status,
+        search: queryParams?.search,
       },
     ],
     () => fetchDevices(queryParams),

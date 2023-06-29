@@ -18,7 +18,7 @@ export const PageWrapper: FC<PageWrapperProps> = ({ children, handleSelectedType
     <div className="w-full h-screen flex dark:bg-gray-900">
       <Sidebar handleSelectedTypes={handleSelectedTypes} handleSelectStatus={handleSelectStatus} />
 
-      <div className="w-10/12 p-8 overflow-auto bg-gray-50">{children}</div>
+      <div className="w-10/12 p-8 overflow-auto bg-gray-50 dark:bg-gray-900">{children}</div>
     </div>
   </>
 )
