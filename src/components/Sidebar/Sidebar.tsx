@@ -22,7 +22,7 @@ export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectSta
   const logo = mode === 'dark' ? SidebarLogoWhite : SidebarLogoBlack
   const customTheme = {
     root: {
-      inner: 'h-full overflow-y-auto overflow-x-hidden rounded bg-white py-4 px-3 dark:bg-gray-800',
+      inner: 'h-full overflow-y-auto overflow-x-hidden bg-white py-4 px-3 dark:bg-gray-800 border-r-[1px] border-gray-400 dark:border-gray-600',
     },
   }
   return (
