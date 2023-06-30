@@ -38,7 +38,7 @@ export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectSta
         </div>
         <div className="flex flex-col gap-4">
           <HelpNav />
-          <div className="flex justify-between">
+          <div className="flex justify-between align-top">
             <p className="text-gray-400 dark:text-gray-400 font-normal text-xs align-bottom leading-5">
               Made with &nbsp;
               <HiHeart className="inline align-top" size="1.5em" />
