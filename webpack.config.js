@@ -42,7 +42,7 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
-        test: /\.(png|jpe?g|otf|svg)$/,
+        test: /\.(png|jpe?g|otf|svg|gif)$/,
         use: ['file-loader'],
       },
     ],

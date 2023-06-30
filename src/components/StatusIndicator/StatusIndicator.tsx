@@ -1,9 +1,9 @@
 import { Badge, CustomFlowbiteTheme, useTheme } from 'flowbite-react'
 import React, { FC, useMemo } from 'react'
-import { FanRunningLight } from '../Icons/FanRunningLight'
 import { FanStoppedLight } from '../Icons/FanStoppedLight'
-import { FanRunningDark } from '../Icons/FanRunningDark'
 import { FanStoppedDark } from '../Icons/FanStoppedDark'
+import fanRunningLight from '../../assets/images/fan_running_lightmode.gif'
+import fanRunningDark from '../../assets/images/fan_running_darkmode.gif'
 
 export const StatusIndicator: FC<{ title: string; isActive: boolean }> = ({ title, isActive }) => {
   const { mode } = useTheme()
@@ -16,18 +16,21 @@ export const StatusIndicator: FC<{ title: string; isActive: boolean }> = ({ titl
     },
   }
 
-  const fan = useMemo(() => {
-    if (isActive && mode === 'light') {
-      return FanRunningLight
-    }
-    if (isActive && mode === 'dark') {
-      return FanRunningDark
-    }
+  const staticFan = useMemo(() => {
     if (!isActive && mode === 'light') {
       return FanStoppedLight
     }
     if (!isActive && mode === 'dark') {
       return FanStoppedDark
+    }
+  }, [mode])
+
+  const runingFan = useMemo(() => {
+    if (isActive && mode === 'light') {
+      return fanRunningLight
+    }
+    if (isActive && mode === 'dark') {
+      return fanRunningDark
     }
   }, [mode])
 
@@ -38,10 +41,13 @@ export const StatusIndicator: FC<{ title: string; isActive: boolean }> = ({ titl
         className="flex items-center w-fit"
         style={{ borderRadius: '6px' }}
         color={isActive ? 'success' : 'warning'}
-        icon={fan}
+        icon={staticFan}
         theme={customTheme}
       >
-        {title}
+        <div className="flex items-center gap-1">
+          {runingFan && <img className="w-3 h-3" src={runingFan} />}
+          <div>{title}</div>
+        </div>
       </Badge>
     </span>
   )
