@@ -9,7 +9,7 @@ interface PageWrapperProps {
   children: JSX.Element | JSX.Element[]
   handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
-  activeStatus: DeviceStatus
+  activeStatus?: DeviceStatus
 }
 
 export const PageWrapper: FC<PageWrapperProps> = ({

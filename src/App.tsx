@@ -5,7 +5,7 @@ import { Flowbite } from 'flowbite-react'
 
 import { ErrorBoundary } from './components'
 import { useDetectUserConnection } from './hooks'
-import { AgentDetails, Agents, DeviceDetails, Devices, NoConnection, PageNotFound } from './pages'
+import { Devices, NoConnection, PageNotFound } from './pages'
 import { Providers } from './context/providers'
 
 export const App = () => {
@@ -18,13 +18,9 @@ export const App = () => {
           <ErrorBoundary>
             {isBrowserOnline ? (
               <Routes>
-                <Route path="/agents" element={<Agents />} />
-                <Route path="/agents/:id" element={<AgentDetails />} />
-
                 <Route path="/devices" element={<Devices />} />
-                <Route path="/devices/:id" element={<DeviceDetails />} />
 
-                <Route path="/" element={<Navigate to="/agents" />} />
+                <Route path="/" element={<Navigate to="/devices" />} />
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
             ) : (

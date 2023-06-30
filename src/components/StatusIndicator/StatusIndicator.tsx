@@ -2,8 +2,8 @@ import { Badge, CustomFlowbiteTheme, useTheme } from 'flowbite-react'
 import React, { FC, useMemo } from 'react'
 import { FanStoppedLight } from '../Icons/FanStoppedLight'
 import { FanStoppedDark } from '../Icons/FanStoppedDark'
-import fanRunningLight from '../../assets/images/fan_running_lightmode.gif'
-import fanRunningDark from '../../assets/images/fan_running_darkmode.gif'
+import FanRunningLight from '../../assets/images/fan_running_lightmode.gif'
+import FanRunningDark from '../../assets/images/fan_running_darkmode.gif'
 
 export const StatusIndicator: FC<{ title: string; isActive: boolean }> = ({ title, isActive }) => {
   const { mode } = useTheme()
@@ -27,10 +27,10 @@ export const StatusIndicator: FC<{ title: string; isActive: boolean }> = ({ titl
 
   const runingFan = useMemo(() => {
     if (isActive && mode === 'light') {
-      return fanRunningLight
+      return FanRunningLight
     }
     if (isActive && mode === 'dark') {
-      return fanRunningDark
+      return FanRunningDark
     }
   }, [mode])
 

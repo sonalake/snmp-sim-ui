@@ -4,7 +4,7 @@ import { DeviceStatus } from '../../models'
 
 interface DeviceStatusProps {
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
-  active: DeviceStatus
+  active?: DeviceStatus
 }
 
 const buttons = [

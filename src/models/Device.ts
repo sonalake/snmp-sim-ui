@@ -1,5 +1,3 @@
-import { Agent } from './Agent'
-
 interface SNMP_V1 {
   snmp_v1?: {
     community?: string
@@ -27,17 +25,11 @@ type SNMPProtocolAttributes = SNMP_V1 & SNMP_V2C & SNMP_V3
 export type SMNPVersion = keyof SNMPProtocolAttributes
 
 export interface Device {
-  [key: string]: string | number | Partial<Agent> | SNMPProtocolAttributes
+  [key: string]: string | number | SNMPProtocolAttributes
   id: string
   name: string
   type: string
   description: string
-  agent: {
-    id: string
-    name?: string
-    description?: string
-    snmp_data_url?: string
-  }
   snmp_host: string
   snmp_port: number
   snmp_protocol_attributes: SNMPProtocolAttributes

@@ -21,6 +21,7 @@ async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceR
     status: queryParams?.status,
     search: queryParams?.search,
   }
+  //@TODO replace mocked devices when backend ready
   return baseApi.get('/api/devices', { params }).then((res) => mockedDevices)
 }
 

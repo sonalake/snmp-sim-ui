@@ -1,4 +1,6 @@
-export const mockedDevices = {
+import { Device } from '../../models'
+
+export const mockedDevices: { count: number; items: Device[] } = {
   count: 21,
   items: [
     {
@@ -6,12 +8,6 @@ export const mockedDevices = {
       name: '5000',
       type: 'Accedian 1Gig',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 5000,
       snmp_protocol_attributes: {
@@ -25,12 +21,6 @@ export const mockedDevices = {
       name: '3005',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3005,
       snmp_protocol_attributes: {
@@ -44,12 +34,6 @@ export const mockedDevices = {
       name: '3009',
       type: 'Dell 5448',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3009,
       snmp_protocol_attributes: {
@@ -63,12 +47,6 @@ export const mockedDevices = {
       name: 'test',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: 'ee',
       snmp_port: 4,
       snmp_protocol_attributes: {
@@ -82,12 +60,6 @@ export const mockedDevices = {
       name: 'new one',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5ee22435-460f-4fb6-9cc4-a2c33af3fc3d',
-        name: 'agent 3',
-        description: 'super super agent',
-        snmp_data_url: 'not available',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3000,
       snmp_protocol_attributes: {
@@ -101,12 +73,6 @@ export const mockedDevices = {
       name: '3001',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3001,
       snmp_protocol_attributes: {
@@ -120,12 +86,6 @@ export const mockedDevices = {
       name: 'test',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: 'ba8e4004-8637-4793-8a42-68f450376ab9',
-        name: 'agent no name',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: 'a',
       snmp_port: 7,
       snmp_protocol_attributes: {
@@ -139,12 +99,6 @@ export const mockedDevices = {
       name: '3002',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3002,
       snmp_protocol_attributes: {
@@ -158,12 +112,6 @@ export const mockedDevices = {
       name: '3007',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3007,
       snmp_protocol_attributes: {
@@ -177,12 +125,6 @@ export const mockedDevices = {
       name: '3004',
       type: 'OS Windows Server',
       description: '',
-      agent: {
-        id: '5152c2d2-d2b2-4be1-a0eb-bcd27eb820e9',
-        name: 'aaaaaaa',
-        description: '',
-        snmp_data_url: 'test',
-      },
       snmp_host: '127.0.0.1',
       snmp_port: 3005,
       snmp_protocol_attributes: {

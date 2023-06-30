@@ -14,7 +14,7 @@ import { HelpNav } from './HelpNav'
 interface SidebarProps {
   handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
-  activeStatus: DeviceStatus
+  activeStatus?: DeviceStatus
 }
 
 export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectStatus, activeStatus }) => {

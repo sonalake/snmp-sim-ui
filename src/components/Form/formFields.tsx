@@ -1,11 +1,10 @@
-import { Agent, Device, FormField } from '../../models'
+import { Device, FormField } from '../../models'
 
 export const deviceInitialValues: Partial<Device> = {
   name: '',
   description: '',
   snmp_host: '',
   snmp_port: 0,
-  agent: { id: '' },
   snmp_protocol_attributes: {
     snmp_v1: { community: 'Public' },
   },
@@ -112,31 +111,5 @@ export const deviceSNMPFormFields: Record<
     type: 'TEXT',
     required: false,
     validation: 'Please provide a user',
-  },
-}
-
-export const agentInitialValues: Partial<Agent> = { name: '', description: '', snmp_data_url: '' }
-
-export const agentFormFields: Record<keyof Pick<Agent, 'name' | 'description' | 'snmp_data_url'>, FormField> = {
-  name: {
-    label: 'Name',
-    name: 'name',
-    type: 'TEXT',
-    required: true,
-    validation: 'Please provide a name',
-  },
-  description: {
-    label: 'Description',
-    name: 'description',
-    type: 'TEXT',
-    required: false,
-    validation: 'Please provide a description',
-  },
-  snmp_data_url: {
-    label: 'SNMP data URL',
-    name: 'snmp_data_url',
-    type: 'TEXT',
-    required: true,
-    validation: 'Please provide an SNMP data URL',
   },
 }

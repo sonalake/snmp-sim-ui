@@ -6,12 +6,6 @@ export const mockDevices: Device[] = [
     name: 'Device 1',
     type: 'OS Windows Server',
     description: 'Device 1 description',
-    agent: {
-      id: '1',
-      name: 'Agent 1',
-      description: 'Agent 1 description',
-      snmp_data_url: '',
-    },
     snmp_host: '192.168.104.14',
     snmp_port: 169,
     snmp_protocol_attributes: {
@@ -35,12 +29,6 @@ export const mockDevices: Device[] = [
     name: 'Device 2',
     type: 'Dell 5448',
     description: 'Device 2 description',
-    agent: {
-      id: '2',
-      name: 'Agent 2',
-      description: 'Agent 2 description',
-      snmp_data_url: '',
-    },
     snmp_host: '192.168.104.15',
     snmp_port: 170,
     snmp_protocol_attributes: {

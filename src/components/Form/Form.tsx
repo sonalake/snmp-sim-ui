@@ -1,12 +1,11 @@
 import { Button } from 'flowbite-react'
 import { Form as FormikForm, Formik, FormikValues } from 'formik'
 import React, { FC } from 'react'
-import { Agent, Device, FormField } from '../../models'
-import { AgentSelector } from './AgentSelector'
+import { Device, FormField } from '../../models'
 import { SNMPVersionSelector } from './SNMPVersionSelector'
 import { TextInput } from './TextInput'
 
-type InitialValues = Partial<Agent | Device>
+type InitialValues = Partial<Device>
 
 export const Form: FC<{
   formFields: Record<string, FormField>
@@ -35,27 +34,18 @@ export const Form: FC<{
       {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <FormikForm>
           {Object.values(formFields).map((item) => {
-            return item.type === 'TEXT' || item.type === 'NUMBER' ? (
-              <TextInput
-                key={item.name}
-                formItem={item}
-                touched={touched}
-                errors={errors}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-              />
-            ) : (
-              item.type === 'AGENT_SELECT' && (
-                <AgentSelector
+            return (
+              item.type === 'TEXT' ||
+              (item.type === 'NUMBER' && (
+                <TextInput
                   key={item.name}
                   formItem={item}
-                  value={(values.agent as Agent).id}
                   touched={touched}
                   errors={errors}
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                 />
-              )
+              ))
             )
           })}
 

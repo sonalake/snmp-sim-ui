@@ -1,5 +1,5 @@
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react'
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { HiPlay, HiPlus, HiStop } from 'react-icons/hi'
 import { LoadingIndicator, PageProps, PageWrapper } from '../../components'
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns'
@@ -7,16 +7,12 @@ import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants'
 import { Device, DeviceStatus, DevicesQueryParams } from '../../models'
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
 import { useFetchDevices } from '../../api/devices/devices.api'
-import { useFetchAgents } from '../../api/agents/agents.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
 import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes'
 import { useDebounce } from '../../hooks/useDebounce'
-import { DevicesModal } from './DevicesModal'
 
 export const Devices = () => {
-  const [selectedDevice, setSelectedDevice] = useState<Device>()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState<string>()
+  const [searchValue, setSearchValue] = useState<string>('')
 
   const debouncedSearchValue = useDebounce(searchValue)
 
@@ -41,14 +37,8 @@ export const Devices = () => {
     }))
   }
 
-  const { data: agents, isLoading: isAgentsLoading } = useFetchAgents()
-  const { data: devices, isLoading: isDevicesLoading } = useFetchDevices(deviceQueryParams)
+  const { data: devices, isLoading } = useFetchDevices(deviceQueryParams)
 
-  const isLoading = isAgentsLoading || isDevicesLoading
-  const onCloseModal = useCallback(() => {
-    setIsModalOpen(false)
-    setSelectedDevice(undefined)
-  }, [])
 
   const handleSelectedTypes = (payload: DeviceTypeCheck) => {
     const types = [...deviceQueryParams.types]
@@ -126,8 +116,6 @@ export const Devices = () => {
               disabled={isLoading}
               pageProps={deviceQueryParams}
             />
-
-            <DevicesModal isOpen={isModalOpen} onClose={onCloseModal} selectedDevice={selectedDevice} agents={agents} />
           </>
         )}
       </>
