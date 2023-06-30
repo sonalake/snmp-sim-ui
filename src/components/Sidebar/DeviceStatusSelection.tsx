@@ -4,6 +4,7 @@ import { DeviceStatus } from '../../models'
 
 interface DeviceStatusProps {
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
+  active: DeviceStatus
 }
 
 const buttons = [
@@ -12,7 +13,7 @@ const buttons = [
   { status: DeviceStatus.STOPPED, name: 'Stopped' },
 ]
 
-export const DeviceStatusSelection: FC<DeviceStatusProps> = ({ handleSelectStatus }) => {
+export const DeviceStatusSelection: FC<DeviceStatusProps> = ({ handleSelectStatus, active }) => {
   return (
     <div>
       <h3 className="font-medium text-gray-800 dark:text-white mb-4">Status</h3>
@@ -21,7 +22,7 @@ export const DeviceStatusSelection: FC<DeviceStatusProps> = ({ handleSelectStatu
           <Button
             key={btn.status}
             color="gray"
-            className="dark:text-white"
+            className={`dark:text-white ${active === btn.status ? 'bg-gray-200 dark:bg-blue-600' : ''}`}
             onClick={() => handleSelectStatus?.(btn.status)}
           >
             {btn.name}

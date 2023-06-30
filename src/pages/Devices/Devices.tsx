@@ -20,7 +20,6 @@ export const Devices = () => {
 
   const debouncedSearchValue = useDebounce(searchValue)
 
-
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
@@ -74,7 +73,11 @@ export const Devices = () => {
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => setSearchValue(event.target.value)
 
   return (
-    <PageWrapper handleSelectedTypes={handleSelectedTypes} handleSelectStatus={handleSelectStatus}>
+    <PageWrapper
+      handleSelectedTypes={handleSelectedTypes}
+      handleSelectStatus={handleSelectStatus}
+      activeStatus={deviceQueryParams.status}
+    >
       <>
         {isLoading && (
           <div className="mt-64">

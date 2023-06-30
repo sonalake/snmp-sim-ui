@@ -14,9 +14,10 @@ import { HelpNav } from './HelpNav'
 interface SidebarProps {
   handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void
+  activeStatus: DeviceStatus
 }
 
-export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectStatus }) => {
+export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectStatus, activeStatus }) => {
   const { mode } = useTheme()
   const logo = mode === 'dark' ? SidebarLogoWhite : SidebarLogoBlack
   const customTheme = {
@@ -32,7 +33,7 @@ export const Sidebar: FC<SidebarProps> = ({ handleSelectedTypes, handleSelectSta
           <Divider />
           <DeviceTypes handleSelectedTypes={handleSelectedTypes} />
           <Divider />
-          <DeviceStatusSelection handleSelectStatus={handleSelectStatus} />
+          <DeviceStatusSelection handleSelectStatus={handleSelectStatus} active={activeStatus} />
           <Divider />
         </div>
         <div className="flex flex-col gap-4">
