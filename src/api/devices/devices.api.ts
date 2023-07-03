@@ -14,15 +14,16 @@ export const useFetchDevice = (deviceId?: string) =>
   useQuery([QueryKey.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId })
 
 async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceResponse<Device>> {
-  const params = {
-    page: queryParams?.page,
-    page_size: queryParams?.pageSize,
-    types: queryParams?.types,
-    status: queryParams?.status,
-    search: queryParams?.search,
-  }
+  // const params = {
+  //   page: queryParams?.page,
+  //   page_size: queryParams?.pageSize,
+  //   types: queryParams?.types,
+  //   status: queryParams?.status,
+  //   search: queryParams?.search,
+  // }
   //@TODO replace mocked devices when backend ready
-  return baseApi.get('/api/devices', { params }).then((res) => mockedDevices)
+  // return baseApi.get('/api/devices', { params }).then((res) => res.data)
+  return Promise.resolve().then(() => mockedDevices)
 }
 
 export const useFetchDevices = (queryParams?: DevicesQueryParams) =>
