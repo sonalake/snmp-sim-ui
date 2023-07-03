@@ -33,6 +33,7 @@ export interface Device {
   snmp_host: string
   snmp_port: number
   snmp_protocol_attributes: SNMPProtocolAttributes
+  status: 'running' | 'stopped'
 }
 
 export enum DeviceStatus {

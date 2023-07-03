@@ -10,9 +10,14 @@ import { useFetchDevices } from '../../api/devices/devices.api'
 import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination'
 import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes'
 import { useDebounce } from '../../hooks/useDebounce'
+import { ViewToggle, ViewToggleState } from './ViewToggle'
+import { DeviceCard } from './DeviceCard'
 
 export const Devices = () => {
   const [searchValue, setSearchValue] = useState<string>('')
+  const [viewState, changeViewState] = useState<ViewToggleState>(ViewToggleState.LIST)
+
+  const handleStateChange = (state: ViewToggleState) => changeViewState(state)
 
   const debouncedSearchValue = useDebounce(searchValue)
 
@@ -38,7 +43,6 @@ export const Devices = () => {
   }
 
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams)
-
 
   const handleSelectedTypes = (payload: DeviceTypeCheck) => {
     const types = [...deviceQueryParams.types]
@@ -102,20 +106,29 @@ export const Devices = () => {
                   Stop all
                 </Button>
               </div>
-              <div>
+              <div className="flex items-center">
                 <DarkThemeToggle />
+                <ViewToggle viewState={viewState} changeViewState={handleStateChange} />
               </div>
             </div>
 
-            <DataTableWithPatination<Device>
-              items={devices.items}
-              columns={devicesColumns}
-              isSelectable={false}
-              handlePaginationChange={handlePaginationChange}
-              totalCount={devices.count}
-              disabled={isLoading}
-              pageProps={deviceQueryParams}
-            />
+            {viewState === ViewToggleState.LIST ? (
+              <DataTableWithPatination<Device>
+                items={devices.items}
+                columns={devicesColumns}
+                isSelectable={false}
+                handlePaginationChange={handlePaginationChange}
+                totalCount={devices.count}
+                disabled={isLoading}
+                pageProps={deviceQueryParams}
+              />
+            ) : (
+              <div className="flex flex-wrap items-start content-start gap-4 self-stretch">
+                {devices.items.map((device) => (
+                  <DeviceCard key={device.id} device={device} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </>

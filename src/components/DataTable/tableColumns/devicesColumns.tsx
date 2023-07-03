@@ -3,7 +3,6 @@ import React from 'react'
 import { Badge } from 'flowbite-react'
 import { StatusIndicator } from '../..'
 import { Device } from '../../../models'
-import { LOCALHOST } from '../../../constants'
 
 export type DevicesColumns = Array<ColumnDef<Device>>
 
@@ -42,11 +41,11 @@ export const devicesColumns: DevicesColumns = [
   },
   {
     header: 'Status',
-    accessorFn: (row) => row.snmp_host === LOCALHOST,
+    accessorFn: (row) => row.status,
     cell: ({ row }) => {
-      const isMockActive = row.original.snmp_host === LOCALHOST
+      const isActive = row.original.status === 'running'
 
-      return <StatusIndicator title={isMockActive ? 'Running' : 'Stopped'} isActive={isMockActive} />
+      return <StatusIndicator title={isActive ? 'Running' : 'Stopped'} isActive={isActive} />
     },
   },
 ]

@@ -4,6 +4,7 @@ export const mockDevices: Device[] = [
   {
     id: '8879489',
     name: 'Device 1',
+    status: 'stopped',
     type: 'OS Windows Server',
     description: 'Device 1 description',
     snmp_host: '192.168.104.14',
@@ -27,6 +28,7 @@ export const mockDevices: Device[] = [
   {
     id: '776539',
     name: 'Device 2',
+    status: 'running',
     type: 'Dell 5448',
     description: 'Device 2 description',
     snmp_host: '192.168.104.15',

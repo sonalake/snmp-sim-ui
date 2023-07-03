@@ -62,19 +62,14 @@ describe('Devices', () => {
         search: '',
       })
     })
+  })
 
-    // expect(screen.getByPlaceholderText(/search devices/i)).toBeInTheDocument()
-    // // userEvent.type(screen.getByPlaceholderText(/search devices/i), 'test')
-    // fireEvent.change(screen.getByPlaceholderText(/search devices/i), { target: { value: 'test' } })
-
-    // await waitFor(() => {
-    //   expect(baseApiMock.history.get[4].params).toEqual({
-    //     page: 1,
-    //     page_size: 10,
-    //     types: ['OS Windows Server'],
-    //     status: 'stopped',
-    //     search: 'test',
-    //   })
-    // })
+  it('should change view od devices properly', async () => {
+    render(<Devices />)
+    expect(await screen.findByTestId('view-toggle-button')).toBeInTheDocument()
+    expect(screen.queryAllByTestId('flowbite-card')).toHaveLength(0)
+    userEvent.click(screen.getByTestId('view-toggle-button'))
+    // returning mocked data - in devices.api.ts
+    expect(await screen.findAllByTestId('flowbite-card')).toHaveLength(10)
   })
 })
