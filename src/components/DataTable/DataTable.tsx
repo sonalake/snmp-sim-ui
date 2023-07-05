@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { HiChevronDown, HiChevronUp } from 'react-icons/hi';
 import {
   ColumnDef,
   flexRender,
@@ -5,23 +7,22 @@ import {
   getSortedRowModel,
   Row,
   SortingState,
-  useReactTable,
-} from '@tanstack/react-table'
-import { Table } from 'flowbite-react'
-import React, { useEffect, useState } from 'react'
-import { HiChevronDown, HiChevronUp } from 'react-icons/hi'
-import { DataTableCheckbox } from './DataTableCheckbox/DataTableCheckbox'
+  useReactTable
+} from '@tanstack/react-table';
+import { Table } from 'flowbite-react';
+
+import { DataTableCheckbox } from './DataTableCheckbox/DataTableCheckbox';
 
 interface Props<T> {
-  data: T[]
-  columns: Array<ColumnDef<T>>
-  isSelectable?: boolean
-  onSelection?: (val: Array<Row<T>>) => void
+  data: T[];
+  columns: Array<ColumnDef<T>>;
+  isSelectable?: boolean;
+  onSelection?: (val: Array<Row<T>>) => void;
 }
 
 export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Props<T>) => {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [rowSelection, setRowSelection] = useState({})
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -30,61 +31,61 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  })
+    getSortedRowModel: getSortedRowModel()
+  });
 
-  const { flatRows } = table.getSelectedRowModel()
+  const { flatRows } = table.getSelectedRowModel();
 
   useEffect(() => {
-    onSelection?.(flatRows)
-  }, [onSelection, flatRows])
+    onSelection?.(flatRows);
+  }, [onSelection, flatRows]);
 
   return (
-    <div className="rounded-lg shadow-md overflow-hidden">
-      <Table hoverable className="shadow-md">
-        <Table.Head className="border-b-[1px] dark:border-gray-700">
+    <div className='rounded-lg shadow-md overflow-hidden'>
+      <Table hoverable className='shadow-md'>
+        <Table.Head className='border-b-[1px] dark:border-gray-700'>
           {isSelectable && !!table.getRowModel().rows.length && (
-            <Table.HeadCell className="!p-4 hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+            <Table.HeadCell className='!p-4 hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'>
               <DataTableCheckbox
                 {...{
                   checked: table.getIsAllRowsSelected(),
                   indeterminate: table.getIsSomeRowsSelected(),
-                  onChange: table.getToggleAllRowsSelectedHandler(),
+                  onChange: table.getToggleAllRowsSelectedHandler()
                 }}
               />
             </Table.HeadCell>
           )}
 
-          {table.getHeaderGroups().map((headerGroup) =>
-            headerGroup.headers.map((header) => (
+          {table.getHeaderGroups().map(headerGroup =>
+            headerGroup.headers.map(header => (
               <Table.HeadCell
                 key={header.id}
                 colSpan={header.colSpan}
-                className="hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                className='hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
               >
                 {!header.isPlaceholder && (
-                  <div className="flex flex-col relative" style={{ minWidth: '5vw' }}>
-                    <div className="flex gap-1 items-center">
+                  <div className='flex flex-col relative' style={{ minWidth: '5vw' }}>
+                    <div className='flex gap-1 items-center'>
                       <div
                         {...{
                           className: header.column.getCanSort()
                             ? 'cursor-pointer select-none flex gap-1'
                             : 'flex justify-between gap-1',
-                          onClick: header.column.getToggleSortingHandler(),
+                          onClick: header.column.getToggleSortingHandler()
                         }}
                       >
-                        <div className="text-gray-500 font-semibold dark:text-gray-200">
+                        <div className='text-gray-500 font-semibold dark:text-gray-200'>
                           {flexRender(header.column.columnDef.header, header.getContext())}
                         </div>
                         {
                           {
                             asc: <HiChevronUp />,
-                            desc: <HiChevronDown />,
+                            desc: <HiChevronDown />
                           }[header.column.getIsSorted() as string]
                         }
 
                         {header.column.getCanSort() && !header.column.getIsSorted() && (
-                          <div className="flex flex-col h-4">
+                          <div className='flex flex-col h-4'>
                             <HiChevronUp style={{ marginBottom: '-2px' }} />
                             <HiChevronDown style={{ marginTop: '-2px' }} />
                           </div>
@@ -94,33 +95,33 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
                   </div>
                 )}
               </Table.HeadCell>
-            )),
+            ))
           )}
         </Table.Head>
 
-        <Table.Body className="divide-y">
+        <Table.Body className='divide-y'>
           {!table.getRowModel().rows.length ? (
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+            <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+              <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
                 No data to display
               </Table.Cell>
             </Table.Row>
           ) : (
-            table.getRowModel().rows.map((row) => (
-              <Table.Row key={row.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            table.getRowModel().rows.map(row => (
+              <Table.Row key={row.id} className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                 {isSelectable && (
-                  <Table.Cell className="!p-4">
+                  <Table.Cell className='!p-4'>
                     <DataTableCheckbox
                       {...{
                         checked: row.getIsSelected(),
                         indeterminate: row.getIsSomeSelected(),
-                        onChange: row.getToggleSelectedHandler(),
+                        onChange: row.getToggleSelectedHandler()
                       }}
                     />
                   </Table.Cell>
                 )}
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                {row.getVisibleCells().map(cell => (
+                  <Table.Cell key={cell.id} className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
                 ))}
@@ -130,5 +131,5 @@ export const DataTable = <T,>({ data, columns, isSelectable, onSelection }: Prop
         </Table.Body>
       </Table>
     </div>
-  )
-}
+  );
+};

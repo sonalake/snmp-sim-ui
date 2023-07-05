@@ -1,29 +1,26 @@
 module.exports = {
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'plugin:import/recommended',
-    'plugin:import/react',
-    'plugin:import/typescript',
+    'plugin:react/jsx-runtime',
+    'plugin:@typescript-eslint/recommended',
     'prettier',
     'plugin:jest/recommended',
-    'plugin:jest/style',
+    'plugin:jest/style'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'import', 'jest'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier', 'jest', 'simple-import-sort'],
   ignorePatterns: ['dist/'],
   env: {
     node: true,
     es6: true,
-    jest: true,
+    jest: true
   },
   parserOptions: {
     ecmaVersion: 6,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
-    'arrow-parens': ['error', 'always'],
     'no-unused-vars': 'off',
     'no-console': 'warn',
     '@typescript-eslint/ban-types': 'off',
@@ -39,23 +36,23 @@ module.exports = {
           constructors: 'no-public',
           methods: 'explicit',
           properties: 'off',
-          parameterProperties: 'explicit',
-        },
-      },
+          parameterProperties: 'explicit'
+        }
+      }
     ],
     '@typescript-eslint/array-type': [
       'error',
       {
         default: 'array-simple',
-        readonly: 'array-simple',
-      },
+        readonly: 'array-simple'
+      }
     ],
     'no-unused-expressions': [
       'error',
       {
         allowShortCircuit: true,
-        allowTernary: true,
-      },
+        allowTernary: true
+      }
     ],
     'prettier/prettier': 'error',
     'no-nested-ternary': 'error',
@@ -65,12 +62,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'error',
     'arrow-body-style': 'off',
     'jest/no-focused-tests': 'error',
-    'import/first': 'error',
-    'import/no-duplicates': 'error',
-    'import/no-unresolved': 'off',
-    'import/order': 'error',
-    'import/namespace': 'off',
-    'import/no-named-as-default': 0,
     'object-shorthand': 'error',
     'dot-notation': 'error',
     'no-caller': 'error',
@@ -93,11 +84,41 @@ module.exports = {
     'react/prop-types': ['off'],
     'jest/expect-expect': 'off',
     'jest/no-disabled-tests': 'off',
+    'simple-import-sort/imports': [
+      'warn',
+      {
+        groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+          // Node.js builtins. You could also generate this regex if you use a `.js` config.
+          // For example: `^(${require("module").builtinModules.join("|")})(/|$)`
+          [
+            '^(assert|buffer|child_process|cluster|console|crypto|dgram|dns|domain|events|fs|http|https|module|net|os|path|punycode|querystring|readline|repl|stream|string_decoder|sys|timers|tls|tty|url|util|vm|zlib|freelist|v8|process|async_hooks|http2|perf_hooks)(/.*|$)'
+          ],
+          // Packages.
+          [
+            '^react$',
+            // "tss-react/*",
+            '^react',
+            '^@?\\w'
+          ],
+          // Internal packages.
+          [
+            '^(api|assets|components|constants|context|hooks|models|pages|utils)(/.*|$)' // update as needed
+          ],
+          // Parent imports. Put `..` last.
+          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+          // Other relative imports. Put same-folder imports and `.` last.
+          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$']
+        ]
+      }
+    ],
+    'simple-import-sort/exports': 'warn'
   },
   settings: {
     react: {
-      version: 'detect',
-    },
+      version: 'detect'
+    }
   },
   overrides: [
     {
@@ -114,8 +135,8 @@ module.exports = {
         'testing-library/prefer-find-by': 'error',
         'testing-library/prefer-presence-queries': 'error',
         'testing-library/prefer-screen-queries': 'error',
-        '@typescript-eslint/no-var-requires': 'off',
-      },
-    },
-  ],
-}
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    }
+  ]
+};

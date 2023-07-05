@@ -1,26 +1,28 @@
-import React from 'react'
-import { render, screen } from '../../utils/testUtils/testUtils'
-import { ErrorBoundary } from './ErrorBoundary'
+import React from 'react';
 
-const testError = 'testError'
+import { render, screen } from '../../utils/testUtils/testUtils';
+
+import { ErrorBoundary } from './ErrorBoundary';
+
+const testError = 'testError';
 
 const ProblemChild = () => {
-  throw new Error(testError)
-}
+  throw new Error(testError);
+};
 
 describe('ErrorBoundary', () => {
   it(`should render error boundary component when there is an error`, async () => {
     // This is needed for suppressing the testError appearing as uncaught
-    jest.spyOn(console, 'error').mockImplementation(() => null)
+    jest.spyOn(console, 'error').mockImplementation(() => null);
 
     render(
       <ErrorBoundary>
         <ProblemChild />
-      </ErrorBoundary>,
-    )
+      </ErrorBoundary>
+    );
 
-    expect(await screen.findByText(testError)).toBeInTheDocument()
-    expect(await screen.findByText('Error')).toBeInTheDocument()
-    expect(await screen.findByText('Refresh')).toBeInTheDocument()
-  })
-})
+    expect(await screen.findByText(testError)).toBeInTheDocument();
+    expect(await screen.findByText('Error')).toBeInTheDocument();
+    expect(await screen.findByText('Refresh')).toBeInTheDocument();
+  });
+});

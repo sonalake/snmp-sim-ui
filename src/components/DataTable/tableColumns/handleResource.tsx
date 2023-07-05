@@ -1,19 +1,20 @@
-import axios, { AxiosError } from 'axios'
-import React from 'react'
-import { toast } from 'react-toastify'
-import { Alert } from '../..'
+import React from 'react';
+import { toast } from 'react-toastify';
+import axios, { AxiosError } from 'axios';
+
+import { Alert } from '../..';
 
 export const runDevice = async (id: string, isStart: boolean) => {
-  const message = `Device ${isStart ? 'started' : 'stopped'}!`
+  const message = `Device ${isStart ? 'started' : 'stopped'}!`;
 
   try {
-    await axios.put(`/api/devices/${id}/${isStart ? 'start' : 'stop'}`)
+    await axios.put(`/api/devices/${id}/${isStart ? 'start' : 'stop'}`);
 
-    toast(<Alert color="success" message={message} />)
+    toast(<Alert color='success' message={message} />);
   } catch (err) {
     toast(
       <Alert
-        color="failure"
+        color='failure'
         message={(err as Error)?.message}
         additionalContent={
           <>
@@ -22,7 +23,7 @@ export const runDevice = async (id: string, isStart: boolean) => {
             <span>{(err as AxiosError<{ error: string }>)?.response?.data?.error}</span>
           </>
         }
-      />,
-    )
+      />
+    );
   }
-}
+};

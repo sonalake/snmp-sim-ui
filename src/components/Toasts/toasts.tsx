@@ -1,14 +1,15 @@
-import { toast } from 'react-toastify'
-import React from 'react'
-import { AxiosError } from 'axios'
-import { Alert } from '../Alert/Alert'
+import React from 'react';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
-export const successToast = (message: string) => toast(<Alert color="success" message={message} />)
+import { Alert } from '../Alert/Alert';
+
+export const successToast = (message: string) => toast(<Alert color='success' message={message} />);
 
 export const errorToast = (err: unknown) =>
   toast(
     <Alert
-      color="failure"
+      color='failure'
       message={err instanceof Error ? err.message : ''}
       additionalContent={
         <>
@@ -21,5 +22,5 @@ export const errorToast = (err: unknown) =>
           )}
         </>
       }
-    />,
-  )
+    />
+  );

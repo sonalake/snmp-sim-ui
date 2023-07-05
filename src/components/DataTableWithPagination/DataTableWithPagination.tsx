@@ -1,17 +1,18 @@
-import React from 'react'
-import { ColumnDef, Row } from '@tanstack/react-table'
-import { DataTable } from '../DataTable/DataTable'
-import { PageProps, Pagination } from '../Pagination/Pagination'
+import React from 'react';
+import { ColumnDef, Row } from '@tanstack/react-table';
+
+import { DataTable } from '../DataTable/DataTable';
+import { PageProps, Pagination } from '../Pagination/Pagination';
 
 interface DataTableWithPatination<T> {
-  items: T[]
-  columns: Array<ColumnDef<T>>
-  totalCount: number
-  pageProps: PageProps
-  handlePaginationChange: (pageProps: PageProps) => void
-  handleSelectItems?: (val: Array<Row<T>>) => void
-  isSelectable?: boolean
-  disabled: boolean
+  items: T[];
+  columns: Array<ColumnDef<T>>;
+  totalCount: number;
+  pageProps: PageProps;
+  handlePaginationChange: (pageProps: PageProps) => void;
+  handleSelectItems?: (val: Array<Row<T>>) => void;
+  isSelectable?: boolean;
+  disabled: boolean;
 }
 export const DataTableWithPatination = <T,>({
   items,
@@ -21,7 +22,7 @@ export const DataTableWithPatination = <T,>({
   handlePaginationChange,
   handleSelectItems,
   isSelectable,
-  disabled,
+  disabled
 }: DataTableWithPatination<T>) => {
   return (
     <>
@@ -34,5 +35,5 @@ export const DataTableWithPatination = <T,>({
         pageProps={pageProps}
       />
     </>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { Device, FormField } from '../../models'
+import { Device, FormField } from '../../models';
 
 export const deviceInitialValues: Partial<Device> = {
   name: '',
@@ -6,9 +6,9 @@ export const deviceInitialValues: Partial<Device> = {
   snmp_host: '',
   snmp_port: 0,
   snmp_protocol_attributes: {
-    snmp_v1: { community: 'Public' },
-  },
-}
+    snmp_v1: { community: 'Public' }
+  }
+};
 
 export const deviceFormFields: Record<
   keyof Pick<Device, 'name' | 'description' | 'snmp_host' | 'snmp_port'> | 'agent.id',
@@ -19,37 +19,37 @@ export const deviceFormFields: Record<
     name: 'name',
     type: 'TEXT',
     required: true,
-    validation: 'Please provide a name',
+    validation: 'Please provide a name'
   },
   description: {
     label: 'Description',
     name: 'description',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide a description',
+    validation: 'Please provide a description'
   },
   snmp_host: {
     label: 'SNMP host',
     name: 'snmp_host',
     type: 'TEXT',
     required: true,
-    validation: 'Please provide an SNMP host',
+    validation: 'Please provide an SNMP host'
   },
   snmp_port: {
     label: 'SNMP port',
     name: 'snmp_port',
     type: 'NUMBER',
     required: true,
-    validation: 'Please provide an SNMP port',
+    validation: 'Please provide an SNMP port'
   },
   'agent.id': {
     label: 'Agent',
     name: 'agent.id',
     type: 'AGENT_SELECT',
     required: true,
-    validation: 'Please provide an agent',
-  },
-}
+    validation: 'Please provide an agent'
+  }
+};
 
 export const deviceSNMPFormFields: Record<
   | 'snmp_protocol_attributes.snmp_v1.community'
@@ -66,7 +66,7 @@ export const deviceSNMPFormFields: Record<
     name: 'snmp_protocol_attributes.snmp_v1.community',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide a community',
+    validation: 'Please provide a community'
   },
 
   'snmp_protocol_attributes.snmp_v2c.community': {
@@ -74,7 +74,7 @@ export const deviceSNMPFormFields: Record<
     name: 'snmp_protocol_attributes.snmp_v2c.community',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide a community',
+    validation: 'Please provide a community'
   },
 
   'snmp_protocol_attributes.snmp_v3.authentication': {
@@ -82,34 +82,34 @@ export const deviceSNMPFormFields: Record<
     name: 'snmp_protocol_attributes.snmp_v3.authentication',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide an authentication',
+    validation: 'Please provide an authentication'
   },
   'snmp_protocol_attributes.snmp_v3.authentication_password': {
     label: 'Authentication password',
     name: 'snmp_protocol_attributes.snmp_v3.authentication_password',
     type: 'TEXT',
     required: true,
-    validation: 'Please provide an authentication password',
+    validation: 'Please provide an authentication password'
   },
   'snmp_protocol_attributes.snmp_v3.encryption_key': {
     label: 'Encryption key',
     name: 'snmp_protocol_attributes.snmp_v3.encryption_key',
     type: 'TEXT',
     required: true,
-    validation: 'Please provide an encryption key',
+    validation: 'Please provide an encryption key'
   },
   'snmp_protocol_attributes.snmp_v3.encryption': {
     label: 'Encryption',
     name: 'snmp_protocol_attributes.snmp_v3.encryption',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide an encryption',
+    validation: 'Please provide an encryption'
   },
   'snmp_protocol_attributes.snmp_v3.user': {
     label: 'User',
     name: 'snmp_protocol_attributes.snmp_v3.user',
     type: 'TEXT',
     required: false,
-    validation: 'Please provide a user',
-  },
-}
+    validation: 'Please provide a user'
+  }
+};

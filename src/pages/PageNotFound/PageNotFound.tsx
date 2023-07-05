@@ -1,18 +1,19 @@
-import { Button } from 'flowbite-react'
-import React from 'react'
-import { HiOutlineArrowLeft } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
-import { PageWrapper, StatusDisplay } from '../../components'
-import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon'
+import React from 'react';
+import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+import { Button } from 'flowbite-react';
+
+import { PageWrapper, StatusDisplay } from '../../components';
+import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
 
 export const PageNotFound = () => (
   <PageWrapper>
     <StatusDisplay
-      icon="pageNotFound"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
+      icon='pageNotFound'
+      title='404'
+      subTitle='Sorry, the page you visited does not exist.'
       extraContent={
-        <Link to="/">
+        <Link to='/'>
           <Button>
             <ButtonIcon as={HiOutlineArrowLeft} />
             Back
@@ -21,4 +22,4 @@ export const PageNotFound = () => (
       }
     />
   </PageWrapper>
-)
+);

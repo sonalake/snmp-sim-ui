@@ -3,3 +3,4 @@ public
 dist
 bundle
 build
+webpack.config.js

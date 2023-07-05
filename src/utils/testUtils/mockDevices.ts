@@ -1,4 +1,4 @@
-import { Device } from '../../models/Device'
+import { Device } from '../../models/Device';
 
 export const mockDevices: Device[] = [
   {
@@ -11,19 +11,19 @@ export const mockDevices: Device[] = [
     snmp_port: 169,
     snmp_protocol_attributes: {
       snmp_v1: {
-        community: '',
+        community: ''
       },
       snmp_v2c: {
-        community: '',
+        community: ''
       },
       snmp_v3: {
         user: '',
         authentication: 'MD5',
         authentication_password: '',
         encryption: 'DES',
-        encryption_key: '',
-      },
-    },
+        encryption_key: ''
+      }
+    }
   },
   {
     id: '776539',
@@ -39,13 +39,13 @@ export const mockDevices: Device[] = [
         authentication: 'MD5',
         authentication_password: '',
         encryption: 'DES',
-        encryption_key: '',
-      },
-    },
-  },
-]
+        encryption_key: ''
+      }
+    }
+  }
+];
 
 export const devicesMockedResponse = {
   count: 2,
-  items: mockDevices,
-}
+  items: mockDevices
+};

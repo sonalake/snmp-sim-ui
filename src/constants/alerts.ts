@@ -1,0 +1,1 @@
+export const ALERT_AUTO_CLOSE_TIME = 2000;

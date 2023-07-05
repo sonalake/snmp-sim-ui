@@ -8,7 +8,13 @@
     "clean": "rimraf bundle & rimraf dist",
     "build": "./node_modules/.bin/webpack --env NODE_ENV=production --mode production",
     "start": "./node_modules/.bin/webpack serve --mode development --hot --history-api-fallback",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:staged": "eslint --cache --fix",
+    "lint:all": "eslint \"**/*.{ts,tsx,js,jsx,mjs}\" --cache --fix",
+    "prettier:staged": "prettier --write",
+    "prettier:all": "prettier \"**/*.{ts,tsx,js,jsx,mjs}\" --write",
+    "format:all": "yarn prettier:all && yarn lint:all"
   },
   "dependencies": {
     "@tanstack/react-table": "^8.9.2",
@@ -49,8 +55,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.7.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-testing-library": "^5.6.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
@@ -76,5 +83,14 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^5.8.0"
+  },
+  "engines": {
+    "node": "14.21.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "yarn lint:staged",
+      "yarn prettier:staged"
+    ]
   }
 }

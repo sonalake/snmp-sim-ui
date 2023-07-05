@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 
 jest.mock('@tanstack/react-table', () => ({
   getCoreRowModel: jest.fn(),
@@ -6,6 +6,6 @@ jest.mock('@tanstack/react-table', () => ({
   useReactTable: jest.fn().mockImplementation(() => ({
     getSelectedRowModel: jest.fn().mockImplementation(() => ({ flatRows: [] })),
     getHeaderGroups: jest.fn().mockImplementation(() => []),
-    getRowModel: jest.fn().mockImplementation(() => ({ rows: [] })),
-  })),
-}))
+    getRowModel: jest.fn().mockImplementation(() => ({ rows: [] }))
+  }))
+}));

@@ -1,15 +1,15 @@
-import React from 'react'
-import { Navigate } from 'react-router'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Flowbite } from 'flowbite-react'
+import React from 'react';
+import { Navigate } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Flowbite } from 'flowbite-react';
 
-import { ErrorBoundary } from './components'
-import { useDetectUserConnection } from './hooks'
-import { Devices, NoConnection, PageNotFound } from './pages'
-import { Providers } from './context/providers'
+import { Providers } from './context/providers';
+import { ErrorBoundary } from './components';
+import { useDetectUserConnection } from './hooks';
+import { Devices, NoConnection, PageNotFound } from './pages';
 
 export const App = () => {
-  const { isBrowserOnline } = useDetectUserConnection()
+  const { isBrowserOnline } = useDetectUserConnection();
 
   return (
     <Flowbite>
@@ -18,10 +18,10 @@ export const App = () => {
           <ErrorBoundary>
             {isBrowserOnline ? (
               <Routes>
-                <Route path="/devices" element={<Devices />} />
+                <Route path='/devices' element={<Devices />} />
 
-                <Route path="/" element={<Navigate to="/devices" />} />
-                <Route path="*" element={<PageNotFound />} />
+                <Route path='/' element={<Navigate to='/devices' />} />
+                <Route path='*' element={<PageNotFound />} />
               </Routes>
             ) : (
               <NoConnection />
@@ -30,5 +30,5 @@ export const App = () => {
         </BrowserRouter>
       </Providers>
     </Flowbite>
-  )
-}
+  );
+};

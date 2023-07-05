@@ -1,30 +1,31 @@
-import { Button } from 'flowbite-react'
-import React, { Component, ReactNode } from 'react'
-import { HiRefresh } from 'react-icons/hi'
-import { PageWrapper, StatusDisplay } from '..'
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon'
+import React, { Component, ReactNode } from 'react';
+import { HiRefresh } from 'react-icons/hi';
+import { Button } from 'flowbite-react';
+
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+import { PageWrapper, StatusDisplay } from '..';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface State {
-  error: Error | null
-  hasError: boolean
+  error: Error | null;
+  hasError: boolean;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     error: null,
-    hasError: false,
-  }
+    hasError: false
+  };
 
   public static getDerivedStateFromError(error: Error): State {
-    return { error, hasError: true }
+    return { error, hasError: true };
   }
 
   public componentDidCatch(error: Error) {
-    this.setState({ error })
+    this.setState({ error });
   }
 
   public render() {
@@ -32,8 +33,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <PageWrapper>
           <StatusDisplay
-            icon="error"
-            title="Error"
+            icon='error'
+            title='Error'
             subTitle={this.state.error.message}
             extraContent={
               <Button onClick={() => window.location.reload()}>
@@ -43,9 +44,9 @@ export class ErrorBoundary extends Component<Props, State> {
             }
           />
         </PageWrapper>
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }

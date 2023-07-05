@@ -1,4 +1,4 @@
-import { TailwindConfig } from 'tailwindcss/tailwind-config'
+import { TailwindConfig } from 'tailwindcss/tailwind-config';
 
-declare const config: TailwindConfig
-export default config
+declare const config: TailwindConfig;
+export default config;
