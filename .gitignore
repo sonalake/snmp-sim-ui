@@ -109,3 +109,6 @@ junit.xml
 
 # Built files
 bundle
+
+# misc
+.DS_Store

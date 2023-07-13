@@ -1,5 +1,7 @@
 # SNMP Simulator Web UI
 
+NOTE: this project supports Node v16 and higher
+
 ## Starting the project locally
 
 For running this project, you will first need to install [yarn](https://classic.yarnpkg.com/lang/en/docs/install).
