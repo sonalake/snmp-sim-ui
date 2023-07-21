@@ -1,16 +1,14 @@
 import { FC, useMemo } from 'react';
-import { HiHeart } from 'react-icons/hi';
 import { Sidebar, useTheme } from 'flowbite-react';
 
 import { Divider } from 'app/components';
 import { DeviceStatus } from 'app/models';
-import GithubLogo from 'assets/github.svg';
 import SidebarLogoBlack from 'assets/logo-black.svg';
 import SidebarLogoWhite from 'assets/logo-white.svg';
 
+import { DevicesSidebarFooter } from './DevicesSidebarFooter';
 import { DeviceStatusFilter } from './DeviceStatusFilter';
 import { DeviceTypeFilter } from './DeviceTypeFilter';
-import { HelpNav } from './HelpNav';
 
 interface DevicesSidebarProps {
   onSelectionChange: (values: string[]) => void;
@@ -39,17 +37,7 @@ export const DevicesSidebar: FC<DevicesSidebarProps> = ({ onSelectionChange, onS
           <DeviceStatusFilter onStatusSelect={onStatusSelect} />
           <Divider />
         </div>
-        <div className='flex flex-col gap-4'>
-          <HelpNav />
-          <div className='flex justify-between align-top'>
-            <p className='text-gray-400 dark:text-gray-400 font-normal text-xs align-bottom leading-5'>
-              Made with &nbsp;
-              <HiHeart className='inline align-top' size='1.5em' />
-              &nbsp; by Sonalake.
-            </p>
-            <img src={GithubLogo} className='inline' />
-          </div>
-        </div>
+        <DevicesSidebarFooter />
       </div>
     </Sidebar>
   );
