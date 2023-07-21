@@ -1,6 +1,6 @@
-import { Device } from '../../models';
+import { Device } from '../../app/models';
 
-export const mockedDevices: { count: number; items: Device[] } = {
+export const DEVICES: { count: number; items: Device[] } = {
   count: 21,
   items: [
     {

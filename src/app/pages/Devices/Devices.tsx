@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { HiPlay, HiPlus, HiStop } from 'react-icons/hi';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
-import { useFetchDevices } from '../../api/devices/devices.api';
+import { useFetchDevices } from '../../api/devices.api';
 import { LoadingIndicator, PageProps, PageWrapper } from '../../components';
 import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
 import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns';

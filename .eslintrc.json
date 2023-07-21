@@ -46,6 +46,10 @@
             "^react",
             "^@?\\w"
           ],
+          // Mock API related items.
+          [
+            "^(mock-api)(/.*|$)" // update as needed
+          ],
           // Internal packages.
           [
             "^(app|assets)(/.*|$)" // update as needed

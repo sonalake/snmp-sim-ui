@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Device, DevicesQueryParams, ResourceResponse } from '../../models';
-import { baseApi } from '../api';
-import { HTTPRequestMethod } from '../api.model';
-import { mutateResource } from '../helpers';
-import { QueryKey } from '../query-keys';
+import { Device, DevicesQueryParams, ResourceResponse } from 'app/models';
 
-import { mockedDevices } from './mocked-devices';
+import { baseApi } from './api';
+import { HTTPRequestMethod } from './api.model';
+import { mutateResource } from './helpers';
+import { QueryKey } from './query-keys';
 
 async function fetchDevice(deviceId?: string): Promise<Device> {
   return baseApi.get(`/api/devices/${deviceId}`).then(res => res.data);
@@ -15,33 +14,21 @@ async function fetchDevice(deviceId?: string): Promise<Device> {
 export const useFetchDevice = (deviceId?: string) =>
   useQuery([QueryKey.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId });
 
-async function fetchDevices(queryParams?: DevicesQueryParams): Promise<ResourceResponse<Device>> {
-  // const params = {
-  //   page: queryParams?.page,
-  //   page_size: queryParams?.pageSize,
-  //   types: queryParams?.types,
-  //   status: queryParams?.status,
-  //   search: queryParams?.search
-  // };
-  //@TODO replace mocked devices when backend ready
-  // return baseApi.get('/api/devices', { params }).then(res => res.data);
-  return Promise.resolve().then(() => mockedDevices);
-}
+export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
+  const params = {
+    page: queryParams?.page,
+    pageSize: queryParams?.pageSize,
+    types: queryParams?.types,
+    status: queryParams?.status,
+    search: queryParams?.search
+  };
 
-export const useFetchDevices = (queryParams?: DevicesQueryParams) =>
-  useQuery(
-    [
-      QueryKey.DEVICES,
-      {
-        page: queryParams?.page,
-        pageSize: queryParams?.pageSize,
-        types: queryParams?.types,
-        status: queryParams?.status,
-        search: queryParams?.search
-      }
-    ],
-    () => fetchDevices(queryParams)
-  );
+  return useQuery({
+    queryKey: [QueryKey.DEVICES, params],
+    queryFn: () =>
+      baseApi.get<ResourceResponse<Device>>('/api/devices', { params }).then(res => res.data)
+  });
+};
 
 export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
   return mutateResource<Omit<Device, 'id'>, Device>({

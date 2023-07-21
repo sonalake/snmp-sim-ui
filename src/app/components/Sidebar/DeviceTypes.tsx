@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useMemo } from 'react';
 import { Label } from 'flowbite-react';
 
-import { useFetchDevices } from '../../api/devices/devices.api';
+import { useFetchDevices } from '../../api/devices.api';
 import { Device } from '../../models';
 import { Checkbox } from '../Form/Checkbox';
 
