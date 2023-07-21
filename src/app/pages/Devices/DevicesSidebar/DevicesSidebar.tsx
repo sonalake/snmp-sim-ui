@@ -1,22 +1,20 @@
 import { FC, useMemo } from 'react';
 import { HiHeart } from 'react-icons/hi';
-import { Sidebar as FlowbiteSidebar, useTheme } from 'flowbite-react';
+import { Sidebar, useTheme } from 'flowbite-react';
 
+import { Divider } from 'app/components';
+import { DeviceStatus } from 'app/models';
 import GithubLogo from 'assets/github.svg';
 import SidebarLogoBlack from 'assets/logo-black.svg';
 import SidebarLogoWhite from 'assets/logo-white.svg';
 
-import { Divider } from '../../../components/Divider/Divider';
-import { DeviceStatus } from '../../../models';
-
-import { DeviceStatusSelection } from './DeviceStatusSelection';
-import { DeviceTypeCheck, DeviceTypes } from './DeviceTypes';
+import { DeviceStatusFilter } from './DeviceStatusFilter';
+import { DeviceTypeFilter } from './DeviceTypeFilter';
 import { HelpNav } from './HelpNav';
 
-interface SidebarProps {
-  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void;
-  handleSelectStatus?: (deviceStatus: DeviceStatus) => void;
-  activeStatus?: DeviceStatus;
+interface DevicesSidebarProps {
+  onSelectionChange: (values: string[]) => void;
+  onStatusSelect: (value: DeviceStatus) => void;
 }
 
 const customTheme = {
@@ -26,23 +24,19 @@ const customTheme = {
   }
 };
 
-export const Sidebar: FC<SidebarProps> = ({
-  handleSelectedTypes,
-  handleSelectStatus,
-  activeStatus
-}) => {
+export const DevicesSidebar: FC<DevicesSidebarProps> = ({ onSelectionChange, onStatusSelect }) => {
   const { mode } = useTheme();
   const logo = useMemo(() => (mode === 'dark' ? SidebarLogoWhite : SidebarLogoBlack), [mode]);
 
   return (
-    <FlowbiteSidebar aria-label='Sidebar menu' theme={customTheme}>
+    <Sidebar aria-label='Sidebar menu' theme={customTheme}>
       <div className='flex flex-col justify-between h-full'>
         <div>
           <img src={logo} />
           <Divider />
-          <DeviceTypes handleSelectedTypes={handleSelectedTypes} />
+          <DeviceTypeFilter onSelectionChange={onSelectionChange} />
           <Divider />
-          <DeviceStatusSelection handleSelectStatus={handleSelectStatus} active={activeStatus} />
+          <DeviceStatusFilter onStatusSelect={onStatusSelect} />
           <Divider />
         </div>
         <div className='flex flex-col gap-4'>
@@ -57,6 +51,6 @@ export const Sidebar: FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-    </FlowbiteSidebar>
+    </Sidebar>
   );
 };

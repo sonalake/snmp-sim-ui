@@ -1,25 +1,22 @@
-import { ChangeEvent, FC, useMemo } from 'react';
+import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Label } from 'flowbite-react';
 
-import { useFetchDevices } from '../../../api/devices.api';
-import { Checkbox } from '../../../components/Form/Checkbox';
-import { Device } from '../../../models';
+import { useFetchDevices } from 'app/api/devices.api';
+import { Checkbox } from 'app/components/Form/Checkbox';
+import { Device } from 'app/models';
 
-export type DeviceTypeCheck = {
-  type: string;
-  checked: boolean;
-};
-
-interface DeviceTypesProps {
-  handleSelectedTypes?: ({ type, checked }: DeviceTypeCheck) => void;
+interface DeviceTypeFilterProps {
+  onSelectionChange: (values: string[]) => void;
 }
 
 interface DevicesByType {
   [key: string]: Device[];
 }
 
-export const DeviceTypes: FC<DeviceTypesProps> = ({ handleSelectedTypes }) => {
+export const DeviceTypeFilter: FC<DeviceTypeFilterProps> = ({ onSelectionChange }) => {
   const { data } = useFetchDevices();
+
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const deviceGroupsByType = useMemo(
     () =>
@@ -32,11 +29,15 @@ export const DeviceTypes: FC<DeviceTypesProps> = ({ handleSelectedTypes }) => {
     [data]
   );
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { id, checked }
-    } = event;
-    handleSelectedTypes?.({ type: id, checked });
+  const handleChange = ({ target: { id, checked } }: ChangeEvent<HTMLInputElement>) => {
+    const types = [...selectedTypes];
+    if (checked && !types.includes(id)) {
+      types.push(id);
+    } else if (!checked && types.includes(id)) {
+      types.filter(type => type !== id);
+    }
+    setSelectedTypes(types);
+    onSelectionChange(types);
   };
 
   return (

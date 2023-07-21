@@ -6,18 +6,17 @@ import { useFetchDevices } from 'app/api/devices.api';
 import {
   ButtonIcon,
   DataTableWithPatination,
+  DevicesSidebar,
   LoadingIndicator,
   PageProps,
-  PageWrapper,
-  Sidebar
+  PageWrapper
 } from 'app/components';
-import { devicesColumns } from 'app/components/DataTable/tableColumns/devicesColumns';
 import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from 'app/constants';
 import { useDebounce } from 'app/hooks';
 import { Device, DevicesQueryParams, DeviceStatus } from 'app/models';
-import { DeviceTypeCheck } from 'app/pages/Devices/DevicesSidebar/DeviceTypes';
 
 import { DeviceCard } from './DeviceCard';
+import { devicesColumns } from './devicesColumns';
 import { ViewToggle, ViewToggleState } from './ViewToggle';
 
 export const Devices = () => {
@@ -51,20 +50,13 @@ export const Devices = () => {
 
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
-  const handleSelectedTypes = (payload: DeviceTypeCheck) => {
-    const types = [...deviceQueryParams.types];
-    if (payload.checked && !types.includes(payload.type)) {
-      types.push(payload.type);
-    } else if (!payload.checked && types.includes(payload.type)) {
-      types.filter(type => type !== payload.type);
-    }
+  const handleSelectionChange = (types: string[]) =>
     setDeviceQueryParams(query => ({
       ...query,
       types
     }));
-  };
 
-  const handleSelectStatus = (deviceStatus: DeviceStatus) => {
+  const handleStatusSelect = (deviceStatus: DeviceStatus) => {
     setDeviceQueryParams(params => ({
       ...params,
       status: deviceStatus
@@ -77,10 +69,9 @@ export const Devices = () => {
   return (
     <PageWrapper
       sidebarComponent={
-        <Sidebar
-          handleSelectedTypes={handleSelectedTypes}
-          handleSelectStatus={handleSelectStatus}
-          activeStatus={deviceQueryParams.status}
+        <DevicesSidebar
+          onSelectionChange={handleSelectionChange}
+          onStatusSelect={handleStatusSelect}
         />
       }
     >

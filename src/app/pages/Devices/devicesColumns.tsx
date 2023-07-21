@@ -1,12 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from 'flowbite-react';
 
-import { Device } from '../../../models';
-import { StatusIndicator } from '../..';
+import { StatusIndicator } from 'app/components';
+import { Device } from 'app/models';
 
-export type DevicesColumns = Array<ColumnDef<Device>>;
-
-export const devicesColumns: DevicesColumns = [
+export const devicesColumns: ColumnDef<Device>[] = [
   {
     header: 'Name',
     accessorFn: row => row.name,
@@ -44,7 +42,6 @@ export const devicesColumns: DevicesColumns = [
     accessorFn: row => row.status,
     cell: ({ row }) => {
       const isActive = row.original.status === 'running';
-
       return <StatusIndicator title={isActive ? 'Running' : 'Stopped'} isActive={isActive} />;
     }
   }

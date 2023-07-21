@@ -1,6 +1,6 @@
 import { Avatar } from 'flowbite-react';
 
-import { VerticalDivider } from '../../../components/Divider/Divider';
+import { VerticalDivider } from 'app/components';
 
 const styles = {
   root: {
