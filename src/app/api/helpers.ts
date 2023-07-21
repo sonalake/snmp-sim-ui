@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
-import { baseApi } from './api';
 import { MutateResourceConfig } from './api.model';
+import { baseApi } from './baseApi';
 
 export async function mutateResource<T, R>(config: MutateResourceConfig<T>): Promise<R> {
   const { method, url, body } = config;

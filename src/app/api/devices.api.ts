@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Device, DevicesQueryParams, ResourceResponse } from 'app/models';
 
-import { baseApi } from './api';
 import { HTTPRequestMethod } from './api.model';
+import { baseApi } from './baseApi';
 import { mutateResource } from './helpers';
 import { QueryKey } from './query-keys';
 
