@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Button } from 'flowbite-react';
 
-import { DeviceStatus } from '../../models';
+import { DeviceStatus } from '../../../models';
 
 interface DeviceStatusProps {
   handleSelectStatus?: (deviceStatus: DeviceStatus) => void;

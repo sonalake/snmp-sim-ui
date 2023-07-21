@@ -2,15 +2,20 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { HiPlay, HiPlus, HiStop } from 'react-icons/hi';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
-import { useFetchDevices } from '../../api/devices.api';
-import { LoadingIndicator, PageProps, PageWrapper } from '../../components';
-import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
-import { devicesColumns } from '../../components/DataTable/tableColumns/devicesColumns';
-import { DataTableWithPatination } from '../../components/DataTableWithPagination/DataTableWithPagination';
-import { DeviceTypeCheck } from '../../components/Sidebar/DeviceTypes';
-import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants';
-import { useDebounce } from '../../hooks/useDebounce';
-import { Device, DevicesQueryParams, DeviceStatus } from '../../models';
+import { useFetchDevices } from 'app/api/devices.api';
+import {
+  ButtonIcon,
+  DataTableWithPatination,
+  LoadingIndicator,
+  PageProps,
+  PageWrapper,
+  Sidebar
+} from 'app/components';
+import { devicesColumns } from 'app/components/DataTable/tableColumns/devicesColumns';
+import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from 'app/constants';
+import { useDebounce } from 'app/hooks';
+import { Device, DevicesQueryParams, DeviceStatus } from 'app/models';
+import { DeviceTypeCheck } from 'app/pages/Devices/DevicesSidebar/DeviceTypes';
 
 import { DeviceCard } from './DeviceCard';
 import { ViewToggle, ViewToggleState } from './ViewToggle';
@@ -71,9 +76,13 @@ export const Devices = () => {
 
   return (
     <PageWrapper
-      handleSelectedTypes={handleSelectedTypes}
-      handleSelectStatus={handleSelectStatus}
-      activeStatus={deviceQueryParams.status}
+      sidebarComponent={
+        <Sidebar
+          handleSelectedTypes={handleSelectedTypes}
+          handleSelectStatus={handleSelectStatus}
+          activeStatus={deviceQueryParams.status}
+        />
+      }
     >
       <>
         {isLoading && (

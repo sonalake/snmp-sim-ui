@@ -7,8 +7,6 @@ interface ButtonIconProps {
   className?: string;
 }
 
-export const ButtonIcon: FC<ButtonIconProps> = ({ as, onClick, className }) => {
-  const Icon = as;
-
-  return <Icon className={`${className} mr-2 h-5 w-5 cursor-pointer`} onClick={onClick} />;
-};
+export const ButtonIcon: FC<ButtonIconProps> = ({ as: Icon, onClick, className }) => (
+  <Icon className={`${className} mr-2 h-5 w-5 cursor-pointer`} onClick={onClick} />
+);

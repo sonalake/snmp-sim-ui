@@ -6,8 +6,8 @@ import GithubLogo from 'assets/github.svg';
 import SidebarLogoBlack from 'assets/logo-black.svg';
 import SidebarLogoWhite from 'assets/logo-white.svg';
 
-import { DeviceStatus } from '../../models';
-import { Divider } from '../Divider/Divider';
+import { Divider } from '../../../components/Divider/Divider';
+import { DeviceStatus } from '../../../models';
 
 import { DeviceStatusSelection } from './DeviceStatusSelection';
 import { DeviceTypeCheck, DeviceTypes } from './DeviceTypes';

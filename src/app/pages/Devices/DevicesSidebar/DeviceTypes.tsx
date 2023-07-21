@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useMemo } from 'react';
 import { Label } from 'flowbite-react';
 
-import { useFetchDevices } from '../../api/devices.api';
-import { Device } from '../../models';
-import { Checkbox } from '../Form/Checkbox';
+import { useFetchDevices } from '../../../api/devices.api';
+import { Checkbox } from '../../../components/Form/Checkbox';
+import { Device } from '../../../models';
 
 export type DeviceTypeCheck = {
   type: string;

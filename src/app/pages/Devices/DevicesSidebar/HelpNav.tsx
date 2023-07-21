@@ -1,6 +1,6 @@
 import { Avatar } from 'flowbite-react';
 
-import { VerticalDivider } from '../Divider/Divider';
+import { VerticalDivider } from '../../../components/Divider/Divider';
 
 const styles = {
   root: {
@@ -15,6 +15,8 @@ export const HelpNav = () => (
   <div className='flex gap-2 items-center'>
     <Avatar theme={styles} alt='PH' placeholderInitials='PH' rounded size='sm' />
     <VerticalDivider />
-    <div className='text-blue-700 dark:text-blue-200 cursor-pointer font-medium text-sm'>Logout</div>
+    <div className='text-blue-700 dark:text-blue-200 cursor-pointer font-medium text-sm'>
+      Logout
+    </div>
   </div>
 );
