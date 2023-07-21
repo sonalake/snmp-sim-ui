@@ -41,12 +41,11 @@ export const Devices = () => {
     }
   }, [debouncedSearchValue, deviceQueryParams.search]);
 
-  const handlePaginationChange = (pageProps: PageProps) => {
+  const handlePaginationChange = (pageProps: PageProps) =>
     setDeviceQueryParams(query => ({
       ...query,
       ...pageProps
     }));
-  };
 
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
@@ -56,12 +55,11 @@ export const Devices = () => {
       types
     }));
 
-  const handleStatusSelect = (deviceStatus: DeviceStatus) => {
+  const handleStatusSelect = (deviceStatus: DeviceStatus) =>
     setDeviceQueryParams(params => ({
       ...params,
       status: deviceStatus
     }));
-  };
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(event.target.value);

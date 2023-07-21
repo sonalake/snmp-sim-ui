@@ -30,11 +30,11 @@ export const DeviceTypeFilter: FC<DeviceTypeFilterProps> = ({ onSelectionChange 
   );
 
   const handleChange = ({ target: { id, checked } }: ChangeEvent<HTMLInputElement>) => {
-    const types = [...selectedTypes];
+    let types = [...selectedTypes];
     if (checked && !types.includes(id)) {
       types.push(id);
     } else if (!checked && types.includes(id)) {
-      types.filter(type => type !== id);
+      types = [...selectedTypes].filter(type => type !== id);
     }
     setSelectedTypes(types);
     onSelectionChange(types);
