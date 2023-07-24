@@ -5,8 +5,4 @@ export enum HTTPRequestMethod {
   DELETE = 'delete'
 }
 
-export interface MutateResourceConfig<T> {
-  method: HTTPRequestMethod;
-  url: string;
-  body?: T;
-}
+export const API_ROOT = '/api';

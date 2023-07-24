@@ -5,7 +5,7 @@ export * from './DataTable/DataTable';
 export * from './DataTableWithPagination/DataTableWithPagination';
 export * from './Divider';
 export * from './ErrorBoundary/ErrorBoundary';
-export * from './Form/Form';
+export * from './Inputs/Checkbox';
 export * from './LoadingIndicator/LoadingIndicator';
 export * from './Modal/Modal';
 export * from './PageWrapper/PageWrapper';

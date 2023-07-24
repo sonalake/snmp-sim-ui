@@ -3,7 +3,7 @@ import { HiUpload } from 'react-icons/hi';
 import { Badge, Card } from 'flowbite-react';
 
 import { StatusIndicator } from 'app/components';
-import { Device } from 'app/models';
+import { Device } from 'app/types';
 
 interface DeviceCardProps {
   device: Device;

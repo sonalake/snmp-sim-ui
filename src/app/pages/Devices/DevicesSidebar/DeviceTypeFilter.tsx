@@ -2,8 +2,8 @@ import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Label } from 'flowbite-react';
 
 import { useFetchDevices } from 'app/api/devices.api';
-import { Checkbox } from 'app/components/Form/Checkbox';
-import { Device } from 'app/models';
+import { Checkbox } from 'app/components';
+import { Device } from 'app/types';
 
 interface DeviceTypeFilterProps {
   onSelectionChange: (values: string[]) => void;

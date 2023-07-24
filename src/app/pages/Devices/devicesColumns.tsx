@@ -2,7 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from 'flowbite-react';
 
 import { StatusIndicator } from 'app/components';
-import { Device } from 'app/models';
+import { Device } from 'app/types';
 
 export const devicesColumns: ColumnDef<Device>[] = [
   {

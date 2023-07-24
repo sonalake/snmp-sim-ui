@@ -1,4 +1,4 @@
-import { Device } from '../../app/models';
+import { Device } from 'app/types';
 
 export const DEVICES: Device[] = [
   {

@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { Sidebar, useTheme } from 'flowbite-react';
 
 import { Divider } from 'app/components';
-import { DeviceStatus } from 'app/models';
+import { DeviceStatus } from 'app/constants';
 import SidebarLogoBlack from 'assets/logo-black.svg';
 import SidebarLogoWhite from 'assets/logo-white.svg';
 

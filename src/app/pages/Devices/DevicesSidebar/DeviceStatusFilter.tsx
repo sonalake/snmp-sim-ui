@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { Button } from 'flowbite-react';
 
-import { DeviceStatus } from 'app/models';
+import { DeviceStatus } from 'app/constants';
 
 interface DeviceStatusFilterProps {
   onStatusSelect: (deviceStatus: DeviceStatus) => void;

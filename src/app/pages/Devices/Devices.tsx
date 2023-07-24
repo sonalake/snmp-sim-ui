@@ -11,9 +11,9 @@ import {
   PageProps,
   PageWrapper
 } from 'app/components';
-import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from 'app/constants';
+import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from 'app/constants';
 import { useDebounce } from 'app/hooks';
-import { Device, DevicesQueryParams, DeviceStatus } from 'app/models';
+import { Device, DevicesQueryParams } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
 import { devicesColumns } from './devicesColumns';
@@ -22,8 +22,6 @@ import { ViewToggle, ViewToggleState } from './ViewToggle';
 export const Devices = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [viewState, changeViewState] = useState<ViewToggleState>(ViewToggleState.LIST);
-
-  const handleStateChange = (state: ViewToggleState) => changeViewState(state);
 
   const debouncedSearchValue = useDebounce(searchValue);
 
@@ -35,19 +33,13 @@ export const Devices = () => {
     search: ''
   });
 
-  useEffect(() => {
-    if (debouncedSearchValue !== deviceQueryParams.search && debouncedSearchValue !== undefined) {
-      setDeviceQueryParams(query => ({ ...query, search: debouncedSearchValue }));
-    }
-  }, [debouncedSearchValue, deviceQueryParams.search]);
+  const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
   const handlePaginationChange = (pageProps: PageProps) =>
     setDeviceQueryParams(query => ({
       ...query,
       ...pageProps
     }));
-
-  const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
   const handleSelectionChange = (types: string[]) =>
     setDeviceQueryParams(query => ({
@@ -63,6 +55,14 @@ export const Devices = () => {
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(event.target.value);
+
+  const handleStateChange = (state: ViewToggleState) => changeViewState(state);
+
+  useEffect(() => {
+    if (debouncedSearchValue !== deviceQueryParams.search && debouncedSearchValue !== undefined) {
+      setDeviceQueryParams(query => ({ ...query, search: debouncedSearchValue }));
+    }
+  }, [debouncedSearchValue, deviceQueryParams.search]);
 
   return (
     <PageWrapper

@@ -1,18 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Device, DevicesQueryParams, ResourceResponse } from 'app/models';
+import { API_ROOT, HTTPRequestMethod } from 'app/constants';
+import { Device, DevicesQueryParams, ListResponse } from 'app/types';
 
-import { HTTPRequestMethod } from './api.model';
-import { baseApi } from './baseApi';
-import { mutateResource } from './helpers';
-import { QueryKey } from './query-keys';
+import { BASE_API, QUERY_KEYS } from './constants';
+import { mutateResource } from './utils';
+
+const DEVICES_API_ROOT = `${API_ROOT}/devices`;
 
 async function fetchDevice(deviceId?: string): Promise<Device> {
-  return baseApi.get(`/api/devices/${deviceId}`).then(res => res.data);
+  return BASE_API.get(`${DEVICES_API_ROOT}/${deviceId}`).then(res => res.data);
 }
 
 export const useFetchDevice = (deviceId?: string) =>
-  useQuery([QueryKey.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId });
+  useQuery([QUERY_KEYS.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId });
 
 export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
   const params = {
@@ -24,16 +25,16 @@ export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
   };
 
   return useQuery({
-    queryKey: [QueryKey.DEVICES, params],
+    queryKey: [QUERY_KEYS.DEVICES, params],
     queryFn: () =>
-      baseApi.get<ResourceResponse<Device>>('/api/devices', { params }).then(res => res.data)
+      BASE_API.get<ListResponse<Device>>(DEVICES_API_ROOT, { params }).then(res => res.data)
   });
 };
 
 export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
   return mutateResource<Omit<Device, 'id'>, Device>({
     method: HTTPRequestMethod.POST,
-    url: '/api/devices',
+    url: DEVICES_API_ROOT,
     body: device
   });
 }
@@ -41,7 +42,7 @@ export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
 export function updateDevice(device: Device): Promise<Device> {
   return mutateResource<Device, Device>({
     method: HTTPRequestMethod.PUT,
-    url: `/api/devices/${device.id}`,
+    url: `/${DEVICES_API_ROOT}/${device.id}`,
     body: device
   });
 }
@@ -49,20 +50,20 @@ export function updateDevice(device: Device): Promise<Device> {
 export function deleteDevice(deviceId: string): Promise<Device> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.DELETE,
-    url: `/api/devices/${deviceId}`
+    url: `/${DEVICES_API_ROOT}/${deviceId}`
   });
 }
 
 export function startDevice(deviceId: string): Promise<unknown> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.PUT,
-    url: `/api/devices/${deviceId}/start`
+    url: `/${DEVICES_API_ROOT}/${deviceId}/start`
   });
 }
 
 export function stopDevice(deviceId: string): Promise<unknown> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.PUT,
-    url: `/api/devices/${deviceId}/stop`
+    url: `/${DEVICES_API_ROOT}/${deviceId}/stop`
   });
 }
