@@ -1,7 +1,7 @@
 import { FC, ReactNode, useMemo } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import { ALERT_AUTO_CLOSE_TIME } from 'app/constants';
+import { ALERT_AUTO_CLOSE_TIME, MAIN_CONTENT_WITH_SIDEBAR_WIDTH } from 'app/constants';
 
 import { Sidebar } from '../Sidebar/Sidebar';
 
@@ -16,7 +16,10 @@ export const PageWrapper: FC<PageWrapperProps> = ({
   withSidebar = false,
   sidebarContent = <div />
 }) => {
-  const mainWidth = useMemo(() => (withSidebar ? 'w-10/12' : 'w-full'), [withSidebar]);
+  const mainWidth = useMemo(
+    () => (withSidebar ? MAIN_CONTENT_WITH_SIDEBAR_WIDTH : 'w-full'),
+    [withSidebar]
+  );
 
   return (
     <>

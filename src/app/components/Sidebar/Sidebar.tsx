@@ -2,6 +2,7 @@ import { FC, PropsWithChildren, useMemo } from 'react';
 import { Sidebar as FlowbiteSidebar, useTheme } from 'flowbite-react';
 
 import { Divider } from 'app/components';
+import { SIDEBAR_WIDTH } from 'app/constants';
 import SidebarLogoBlack from 'assets/logo-black.svg';
 import SidebarLogoWhite from 'assets/logo-white.svg';
 
@@ -9,8 +10,11 @@ import { SidebarFooter } from './SidebarFooter';
 
 const customTheme = {
   root: {
+    collapsed: {
+      off: SIDEBAR_WIDTH
+    },
     inner:
-      'h-full overflow-y-auto overflow-x-hidden bg-white py-4 px-3 dark:bg-gray-800 border-r-[1px] border-gray-400 dark:border-gray-600'
+      'h-full overflow-y-auto overflow-x-hidden bg-white pt-4 pb-3 px-3 dark:bg-gray-800 border-r-[1px] border-gray-400 dark:border-gray-600'
   }
 };
 

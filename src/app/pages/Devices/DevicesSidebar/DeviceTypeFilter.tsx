@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Label } from 'flowbite-react';
 
 import { useFetchDevices } from 'app/api/devices.api';
-import { Checkbox } from 'app/components';
+import { Checkbox, Heading } from 'app/components';
 import { Device } from 'app/types';
 
 interface DeviceTypeFilterProps {
@@ -42,17 +42,17 @@ export const DeviceTypeFilter: FC<DeviceTypeFilterProps> = ({ onSelectionChange 
 
   return (
     <div>
-      <h3 className='font-medium text-gray-800 dark:text-white mb-4'>Device Types</h3>
+      <Heading.H3>Device Types</Heading.H3>
       <form className='flex max-w-md flex-col gap-4'>
         {deviceGroupsByType &&
           Object.entries(deviceGroupsByType).map(([type, devices]) => (
             <div className='flex items-start gap-2' key={type}>
               <Checkbox id={type} onChange={handleChange} />
               <Label htmlFor={type}>
-                <div className='leading-3 text-sm text-gray-900 dark:text-white font-medium'>
+                <div className='text-sm leading-4 font-medium text-gray-900 dark:text-white'>
                   {type}
                 </div>
-                <div className='text-sx text-gray-500 dark:text-gray-400 font-normal'>
+                <div className='text-xs leading-normal font-normal text-gray-500 dark:text-gray-400'>
                   {devices.length} device{devices.length > 1 ? 's' : ''}
                 </div>
               </Label>

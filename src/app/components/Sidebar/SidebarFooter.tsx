@@ -1,7 +1,6 @@
 import { HiHeart } from 'react-icons/hi';
 import { Avatar } from 'flowbite-react';
 
-import { VerticalDivider } from 'app/components';
 import GithubLogo from 'assets/github.svg';
 
 const customTheme = {
@@ -17,13 +16,16 @@ export const SidebarFooter = () => (
   <div className='flex flex-col gap-4'>
     <div className='flex gap-2 items-center'>
       <Avatar theme={customTheme} alt='PH' placeholderInitials='PH' rounded size='sm' />
-      <VerticalDivider />
-      <div className='text-blue-700 dark:text-blue-200 cursor-pointer font-medium text-sm'>
+      <div className='h-full border-l-[1px] border-gray-200 dark:border-gray-700' />
+      <a
+        href='#'
+        className='font-medium text-sm hover:underline text-primary-700 dark:text-primary-200'
+      >
         Logout
-      </div>
+      </a>
     </div>
-    <div className='flex justify-between align-top'>
-      <p className='text-gray-400 dark:text-gray-400 font-normal text-xs align-bottom leading-5'>
+    <div className='flex justify-between items-center'>
+      <p className='text-xs leading-normal text-gray-400 dark:text-gray-400'>
         {'Made with '}
         <HiHeart className='inline align-top' size='1.5em' />
         {' by Sonalake.'}

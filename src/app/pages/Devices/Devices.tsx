@@ -6,7 +6,6 @@ import { useFetchDevices } from 'app/api/devices.api';
 import {
   ButtonIcon,
   DataTableWithPatination,
-  DevicesSidebarContent,
   LoadingIndicator,
   PageProps,
   PageWrapper
@@ -17,6 +16,7 @@ import { Device, DevicesQueryParams } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
 import { devicesColumns } from './devicesColumns';
+import { DevicesSidebarContent } from './DevicesSidebar';
 import { ViewToggle, ViewToggleState } from './ViewToggle';
 
 export const Devices = () => {
