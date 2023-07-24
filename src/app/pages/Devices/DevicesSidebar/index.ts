@@ -1,1 +1,1 @@
-export * from './DevicesSidebar';
+export * from './DevicesSidebarContent';

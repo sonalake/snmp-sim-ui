@@ -6,7 +6,7 @@ import { useFetchDevices } from 'app/api/devices.api';
 import {
   ButtonIcon,
   DataTableWithPatination,
-  DevicesSidebar,
+  DevicesSidebarContent,
   LoadingIndicator,
   PageProps,
   PageWrapper
@@ -66,8 +66,9 @@ export const Devices = () => {
 
   return (
     <PageWrapper
-      sidebarComponent={
-        <DevicesSidebar
+      withSidebar={true}
+      sidebarContent={
+        <DevicesSidebarContent
           onSelectionChange={handleSelectionChange}
           onStatusSelect={handleStatusSelect}
         />

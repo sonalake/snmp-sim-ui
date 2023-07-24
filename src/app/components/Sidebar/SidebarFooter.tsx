@@ -13,7 +13,7 @@ const customTheme = {
   }
 };
 
-export const DevicesSidebarFooter = () => (
+export const SidebarFooter = () => (
   <div className='flex flex-col gap-4'>
     <div className='flex gap-2 items-center'>
       <Avatar theme={customTheme} alt='PH' placeholderInitials='PH' rounded size='sm' />

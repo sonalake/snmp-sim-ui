@@ -10,6 +10,7 @@ export * from './LoadingIndicator/LoadingIndicator';
 export * from './Modal/Modal';
 export * from './PageWrapper/PageWrapper';
 export * from './Pagination/Pagination';
+export * from './Sidebar/Sidebar';
 export * from './StatusDisplay/StatusDisplay';
 export * from './StatusIndicator/StatusIndicator';
 export * from './StyledLink/StyledLink';

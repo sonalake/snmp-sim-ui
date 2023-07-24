@@ -3,13 +3,20 @@ import { ToastContainer } from 'react-toastify';
 
 import { ALERT_AUTO_CLOSE_TIME } from 'app/constants';
 
+import { Sidebar } from '../Sidebar/Sidebar';
+
 interface PageWrapperProps {
   children: JSX.Element | JSX.Element[];
-  sidebarComponent?: ReactNode;
+  withSidebar?: boolean;
+  sidebarContent?: ReactNode;
 }
 
-export const PageWrapper: FC<PageWrapperProps> = ({ children, sidebarComponent }) => {
-  const mainWidth = useMemo(() => (sidebarComponent ? 'w-10/12' : 'w-full'), [sidebarComponent]);
+export const PageWrapper: FC<PageWrapperProps> = ({
+  children,
+  withSidebar = false,
+  sidebarContent = <div />
+}) => {
+  const mainWidth = useMemo(() => (withSidebar ? 'w-10/12' : 'w-full'), [withSidebar]);
 
   return (
     <>
@@ -21,7 +28,7 @@ export const PageWrapper: FC<PageWrapperProps> = ({ children, sidebarComponent }
       />
 
       <div className='w-full h-screen flex dark:bg-gray-900'>
-        {sidebarComponent}
+        {withSidebar && <Sidebar>{sidebarContent}</Sidebar>}
         <div className={`${mainWidth} p-8 overflow-auto bg-gray-50 dark:bg-gray-900`}>
           {children}
         </div>
