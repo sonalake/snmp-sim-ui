@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi';
+import { HiChevronUpDown } from 'react-icons/hi2';
 import {
   ColumnDef,
   flexRender,
@@ -42,12 +43,12 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
   }, [onSelection, rowSelection, table]);
 
   return (
-    <div className='rounded-lg shadow-md overflow-hidden'>
+    <div className='relative overflow-x-auto shadow-md rounded-lg'>
       {!!table && (
         <Table hoverable className='shadow-md'>
           <Table.Head className='border-b-[1px] dark:border-gray-700'>
             {isSelectable && !!table.getRowModel().rows.length && (
-              <Table.HeadCell className='!p-4 hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'>
+              <Table.HeadCell className='!p-4 hover:bg-primary-50 dark:hover:bg-gray-700 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300'>
                 <DataTableCheckbox
                   {...{
                     checked: table.getIsAllRowsSelected(),
@@ -63,7 +64,7 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
                 <Table.HeadCell
                   key={header.id}
                   colSpan={header.colSpan}
-                  className='hover:bg-gray-50 dark:hover:bg-gray-600 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200'
+                  className='p-4 hover:bg-primary-50 dark:hover:bg-gray-700 bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300'
                 >
                   {!header.isPlaceholder && (
                     <div className='flex flex-col relative' style={{ minWidth: '5vw' }}>
@@ -76,21 +77,18 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
                             onClick: header.column.getToggleSortingHandler()
                           }}
                         >
-                          <div className='text-gray-500 font-semibold dark:text-gray-200'>
+                          <div className='text-gray-500 font-semibold dark:text-gray-300'>
                             {flexRender(header.column.columnDef.header, header.getContext())}
                           </div>
                           {
                             {
-                              asc: <HiChevronUp />,
-                              desc: <HiChevronDown />
+                              asc: <HiChevronUp size='16' />,
+                              desc: <HiChevronDown size='16' />
                             }[header.column.getIsSorted() as string]
                           }
 
                           {header.column.getCanSort() && !header.column.getIsSorted() && (
-                            <div className='flex flex-col h-4'>
-                              <HiChevronUp style={{ marginBottom: '-2px' }} />
-                              <HiChevronDown style={{ marginTop: '-2px' }} />
-                            </div>
+                            <HiChevronUpDown size='16' />
                           )}
                         </div>
                       </div>
@@ -103,14 +101,17 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
 
           <Table.Body className='divide-y'>
             {!table.getRowModel().rows.length ? (
-              <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+              <Table.Row className='hover:bg-primary-50 dark:hover:bg-gray-700 bg-white dark:border-gray-700 dark:bg-gray-800'>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-gray-200'>
                   No data to display
                 </Table.Cell>
               </Table.Row>
             ) : (
               table.getRowModel().rows.map(row => (
-                <Table.Row key={row.id} className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+                <Table.Row
+                  key={row.id}
+                  className='hover:bg-primary-50 dark:hover:bg-gray-700 bg-white dark:border-gray-700 dark:bg-gray-800'
+                >
                   {isSelectable && (
                     <Table.Cell className='!p-4'>
                       <DataTableCheckbox
@@ -125,7 +126,7 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
                   {row.getVisibleCells().map(cell => (
                     <Table.Cell
                       key={cell.id}
-                      className='whitespace-nowrap font-medium text-gray-900 dark:text-white'
+                      className='p-4 whitespace-nowrap font-normal text-gray-900 dark:text-gray-200'
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Table.Cell>

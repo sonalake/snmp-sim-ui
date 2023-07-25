@@ -3,6 +3,7 @@ export * from './ButtonIcon/ButtonIcon';
 export * from './DataTable/DataTable';
 export * from './DataTableWithPagination/DataTableWithPagination';
 export * from './ErrorBoundary/ErrorBoundary';
+export * from './Icons';
 export * from './Inputs/Checkbox';
 export * from './LoadingIndicator/LoadingIndicator';
 export * from './Modal/Modal';

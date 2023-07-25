@@ -21,11 +21,8 @@ import { DevicesSidebarContent } from './DevicesSidebar';
 import { DevicesViewToggle } from './DevicesViewToggle';
 
 export const Devices = () => {
-  const [searchValue, setSearchValue] = useState<string>('');
   const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
-
-  const debouncedSearchValue = useDebounce(searchValue);
-
+  const [searchValue, setSearchValue] = useState<string>('');
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
@@ -33,6 +30,8 @@ export const Devices = () => {
     status: DeviceStatus.ALL,
     search: ''
   });
+
+  const debouncedSearchValue = useDebounce(searchValue);
 
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
@@ -86,7 +85,7 @@ export const Devices = () => {
       <>
         {!!devices && (
           <>
-            <div className='flex items-center justify-between gap-4 mb-5'>
+            <div className='flex items-center justify-between gap-4 mb-10'>
               <div className='grow max-w-[520px]'>
                 <TextInput
                   className='w-auto'
