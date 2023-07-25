@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { HiPlay, HiPlus, HiStop } from 'react-icons/hi';
+import { HiPlus, HiStop } from 'react-icons/hi';
+import { HiPlay } from 'react-icons/hi2';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
 import { useFetchDevices } from 'app/api/devices.api';
@@ -10,18 +11,18 @@ import {
   PageProps,
   PageWrapper
 } from 'app/components';
-import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from 'app/constants';
+import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION, ViewState } from 'app/constants';
 import { useDebounce } from 'app/hooks';
 import { Device, DevicesQueryParams } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
 import { devicesColumns } from './devicesColumns';
 import { DevicesSidebarContent } from './DevicesSidebar';
-import { ViewToggle, ViewToggleState } from './ViewToggle';
+import { DevicesViewToggle } from './DevicesViewToggle';
 
 export const Devices = () => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const [viewState, changeViewState] = useState<ViewToggleState>(ViewToggleState.LIST);
+  const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
 
   const debouncedSearchValue = useDebounce(searchValue);
 
@@ -56,7 +57,7 @@ export const Devices = () => {
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(event.target.value);
 
-  const handleStateChange = (state: ViewToggleState) => changeViewState(state);
+  const handleStateChange = (state: ViewState) => changeViewState(state);
 
   useEffect(() => {
     if (debouncedSearchValue !== deviceQueryParams.search && debouncedSearchValue !== undefined) {
@@ -85,36 +86,36 @@ export const Devices = () => {
       <>
         {!!devices && (
           <>
-            <div className='flex items-center justify-between mb-5'>
-              <div>
+            <div className='flex items-center justify-between gap-4 mb-5'>
+              <div className='grow max-w-[520px]'>
                 <TextInput
-                  className='w-[520px]'
+                  className='w-auto'
                   placeholder='Search devices'
                   value={debouncedSearchValue}
                   onChange={handleSearchChange}
                 />
               </div>
               <div className='flex items-center gap-2 justify-between'>
-                <Button className='bg-blue-700 dark:bg-blue-700 text-white'>
+                <Button className='bg-primary-700 dark:bg-primary-700 text-white'>
                   <ButtonIcon as={HiPlus} />
                   Add device
                 </Button>
-                <Button color='gray'>
+                <Button color='gray' className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'>
                   <ButtonIcon as={HiPlay} />
                   Start all
                 </Button>
-                <Button color='gray'>
+                <Button color='gray' className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'>
                   <ButtonIcon as={HiStop} />
                   Stop all
                 </Button>
               </div>
               <div className='flex items-center'>
                 <DarkThemeToggle />
-                <ViewToggle viewState={viewState} changeViewState={handleStateChange} />
+                <DevicesViewToggle viewState={viewState} changeViewState={handleStateChange} />
               </div>
             </div>
 
-            {viewState === ViewToggleState.LIST ? (
+            {viewState === ViewState.LIST ? (
               <DataTableWithPatination<Device>
                 items={devices.items}
                 columns={devicesColumns}

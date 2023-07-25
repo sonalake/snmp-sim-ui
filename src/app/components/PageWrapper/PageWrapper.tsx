@@ -30,11 +30,9 @@ export const PageWrapper: FC<PageWrapperProps> = ({
         hideProgressBar
       />
 
-      <div className='w-full h-screen flex dark:bg-gray-900'>
+      <div className='w-full h-screen flex bg-gray-50 dark:bg-gray-900'>
         {withSidebar && <Sidebar>{sidebarContent}</Sidebar>}
-        <div className={`${mainWidth} p-8 overflow-auto bg-gray-50 dark:bg-gray-900`}>
-          {children}
-        </div>
+        <div className={`${mainWidth} p-10 overflow-auto`}>{children}</div>
       </div>
     </>
   );

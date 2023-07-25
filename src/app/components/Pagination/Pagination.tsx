@@ -14,16 +14,22 @@ export const Pagination: FC<{
   totalCount: number;
   disabled: boolean;
 }> = ({ onPaginationChange, pageProps, totalCount, disabled }) => {
-  const numberOfPages = useMemo(() => Math.ceil(totalCount / pageProps.pageSize), [pageProps.pageSize, totalCount]);
+  const numberOfPages = useMemo(
+    () => Math.ceil(totalCount / pageProps.pageSize),
+    [pageProps.pageSize, totalCount]
+  );
 
-  const displayPagination = useMemo(() => totalCount >= PAGINATION_DEFAULT_PAGE_SIZE_OPTION, [totalCount]);
+  const displayPagination = useMemo(
+    () => totalCount >= PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
+    [totalCount]
+  );
 
   const handlePageChange = (page: number) => {
     onPaginationChange({ ...pageProps, page });
   };
 
   return displayPagination ? (
-    <div className='flex items-center gap-2 mt-3 pb-32'>
+    <div className='flex items-center gap-2 mt-3 pb-3'>
       <FlowbitePagination
         currentPage={pageProps.page}
         onPageChange={handlePageChange}

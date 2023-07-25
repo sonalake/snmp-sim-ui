@@ -3,3 +3,8 @@ export enum DeviceStatus {
   STOPPED = 'stopped',
   ALL = 'all'
 }
+
+export enum ViewState {
+  LIST = 'list',
+  CARDS = 'cards'
+}
