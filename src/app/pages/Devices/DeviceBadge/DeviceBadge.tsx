@@ -1,7 +1,9 @@
 import { FC, PropsWithChildren } from 'react';
 import { Badge } from 'flowbite-react';
 
-type DeviceBadgeProps = PropsWithChildren;
+type DeviceBadgeProps = PropsWithChildren & {
+  className?: string;
+};
 
 const customTheme = {
   root: {
@@ -15,6 +17,10 @@ const customTheme = {
   }
 };
 
-export const DeviceBadge: FC<DeviceBadgeProps> = ({ children }) => {
-  return <Badge theme={customTheme}>{children}</Badge>;
+export const DeviceBadge: FC<DeviceBadgeProps> = ({ children, className }) => {
+  return (
+    <Badge theme={customTheme} className={className}>
+      {children}
+    </Badge>
+  );
 };

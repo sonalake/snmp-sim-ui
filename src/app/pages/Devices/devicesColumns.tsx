@@ -10,7 +10,12 @@ export const devicesColumns: ColumnDef<Device>[] = [
     header: 'Name',
     accessorFn: row => row.name,
     cell: ({ row: { original } }) => (
-      <div className='font-normal text-sm text-gray-900 dark:text-gray-200'>{original.name}</div>
+      <div
+        className='font-normal text-sm text-gray-900 dark:text-gray-200 max-w-[200px] truncate break-all'
+        title={original.name}
+      >
+        {original.name}
+      </div>
     )
   },
   {

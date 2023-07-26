@@ -1,29 +1,41 @@
 import { FC } from 'react';
-import { HiUpload } from 'react-icons/hi';
-import { Badge, Card } from 'flowbite-react';
+import { HiOutlineUpload } from 'react-icons/hi';
+import { Card } from 'flowbite-react';
 
 import { StatusIndicator } from 'app/components';
 import { Device } from 'app/types';
+
+import { DeviceBadge } from '../DeviceBadge';
+
+const customTheme = {
+  root: {
+    base: 'flex flex-col rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-50 hover:border-blue-400 hover:dark:border-blue-400',
+    children: 'flex h-full flex-col justify-center gap-4 p-4'
+  }
+};
 
 interface DeviceCardProps {
   device: Device;
 }
 
 export const DeviceCard: FC<DeviceCardProps> = ({ device }) => (
-  <Card className='w-[307px] max-w-[307px] h-[131px] flex flex-col grow'>
-    <div className='flex flex-row justify-between'>
-      <div className='font-semibold'>{device.name}</div>
-      <HiUpload />
+  <Card theme={customTheme} className=''>
+    <div className='flex flex-row justify-between items-center'>
+      <div
+        className='font-semibold text-base text-gray-900 dark:text-white truncate break-all'
+        title={device.name}
+      >
+        {device.name}
+      </div>
+      <div>
+        <HiOutlineUpload className='text-gray-500 dark:text-gray-50' size='20' />
+      </div>
     </div>
-    <div className='text-sm font-normal text-gray-500'>{device.type}</div>
-    <div className='flex flex-row justify-between'>
+    <div className='text-sm font-normal text-gray-500 dark:text-gray-400'>{device.type}</div>
+    <div className='flex flex-row justify-between gap-1'>
       <div className='flex flex-row gap-[2px]'>
-        <Badge className='rounded-r-none w-fit'>
-          <div className='font-medium text-sm leading-5s'>{device.snmp_host}</div>
-        </Badge>
-        <Badge className='rounded-l-none w-fit'>
-          <div className='font-medium text-sm leading-5s'>{device.snmp_port}</div>
-        </Badge>
+        <DeviceBadge className='rounded-r-none'>{device.snmp_host}</DeviceBadge>
+        <DeviceBadge className='rounded-l-none'>{device.snmp_port}</DeviceBadge>
       </div>
       <StatusIndicator
         title={device.status === 'running' ? 'Running' : 'Stopped'}

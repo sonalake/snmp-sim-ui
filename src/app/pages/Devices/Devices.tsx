@@ -131,7 +131,7 @@ export const Devices = () => {
                 pageProps={deviceQueryParams}
               />
             ) : (
-              <div className='flex flex-wrap items-start content-start gap-4 self-stretch'>
+              <div className='grid gap-4 grid-cols-[repeat(auto-fit,_minmax(270px,300px))] items-start content-start self-stretch'>
                 {devices.items.map(device => (
                   <DeviceCard key={device.id} device={device} />
                 ))}

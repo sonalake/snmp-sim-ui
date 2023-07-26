@@ -17,7 +17,7 @@ export const DEVICES: Device[] = [
   },
   {
     id: '0a31a09f-04f3-46f0-8fca-bfb14ca512b7',
-    name: '3005',
+    name: 'An example of a device with a particularly long name to demonstrate how the UI handles it',
     status: 'running',
     type: 'OS Windows Server',
     description: '',
