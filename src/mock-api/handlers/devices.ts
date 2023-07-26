@@ -6,6 +6,7 @@ export const handlers = [
   rest.get('/api/devices', (req, res, ctx) => {
     // @TODO - handle pagination/filtering/etc.
     return res(
+      ctx.delay(500),
       ctx.status(200),
       ctx.json({
         count: 21,

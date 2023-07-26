@@ -75,45 +75,51 @@ export const Devices = () => {
       }
     >
       <>
+        <div className='flex items-center justify-between gap-4 mb-10'>
+          <div className='grow max-w-[520px]'>
+            <TextInput
+              className='w-auto'
+              placeholder='Search devices'
+              value={debouncedSearchValue}
+              onChange={handleSearchChange}
+              disabled={isLoading}
+            />
+          </div>
+          <div className='flex items-center gap-2 justify-between'>
+            <Button className='bg-primary-700 dark:bg-primary-700 text-white' disabled={isLoading}>
+              <ButtonIcon as={HiPlus} />
+              Add device
+            </Button>
+            <Button
+              color='gray'
+              className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'
+              disabled={isLoading}
+            >
+              <ButtonIcon as={HiPlay} />
+              Start all
+            </Button>
+            <Button
+              color='gray'
+              className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'
+              disabled={isLoading}
+            >
+              <ButtonIcon as={HiStop} />
+              Stop all
+            </Button>
+          </div>
+          <div className='flex items-center'>
+            <DarkThemeToggle />
+            <DevicesViewToggle viewState={viewState} changeViewState={handleStateChange} />
+          </div>
+        </div>
+
         {isLoading && (
           <div className='mt-64'>
             <LoadingIndicator />
           </div>
         )}
-      </>
-
-      <>
-        {!!devices && (
+        {!isLoading && !!devices && (
           <>
-            <div className='flex items-center justify-between gap-4 mb-10'>
-              <div className='grow max-w-[520px]'>
-                <TextInput
-                  className='w-auto'
-                  placeholder='Search devices'
-                  value={debouncedSearchValue}
-                  onChange={handleSearchChange}
-                />
-              </div>
-              <div className='flex items-center gap-2 justify-between'>
-                <Button className='bg-primary-700 dark:bg-primary-700 text-white'>
-                  <ButtonIcon as={HiPlus} />
-                  Add device
-                </Button>
-                <Button color='gray' className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'>
-                  <ButtonIcon as={HiPlay} />
-                  Start all
-                </Button>
-                <Button color='gray' className='text-gray-800 dark:text-gray-400 dark:bg-gray-800'>
-                  <ButtonIcon as={HiStop} />
-                  Stop all
-                </Button>
-              </div>
-              <div className='flex items-center'>
-                <DarkThemeToggle />
-                <DevicesViewToggle viewState={viewState} changeViewState={handleStateChange} />
-              </div>
-            </div>
-
             {viewState === ViewState.LIST ? (
               <DataTableWithPatination<Device>
                 items={devices.items}
