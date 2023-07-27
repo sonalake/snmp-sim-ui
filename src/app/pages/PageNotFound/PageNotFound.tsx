@@ -2,8 +2,7 @@ import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import { Button } from 'flowbite-react';
 
-import { PageWrapper, StatusDisplay } from '../../components';
-import { ButtonIcon } from '../../components/ButtonIcon/ButtonIcon';
+import { ButtonIcon, PageWrapper, StatusDisplay } from 'app/components';
 
 export const PageNotFound = () => (
   <PageWrapper>

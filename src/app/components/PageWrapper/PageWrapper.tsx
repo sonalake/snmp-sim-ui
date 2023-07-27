@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { ALERT_AUTO_CLOSE_TIME, MAIN_CONTENT_WITH_SIDEBAR_WIDTH } from 'app/constants';
 
-import { Sidebar } from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar';
 
 interface PageWrapperProps {
   children: JSX.Element | JSX.Element[];

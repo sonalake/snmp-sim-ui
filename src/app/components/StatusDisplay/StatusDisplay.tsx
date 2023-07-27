@@ -14,16 +14,11 @@ export const StatusDisplay: FC<{
   title: string;
   subTitle?: string;
   extraContent?: ReactNode;
-}> = ({ icon, title, subTitle, extraContent }) => {
-  return (
-    <div className='flex flex-col items-center'>
-      {icons[icon]}
-
-      <h1 className='text-2xl mb-5'>{title}</h1>
-
-      {subTitle && <h4 className='text-base mb-10'>{subTitle}</h4>}
-
-      {extraContent && extraContent}
-    </div>
-  );
-};
+}> = ({ icon, title, subTitle, extraContent }) => (
+  <div className='flex flex-col items-center'>
+    {icons[icon]}
+    <h1 className='text-2xl mb-5'>{title}</h1>
+    {subTitle && <h4 className='text-base mb-10'>{subTitle}</h4>}
+    {extraContent}
+  </div>
+);

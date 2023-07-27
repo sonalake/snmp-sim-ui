@@ -2,8 +2,9 @@ import { Component, ReactNode } from 'react';
 import { HiRefresh } from 'react-icons/hi';
 import { Button } from 'flowbite-react';
 
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
-import { PageWrapper, StatusDisplay } from '..';
+import { ButtonIcon } from '../ButtonIcon';
+import { PageWrapper } from '../PageWrapper';
+import { StatusDisplay } from '../StatusDisplay';
 
 interface Props {
   children: ReactNode;
@@ -29,13 +30,13 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    if (this.state.hasError && this.state.error?.message) {
+    if (this.state.hasError) {
       return (
         <PageWrapper>
           <StatusDisplay
             icon='error'
             title='Error'
-            subTitle={this.state.error.message}
+            subTitle={this.state.error?.message}
             extraContent={
               <Button onClick={() => window.location.reload()}>
                 <ButtonIcon as={HiRefresh} />

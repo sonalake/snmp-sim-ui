@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { HiPlus, HiStop } from 'react-icons/hi';
 import { HiPlay } from 'react-icons/hi2';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';

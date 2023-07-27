@@ -1,4 +1,4 @@
-import { StatusDisplay } from '../../components';
+import { StatusDisplay } from 'app/components';
 
 export const NoConnection = () => (
   <StatusDisplay

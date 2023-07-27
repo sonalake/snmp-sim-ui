@@ -1,11 +1,9 @@
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
-import { Alert } from '../Alert/Alert';
+import { Alert } from '../Alert';
 
-export const successToast = (message: string) => toast(<Alert color='success' message={message} />);
-
-export const errorToast = (err: unknown) =>
+export const ErrorToast = (err: unknown) =>
   toast(
     <Alert
       color='failure'
