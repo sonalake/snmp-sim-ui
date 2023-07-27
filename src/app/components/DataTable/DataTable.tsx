@@ -102,7 +102,10 @@ export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }:
           <Table.Body className='divide-y'>
             {!table.getRowModel().rows.length ? (
               <Table.Row className='hover:bg-primary-50 dark:hover:bg-gray-700 bg-white dark:border-gray-700 dark:bg-gray-800'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-gray-200'>
+                <Table.Cell
+                  className='whitespace-nowrap font-normal text-sm text-gray-900 dark:text-gray-200'
+                  colSpan={columns.length}
+                >
                   No data to display
                 </Table.Cell>
               </Table.Row>
