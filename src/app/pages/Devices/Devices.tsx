@@ -31,8 +31,6 @@ export const Devices = () => {
     search: ''
   });
 
-  const debouncedSearchValue = useDebounce(searchValue);
-
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
 
   const handlePaginationChange = (pageProps: PageProps) =>
@@ -53,16 +51,16 @@ export const Devices = () => {
       status: deviceStatus
     }));
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const debouncedRequest = useDebounce(() => {
+    setDeviceQueryParams(query => ({ ...query, search: searchValue }));
+  });
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
+    debouncedRequest();
+  };
 
   const handleStateChange = (state: ViewState) => changeViewState(state);
-
-  useEffect(() => {
-    if (debouncedSearchValue !== deviceQueryParams.search && debouncedSearchValue !== undefined) {
-      setDeviceQueryParams(query => ({ ...query, search: debouncedSearchValue }));
-    }
-  }, [debouncedSearchValue, deviceQueryParams.search]);
 
   return (
     <PageWrapper
@@ -80,7 +78,7 @@ export const Devices = () => {
             <TextInput
               className='w-auto'
               placeholder='Search devices'
-              value={debouncedSearchValue}
+              value={searchValue}
               onChange={handleSearchChange}
               disabled={isLoading}
             />
