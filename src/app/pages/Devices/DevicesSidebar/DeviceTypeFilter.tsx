@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { Label } from 'flowbite-react';
 
-import { useFetchDevices } from 'app/api/devices.api';
 import { Checkbox, Heading } from 'app/components';
+import { useFetchDevices } from 'app/queries/useDeviceQueries';
 import { Device } from 'app/types';
 
 interface DeviceTypeFilterProps {

@@ -98,7 +98,11 @@
     "collectCoverageFrom": [
       "<rootDir>/src/app/**/*.{ts,tsx}",
       "!<rootDir>/**/index.*",
-      "!<rootDir>/src/app/models/**",
+      "!<rootDir>/src/app/constants/**",
+      "!<rootDir>/src/app/context/**",
+      "!<rootDir>/src/app/queries/**",
+      "!<rootDir>/src/app/types/**",
+      "!<rootDir>/src/app/utils/testUtils.*",
       "!<rootDir>/src/assets/**",
       "!<rootDir>/node_modules/"
     ],

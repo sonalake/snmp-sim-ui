@@ -6,17 +6,6 @@ import '@testing-library/jest-dom';
 
 import { server } from './mock-api/server';
 
-// mock the react-table library
-jest.mock('@tanstack/react-table', () => ({
-  getCoreRowModel: jest.fn(),
-  getSortedRowModel: jest.fn(),
-  useReactTable: jest.fn().mockImplementation(() => ({
-    getSelectedRowModel: jest.fn().mockImplementation(() => ({ flatRows: [] })),
-    getHeaderGroups: jest.fn().mockImplementation(() => []),
-    getRowModel: jest.fn().mockImplementation(() => ({ rows: [] }))
-  }))
-}));
-
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 

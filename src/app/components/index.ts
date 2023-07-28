@@ -11,6 +11,5 @@ export * from './Pagination';
 export * from './Sidebar';
 export * from './StatusDisplay';
 export * from './StatusIndicator';
-export * from './StyledLink';
 export * from './Toasts';
 export * from './Typography';

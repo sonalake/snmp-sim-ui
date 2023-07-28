@@ -9,14 +9,7 @@ import { mutateResource } from './utils';
 
 const DEVICES_API_ROOT = `${API_ROOT}/devices`;
 
-async function fetchDevice(deviceId?: string): Promise<Device> {
-  return BASE_API.get(`${DEVICES_API_ROOT}/${deviceId}`).then(res => res.data);
-}
-
-export const useFetchDevice = (deviceId?: string) =>
-  useQuery([QUERY_KEYS.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId });
-
-export interface DevicesQueryParams {
+export interface FetchDevicesQueryParams {
   page: number;
   pageSize: number;
   search: string;
@@ -25,7 +18,7 @@ export interface DevicesQueryParams {
   types: string[];
 }
 
-export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
+export const useFetchDevices = (queryParams?: FetchDevicesQueryParams) => {
   const params = {
     page: queryParams?.page,
     page_size: queryParams?.pageSize,
@@ -43,6 +36,17 @@ export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
   });
 };
 
+export interface FetchDeviceQueryParams {
+  id?: string;
+}
+
+export const useFetchDevice = ({ id }: FetchDeviceQueryParams) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.DEVICE, { id }],
+    queryFn: () => BASE_API.get<Device>(`${DEVICES_API_ROOT}/${id}`).then(res => res.data),
+    enabled: !!id
+  });
+
 export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
   return mutateResource<Omit<Device, 'id'>, Device>({
     method: HTTPRequestMethod.POST,
@@ -59,23 +63,23 @@ export function updateDevice(device: Device): Promise<Device> {
   });
 }
 
-export function deleteDevice(deviceId: string): Promise<Device> {
+export function deleteDevice(id: string): Promise<Device> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.DELETE,
-    url: `/${DEVICES_API_ROOT}/${deviceId}`
+    url: `/${DEVICES_API_ROOT}/${id}`
   });
 }
 
-export function startDevice(deviceId: string): Promise<unknown> {
+export function startDevice(id: string): Promise<unknown> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.PUT,
-    url: `/${DEVICES_API_ROOT}/${deviceId}/start`
+    url: `/${DEVICES_API_ROOT}/${id}/start`
   });
 }
 
-export function stopDevice(deviceId: string): Promise<unknown> {
+export function stopDevice(id: string): Promise<unknown> {
   return mutateResource<undefined, Device>({
     method: HTTPRequestMethod.PUT,
-    url: `/${DEVICES_API_ROOT}/${deviceId}/stop`
+    url: `/${DEVICES_API_ROOT}/${id}/stop`
   });
 }

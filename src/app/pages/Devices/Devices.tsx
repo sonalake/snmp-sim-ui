@@ -4,7 +4,6 @@ import { HiPlay } from 'react-icons/hi2';
 import { SortingState } from '@tanstack/react-table';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
-import { DevicesQueryParams, useFetchDevices } from 'app/api/devices.api';
 import {
   ButtonIcon,
   DataTableWithPatination,
@@ -14,6 +13,7 @@ import {
 } from 'app/components';
 import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION, ViewState } from 'app/constants';
 import { useDebounce } from 'app/hooks';
+import { FetchDevicesQueryParams, useFetchDevices } from 'app/queries/useDeviceQueries';
 import { Device } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
@@ -25,7 +25,7 @@ export const Devices = () => {
   const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortingState, setSortingState] = useState<SortingState>([]);
-  const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
+  const [deviceQueryParams, setDeviceQueryParams] = useState<FetchDevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
     sorting: [],
