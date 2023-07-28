@@ -8,7 +8,7 @@ import { DeviceBadge } from './DeviceBadge';
 export const devicesColumns: ColumnDef<Device>[] = [
   {
     header: 'Name',
-    accessorFn: row => row.name,
+    accessorKey: 'name',
     cell: ({ row: { original } }) => (
       <div
         className='font-normal text-sm text-gray-900 dark:text-gray-200 max-w-[200px] truncate break-all'
@@ -20,24 +20,24 @@ export const devicesColumns: ColumnDef<Device>[] = [
   },
   {
     header: 'Type',
-    accessorFn: row => row.type,
+    accessorKey: 'type',
     cell: ({ row: { original } }) => (
       <div className='font-bold text-sm text-gray-900 dark:text-gray-200'>{original.type}</div>
     )
   },
   {
     header: 'IP address',
-    accessorFn: row => row.snmp_host,
+    accessorKey: 'snmp_host',
     cell: ({ row: { original } }) => <DeviceBadge>{original.snmp_host}</DeviceBadge>
   },
   {
     header: 'Port',
-    accessorFn: row => row.snmp_port,
+    accessorKey: 'snmp_port',
     cell: ({ row: { original } }) => <DeviceBadge>{original.snmp_port}</DeviceBadge>
   },
   {
     header: 'Status',
-    accessorFn: row => row.status,
+    accessorKey: 'status',
     cell: ({ row }) => {
       const isActive = row.original.status === 'running';
       return <StatusIndicator title={isActive ? 'Running' : 'Stopped'} isActive={isActive} />;

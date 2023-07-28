@@ -1,4 +1,5 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { SetStateAction } from 'react';
+import { ColumnDef, Row, SortingState } from '@tanstack/react-table';
 
 import { PageProps, Pagination } from '../Pagination';
 
@@ -10,9 +11,11 @@ interface DataTableWithPatinationProps<T> {
   isSelectable?: boolean;
   items: T[];
   pageProps: PageProps;
+  sortingState: SortingState;
   totalCount: number;
-  handlePaginationChange: (pageProps: PageProps) => void;
-  handleSelectItems?: (val: Array<Row<T>>) => void;
+  onPaginationChange: (pageProps: PageProps) => void;
+  onSelectItems?: (val: Array<Row<T>>) => void;
+  onSortingChange: (newState: SetStateAction<SortingState>) => void;
 }
 
 export const DataTableWithPatination = <T,>({
@@ -21,19 +24,23 @@ export const DataTableWithPatination = <T,>({
   isSelectable,
   items,
   pageProps,
+  sortingState,
   totalCount,
-  handlePaginationChange,
-  handleSelectItems
+  onPaginationChange,
+  onSelectItems,
+  onSortingChange
 }: DataTableWithPatinationProps<T>) => (
   <>
     <DataTable<T>
-      data={items}
       columns={columns}
-      onSelection={handleSelectItems}
+      data={items}
       isSelectable={isSelectable}
+      sortingState={sortingState}
+      onSelection={onSelectItems}
+      onSortingChange={onSortingChange}
     />
     <Pagination
-      onPaginationChange={handlePaginationChange}
+      onPaginationChange={onPaginationChange}
       totalCount={totalCount}
       disabled={disabled}
       pageProps={pageProps}

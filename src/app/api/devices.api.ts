@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { SortingState } from '@tanstack/react-table';
 
-import { API_ROOT, HTTPRequestMethod } from 'app/constants';
-import { Device, DevicesQueryParams, ListResponse } from 'app/types';
+import { API_ROOT, DeviceStatus, HTTPRequestMethod } from 'app/constants';
+import { Device, ListResponse } from 'app/types';
 
 import { BASE_API, QUERY_KEYS } from './constants';
 import { mutateResource } from './utils';
@@ -15,13 +16,24 @@ async function fetchDevice(deviceId?: string): Promise<Device> {
 export const useFetchDevice = (deviceId?: string) =>
   useQuery([QUERY_KEYS.DEVICE, { deviceId }], () => fetchDevice(deviceId), { enabled: !!deviceId });
 
+export interface DevicesQueryParams {
+  page: number;
+  pageSize: number;
+  search: string;
+  sorting: SortingState;
+  status: DeviceStatus;
+  types: string[];
+}
+
 export const useFetchDevices = (queryParams?: DevicesQueryParams) => {
   const params = {
     page: queryParams?.page,
-    pageSize: queryParams?.pageSize,
-    types: queryParams?.types,
+    page_size: queryParams?.pageSize,
+    search: queryParams?.search,
     status: queryParams?.status,
-    search: queryParams?.search
+    types: queryParams?.types,
+    sort: queryParams?.sorting[0]?.id,
+    sortDir: queryParams?.sorting[0] && (queryParams.sorting[0].desc ? 'DESC' : 'ASC')
   };
 
   return useQuery({

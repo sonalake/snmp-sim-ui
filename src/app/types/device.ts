@@ -34,11 +34,3 @@ export interface Device {
   type: string;
   status: 'running' | 'stopped';
 }
-
-export interface DevicesQueryParams {
-  page: number;
-  pageSize: number;
-  types: string[];
-  status: DeviceStatus;
-  search: string;
-}

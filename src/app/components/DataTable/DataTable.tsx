@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi';
 import { HiChevronUpDown } from 'react-icons/hi2';
 import {
@@ -18,18 +18,27 @@ interface Props<T> {
   data: T[];
   columns: Array<ColumnDef<T>>;
   isSelectable?: boolean;
+  sortingState: SortingState;
   onSelection?: (val: Array<Row<T>>) => void;
+  onSortingChange: (newState: SetStateAction<SortingState>) => void;
 }
 
-export const DataTable = <T,>({ data = [], columns, isSelectable, onSelection }: Props<T>) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+export const DataTable = <T,>({
+  data = [],
+  columns,
+  isSelectable,
+  sortingState,
+  onSelection,
+  onSortingChange
+}: Props<T>) => {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, rowSelection },
-    onSortingChange: setSorting,
+    state: { sorting: sortingState, rowSelection },
+    manualSorting: true,
+    onSortingChange: onSortingChange,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel()

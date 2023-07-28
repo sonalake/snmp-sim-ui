@@ -1,9 +1,10 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import { HiPlus, HiStop } from 'react-icons/hi';
 import { HiPlay } from 'react-icons/hi2';
+import { SortingState } from '@tanstack/react-table';
 import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
-import { useFetchDevices } from 'app/api/devices.api';
+import { DevicesQueryParams, useFetchDevices } from 'app/api/devices.api';
 import {
   ButtonIcon,
   DataTableWithPatination,
@@ -13,7 +14,7 @@ import {
 } from 'app/components';
 import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION, ViewState } from 'app/constants';
 import { useDebounce } from 'app/hooks';
-import { Device, DevicesQueryParams } from 'app/types';
+import { Device } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
 import { devicesColumns } from './devicesColumns';
@@ -23,12 +24,14 @@ import { DevicesViewToggle } from './DevicesViewToggle';
 export const Devices = () => {
   const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [sortingState, setSortingState] = useState<SortingState>([]);
   const [deviceQueryParams, setDeviceQueryParams] = useState<DevicesQueryParams>({
     page: 1,
     pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
-    types: [],
+    sorting: [],
+    search: '',
     status: DeviceStatus.ALL,
-    search: ''
+    types: []
   });
 
   const { data: devices, isLoading } = useFetchDevices(deviceQueryParams);
@@ -38,6 +41,15 @@ export const Devices = () => {
       ...query,
       ...pageProps
     }));
+
+  const handleSortingChange = (newState: SetStateAction<SortingState>) => setSortingState(newState);
+
+  useEffect(() => {
+    setDeviceQueryParams(query => ({
+      ...query,
+      sorting: sortingState
+    }));
+  }, [sortingState]);
 
   const handleSelectionChange = (types: string[]) =>
     setDeviceQueryParams(query => ({
@@ -120,13 +132,15 @@ export const Devices = () => {
           <>
             {viewState === ViewState.LIST ? (
               <DataTableWithPatination<Device>
-                items={devices.items}
                 columns={devicesColumns}
-                isSelectable={false}
-                handlePaginationChange={handlePaginationChange}
-                totalCount={devices.count}
                 disabled={isLoading}
+                isSelectable={false}
+                items={devices.items}
                 pageProps={deviceQueryParams}
+                sortingState={sortingState}
+                totalCount={devices.count}
+                onPaginationChange={handlePaginationChange}
+                onSortingChange={handleSortingChange}
               />
             ) : (
               <div className='grid gap-4 grid-cols-[repeat(auto-fit,_minmax(270px,300px))] items-start content-start self-stretch'>
