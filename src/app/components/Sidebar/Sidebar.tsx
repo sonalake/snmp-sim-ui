@@ -26,7 +26,7 @@ export const Sidebar: FC<PropsWithChildren> = ({ children }) => {
     <FlowbiteSidebar aria-label='Sidebar menu' theme={customTheme}>
       <div className='flex flex-col justify-between h-full'>
         <div>
-          <img src={logo} />
+          <img src={logo} data-testid='app-logo' />
           <Divider />
           {children}
         </div>
