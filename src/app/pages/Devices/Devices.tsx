@@ -88,6 +88,7 @@ export const Devices = () => {
         <div className='flex items-center justify-between gap-4 mb-10'>
           <div className='grow max-w-[520px]'>
             <TextInput
+              data-testid='devices-search'
               className='w-auto'
               placeholder='Search devices'
               value={searchValue}

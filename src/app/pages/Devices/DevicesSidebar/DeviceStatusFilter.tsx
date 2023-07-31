@@ -26,7 +26,7 @@ export const DeviceStatusFilter: FC<DeviceStatusFilterProps> = ({ onStatusSelect
     onStatusSelect(val);
   };
   return (
-    <div>
+    <div data-testid='device-status-filter'>
       <Heading.H3>Status</Heading.H3>
       <Button.Group>
         {STATUS_OPTIONS.map(btn => (

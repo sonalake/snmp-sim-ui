@@ -41,7 +41,7 @@ export const DeviceTypeFilter: FC<DeviceTypeFilterProps> = ({ onSelectionChange 
   };
 
   return (
-    <div>
+    <div data-testid='device-type-filter'>
       <Heading.H3>Device Types</Heading.H3>
       <form className='flex max-w-md flex-col gap-4'>
         {deviceGroupsByType &&
