@@ -1,12 +1,20 @@
-import { useState } from 'react';
-
-import { useEventListener } from './useEventListener';
+import { useEffect, useState } from 'react';
 
 export const useDetectUserConnection = () => {
   const [isBrowserOnline, setIsBrowserOnline] = useState(navigator.onLine);
 
-  useEventListener('online', () => setIsBrowserOnline(navigator.onLine));
-  useEventListener('offline', () => setIsBrowserOnline(navigator.onLine));
+  const setOnline = () => setIsBrowserOnline(true);
+  const setOffline = () => setIsBrowserOnline(false);
+
+  useEffect(() => {
+    window.addEventListener('online', setOnline);
+    window.addEventListener('offline', setOffline);
+
+    return () => {
+      window.removeEventListener('online', setOnline);
+      window.removeEventListener('offline', setOffline);
+    };
+  }, []);
 
   return { isBrowserOnline };
 };
