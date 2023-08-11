@@ -70,7 +70,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
         </div>
         <Heading.ModalSub>Select a device type below or add your own.</Heading.ModalSub>
       </div>
-      <form autoComplete='off' onSubmit={formik.handleSubmit}>
+      <form autoComplete='off' data-testid='add-device-form' onSubmit={formik.handleSubmit}>
         <div className='px-6 py-1 flex-1 overflow-auto'>
           <div className='flex flex-col gap-4'>
             {apiError && (
@@ -80,6 +80,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             )}
             <Select
               label='Type'
+              id='type'
               placeholder='Select from the list'
               required={true}
               options={uniqueDeviceTypes.map(val => ({ label: val, value: val }))}
@@ -91,6 +92,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             />
             <TextInput
               label='Name'
+              id='name'
               required={true}
               value={formik.values.name}
               name='name'
@@ -100,6 +102,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             />
             <TextInput
               label='Address'
+              id='address'
               placeholder='127.0.0.1'
               required={true}
               value={formik.values.address}
@@ -110,6 +113,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             />
             <TextInput
               label='Port'
+              id='port'
               placeholder='1025 or higher'
               required={true}
               type='number'
@@ -122,12 +126,13 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
           </div>
         </div>
         <div className='flex items-start justify-between rounded-b p-6 pt-3'>
-          <Button color='gray' onClick={() => onClose()}>
+          <Button color='gray' onClick={() => onClose()} data-testid='device-modal-cancel-btn'>
             Cancel
           </Button>
           <Button
             className='bg-primary-700 dark:bg-primary-700 text-white'
             disabled={!formik.isValid || formik.isSubmitting}
+            data-testid='device-modal-submit-btn'
             type='submit'
           >
             <ButtonIcon as={HiPlus} />

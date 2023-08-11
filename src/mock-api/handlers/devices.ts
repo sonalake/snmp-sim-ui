@@ -38,7 +38,7 @@ export const handlers = [
       return res(ctx.status(404));
     } else if (name === '400') {
       return res(
-        ctx.delay(2000),
+        // ctx.delay(2000),
         ctx.status(400),
         ctx.json({
           error: 'Error from the API'

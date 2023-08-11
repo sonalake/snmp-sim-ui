@@ -106,6 +106,7 @@ export const Devices = () => {
           <div className='flex items-center gap-2 justify-between'>
             <Button
               className='bg-primary-700 dark:bg-primary-700 text-white'
+              data-testid='add-device-btn'
               disabled={isLoading}
               onClick={openDeviceModal}
             >

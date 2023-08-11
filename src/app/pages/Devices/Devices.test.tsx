@@ -78,4 +78,20 @@ describe('Devices', () => {
     expect(await screen.findByTestId('table-element')).toBeInTheDocument();
     expect(screen.queryAllByTestId('flowbite-card')).toHaveLength(0);
   });
+
+  describe('Add Device Modal', () => {
+    it('should open and close the modal', async () => {
+      renderWithRouter(<Devices />);
+
+      await waitFor(() => expect(screen.getByTestId('table-element')).toBeInTheDocument());
+
+      expect((await screen.findByTestId('modal')).classList).toContain('hidden');
+
+      userEvent.click(screen.getByTestId('add-device-btn'));
+      expect((await screen.findByTestId('modal')).classList).not.toContain('hidden');
+
+      userEvent.click(screen.getByTestId('device-modal-cancel-btn'));
+      expect((await screen.findByTestId('modal')).classList).toContain('hidden');
+    });
+  });
 });
