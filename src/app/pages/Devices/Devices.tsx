@@ -17,12 +17,16 @@ import { FetchDevicesQueryParams, useFetchDevices } from 'app/queries/useDeviceQ
 import { Device } from 'app/types';
 
 import { DeviceCard } from './DeviceCard';
+import { DeviceModal } from './DeviceModal';
 import { devicesColumns } from './devicesColumns';
 import { DevicesSidebarContent } from './DevicesSidebar';
 import { DevicesViewToggle } from './DevicesViewToggle';
 
 export const Devices = () => {
   const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
+
+  const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
+
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortingState, setSortingState] = useState<SortingState>([]);
   const [deviceQueryParams, setDeviceQueryParams] = useState<FetchDevicesQueryParams>({
@@ -74,6 +78,9 @@ export const Devices = () => {
 
   const handleStateChange = (state: ViewState) => changeViewState(state);
 
+  const openDeviceModal = () => setIsDeviceModalOpen(true);
+  const onDeviceModalClose = () => setIsDeviceModalOpen(false);
+
   return (
     <PageWrapper
       withSidebar={true}
@@ -97,7 +104,11 @@ export const Devices = () => {
             />
           </div>
           <div className='flex items-center gap-2 justify-between'>
-            <Button className='bg-primary-700 dark:bg-primary-700 text-white' disabled={isLoading}>
+            <Button
+              className='bg-primary-700 dark:bg-primary-700 text-white'
+              disabled={isLoading}
+              onClick={openDeviceModal}
+            >
               <ButtonIcon as={HiPlus} />
               Add device
             </Button>
@@ -152,6 +163,8 @@ export const Devices = () => {
             )}
           </>
         )}
+
+        <DeviceModal isOpen={isDeviceModalOpen} onClose={onDeviceModalClose} />
       </>
     </PageWrapper>
   );
