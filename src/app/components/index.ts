@@ -5,7 +5,7 @@ export * from './ErrorBoundary';
 export * from './Icons';
 export * from './Inputs';
 export * from './LoadingIndicator';
-export * from './Modal';
+export * from './ModalWrapper';
 export * from './PageWrapper';
 export * from './Pagination';
 export * from './Sidebar';

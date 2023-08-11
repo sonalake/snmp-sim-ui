@@ -1,4 +1,4 @@
-import { DeviceStatus } from 'app/constants';
+import { DeviceStatusType } from 'app/constants';
 
 interface SNMP_V1 {
   community?: string;
@@ -32,5 +32,5 @@ export interface Device {
   snmp_port: number;
   snmp_protocol_attributes: SNMPProtocolAttributes;
   type: string;
-  status: 'running' | 'stopped';
+  status: DeviceStatusType;
 }

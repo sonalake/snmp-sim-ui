@@ -47,13 +47,12 @@ export const useFetchDevice = ({ id }: FetchDeviceQueryParams) =>
     enabled: !!id
   });
 
-export function createDevice(device: Omit<Device, 'id'>): Promise<Device> {
-  return mutateResource<Omit<Device, 'id'>, Device>({
+export const createDevice = (device: Omit<Device, 'id'>): Promise<Device> =>
+  mutateResource<Omit<Device, 'id'>, Device>({
     method: HTTPRequestMethod.POST,
     url: DEVICES_API_ROOT,
     body: device
   });
-}
 
 export function updateDevice(device: Device): Promise<Device> {
   return mutateResource<Device, Device>({

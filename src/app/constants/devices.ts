@@ -4,6 +4,8 @@ export enum DeviceStatus {
   ALL = 'all'
 }
 
+export type DeviceStatusType = 'running' | 'stopped';
+
 export enum ViewState {
   LIST = 'list',
   CARDS = 'cards'
