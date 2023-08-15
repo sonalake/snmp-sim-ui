@@ -57,7 +57,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
 
   return (
     <>
-      <div className='flex flex-col rounded-t p-5 pb-3'>
+      <div className='flex flex-col rounded-t p-6 pb-3'>
         <div className='flex items-start justify-between'>
           <Heading.Modal>Add device</Heading.Modal>
           <button
