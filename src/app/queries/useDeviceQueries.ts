@@ -7,7 +7,7 @@ import { Device, ListResponse } from 'app/types';
 import { BASE_API, QUERY_KEYS } from './constants';
 import { mutateResource } from './utils';
 
-const DEVICES_API_ROOT = `${API_ROOT}/devices`;
+export const DEVICES_API_ROOT = `${API_ROOT}/devices`;
 
 export interface FetchDevicesQueryParams {
   page: number;

@@ -2,11 +2,11 @@ import { rest } from 'msw';
 
 import { DEVICES } from 'mock-api/data/devices';
 
-import { API_ROOT } from 'app/constants';
+import { DEVICES_API_ROOT } from 'app/queries/useDeviceQueries';
 import { Device } from 'app/types';
 
 export const handlers = [
-  rest.get(`${API_ROOT}/devices`, (req, res, ctx) => {
+  rest.get(DEVICES_API_ROOT, (req, res, ctx) => {
     // @TODO - handle pagination/filtering/etc.
 
     const search = req.url.searchParams.get('search');
@@ -31,7 +31,7 @@ export const handlers = [
       })
     );
   }),
-  rest.post<Device>(`${API_ROOT}/devices`, (req, res, ctx) => {
+  rest.post<Device>(DEVICES_API_ROOT, (req, res, ctx) => {
     const { name } = req.body;
 
     if (name === '404') {
