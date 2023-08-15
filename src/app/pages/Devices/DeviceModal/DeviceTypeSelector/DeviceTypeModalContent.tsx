@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { HiOutlineX } from 'react-icons/hi';
 import { TextInput } from 'flowbite-react';
 
@@ -15,6 +15,14 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({ onClos
   const [search, setSearch] = useState('');
 
   const { data, isLoading } = useFetchDeviceTypes();
+
+  const filteredData = useMemo(
+    () =>
+      (data || []).filter(
+        ({ name }) => name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) || search === ''
+      ),
+    [search, data]
+  );
 
   return (
     <div className='rounded p-6'>
@@ -42,15 +50,10 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({ onClos
           onChange={e => setSearch(e.target.value)}
         />
       </div>
-      <div className='flex-1 flex flex-col h-[400px] max-h-[470px] overflow-y-auto gap-4'>
+      <div className='flex-1 flex flex-col h-[470px] max-h-[470px] overflow-y-auto gap-4'>
         {isLoading && <LoadingIndicator />}
-        {!isLoading && (
-          <>
-            {data?.map((val, key) => (
-              <DeviceTypeOption key={key} deviceType={val} />
-            ))}
-          </>
-        )}
+        {!isLoading &&
+          filteredData.map((val, key) => <DeviceTypeOption key={key} deviceType={val} />)}
       </div>
     </div>
   );
