@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import { Modal } from 'flowbite-react';
+import { Modal, ModalProps } from 'flowbite-react';
 
 const modalTheme = {
   root: {
@@ -15,15 +15,18 @@ const modalTheme = {
   }
 };
 
-interface ModalWrapperProps extends PropsWithChildren {
-  isOpen: boolean;
-  onClose: () => void;
-}
+interface ModalWrapperProps extends Omit<ModalProps, 'theme'>, PropsWithChildren {}
 
-export const ModalWrapper: FC<ModalWrapperProps> = ({ isOpen, onClose, children }) => {
+export const ModalWrapper: FC<ModalWrapperProps> = ({
+  show,
+  size = 'md',
+  dismissible = true,
+  children,
+  ...props
+}) => {
   return (
-    <Modal theme={modalTheme} size='md' dismissible show={isOpen} onClose={onClose}>
-      {isOpen && children}
+    <Modal theme={modalTheme} show={show} size={size} dismissible={dismissible} {...props}>
+      {show && children}
     </Modal>
   );
 };

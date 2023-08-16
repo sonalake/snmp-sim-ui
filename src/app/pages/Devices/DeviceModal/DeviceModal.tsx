@@ -10,7 +10,7 @@ interface DeviceModalProps {
 }
 
 export const DeviceModal: FC<DeviceModalProps> = ({ isOpen, onClose }) => (
-  <ModalWrapper isOpen={isOpen} onClose={onClose}>
+  <ModalWrapper show={isOpen} onClose={onClose}>
     <DeviceModalContent onClose={onClose} />
   </ModalWrapper>
 );

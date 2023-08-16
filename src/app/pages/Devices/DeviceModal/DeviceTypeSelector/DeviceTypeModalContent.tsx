@@ -4,14 +4,19 @@ import { TextInput } from 'flowbite-react';
 
 import { Heading, LoadingIndicator } from 'app/components';
 import { useFetchDeviceTypes } from 'app/queries/useDeviceTypeQueries';
+import { DeviceTypeCount } from 'app/types';
 
 import { DeviceTypeOption } from './DeviceTypeOption';
 
 interface DeviceTypeModalContentProps {
   onClose: () => void;
+  onSelection: (deviceType: DeviceTypeCount) => void;
 }
 
-export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({ onClose }) => {
+export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({
+  onClose,
+  onSelection
+}) => {
   const [search, setSearch] = useState('');
 
   const { data, isLoading } = useFetchDeviceTypes();
@@ -23,6 +28,11 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({ onClos
       ),
     [search, data]
   );
+
+  const handleClick = (deviceType: DeviceTypeCount) => {
+    onSelection(deviceType);
+    onClose();
+  };
 
   return (
     <div className='rounded p-6'>
@@ -53,7 +63,9 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({ onClos
       <div className='flex-1 flex flex-col h-[470px] max-h-[470px] overflow-y-auto gap-4'>
         {isLoading && <LoadingIndicator />}
         {!isLoading &&
-          filteredData.map((val, key) => <DeviceTypeOption key={key} deviceType={val} />)}
+          filteredData.map((val, key) => (
+            <DeviceTypeOption key={key} deviceType={val} onClick={d => handleClick(d)} />
+          ))}
       </div>
     </div>
   );
