@@ -1,13 +1,16 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { HiInformationCircle, HiOutlineX, HiPlus } from 'react-icons/hi';
 import { AxiosError } from 'axios';
 import { Alert, Button } from 'flowbite-react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { ButtonIcon, Heading, Select, TextInput } from 'app/components';
-import { createDevice, useFetchDevices } from 'app/queries/useDeviceQueries';
+import { ButtonIcon, Heading, TextInput } from 'app/components';
+import { createDevice } from 'app/queries/useDeviceQueries';
 import { Device } from 'app/types';
+
+import { DeviceModalProps } from './DeviceModal';
+import { DeviceTypeSelector } from './DeviceTypeSelector';
 
 const validationSchema = yup.object({
   type: yup.string().required('Type is required'),
@@ -22,18 +25,10 @@ const validationSchema = yup.object({
   port: yup.number().moreThan(1024).required('Port is required')
 });
 
-interface DeviceModalContentProps {
-  onClose: () => void;
-}
+type DeviceModalContentProps = Omit<DeviceModalProps, 'show'>;
 
 export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => {
   const [apiError, setApiError] = useState<string | undefined>();
-
-  const { data } = useFetchDevices();
-  const uniqueDeviceTypes = useMemo(
-    () => [...new Set((data?.items || []).map(obj => obj.type))],
-    [data]
-  );
 
   const formik = useFormik({
     initialValues: {
@@ -78,15 +73,12 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
                 {apiError}
               </Alert>
             )}
-            <Select
-              label='Type'
+            <DeviceTypeSelector
               id='type'
-              placeholder='Select from the list'
               required={true}
-              options={uniqueDeviceTypes.map(val => ({ label: val, value: val }))}
-              value={formik.values.type}
+              defaultValue={formik.values.type}
               name='type'
-              onChange={formik.handleChange}
+              onChange={val => formik.setFieldValue('type', val)}
               onBlur={formik.handleBlur}
               color={formik.touched.type && Boolean(formik.errors.type) ? 'failure' : 'gray'}
             />

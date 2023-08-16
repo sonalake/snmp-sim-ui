@@ -5,14 +5,14 @@ import { DeviceTypeCount } from 'app/types';
 
 import { DeviceTypeModalContent } from './DeviceTypeModalContent';
 
-interface DeviceTypeModalProps {
-  isOpen: boolean;
+export interface DeviceTypeModalProps {
+  show: boolean;
   onClose: () => void;
   onSelection: (deviceType: DeviceTypeCount) => void;
 }
 
-export const DeviceTypeModal: FC<DeviceTypeModalProps> = ({ isOpen, onClose, onSelection }) => (
-  <ModalWrapper show={isOpen} onClose={onClose}>
+export const DeviceTypeModal: FC<DeviceTypeModalProps> = ({ show, onClose, onSelection }) => (
+  <ModalWrapper show={show} onClose={onClose}>
     <DeviceTypeModalContent onClose={onClose} onSelection={onSelection} />
   </ModalWrapper>
 );

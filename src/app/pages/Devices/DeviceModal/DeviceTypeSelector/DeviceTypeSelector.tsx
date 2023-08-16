@@ -68,7 +68,7 @@ export const DeviceTypeSelector: FC<DeviceTypeSelectorProps> = ({
         <TextInput className='hidden' {...props} />
       </div>
       <DeviceTypeModal
-        isOpen={isDeviceTypeOpen}
+        show={isDeviceTypeOpen}
         onClose={onModalClose}
         onSelection={handleSelection}
       />

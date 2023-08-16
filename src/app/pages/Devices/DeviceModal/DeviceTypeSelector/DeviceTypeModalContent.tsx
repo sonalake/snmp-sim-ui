@@ -6,12 +6,10 @@ import { Heading, LoadingIndicator } from 'app/components';
 import { useFetchDeviceTypes } from 'app/queries/useDeviceTypeQueries';
 import { DeviceTypeCount } from 'app/types';
 
+import { DeviceTypeModalProps } from './DeviceTypeModal';
 import { DeviceTypeOption } from './DeviceTypeOption';
 
-interface DeviceTypeModalContentProps {
-  onClose: () => void;
-  onSelection: (deviceType: DeviceTypeCount) => void;
-}
+type DeviceTypeModalContentProps = Omit<DeviceTypeModalProps, 'show'>;
 
 export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({
   onClose,

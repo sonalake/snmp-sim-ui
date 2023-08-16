@@ -165,7 +165,7 @@ export const Devices = () => {
           </>
         )}
 
-        <DeviceModal isOpen={isDeviceModalOpen} onClose={onDeviceModalClose} />
+        <DeviceModal show={isDeviceModalOpen} onClose={onDeviceModalClose} />
       </>
     </PageWrapper>
   );
