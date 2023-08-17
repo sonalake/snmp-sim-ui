@@ -12,7 +12,7 @@ const customTheme = {
       info: 'bg-blue-100 text-blue-800 dark:bg-gray-700 dark:text-gray-200'
     },
     size: {
-      xs: 'px-2.5 py-[1px] font-medium leading-5'
+      xs: 'px-2.5 py-[1px] font-medium text-sm leading-5'
     }
   }
 };

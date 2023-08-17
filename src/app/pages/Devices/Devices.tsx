@@ -98,6 +98,7 @@ export const Devices = () => {
               data-testid='devices-search'
               className='w-auto'
               placeholder='Search devices'
+              autoComplete='off'
               value={searchValue}
               onChange={handleSearchChange}
               disabled={isLoading}

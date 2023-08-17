@@ -76,6 +76,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             <DeviceTypeSelector
               id='type'
               required={true}
+              autoComplete='off'
               defaultValue={formik.values.type}
               name='type'
               onChange={val => formik.setFieldValue('type', val)}
@@ -86,6 +87,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
               label='Name'
               id='name'
               required={true}
+              autoComplete='off'
               value={formik.values.name}
               name='name'
               onChange={formik.handleChange}
@@ -97,6 +99,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
               id='address'
               placeholder='127.0.0.1'
               required={true}
+              autoComplete='off'
               value={formik.values.address}
               name='address'
               onChange={formik.handleChange}
@@ -109,6 +112,7 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
               placeholder='1025 or higher'
               required={true}
               type='number'
+              autoComplete='off'
               value={formik.values.port}
               name='port'
               onChange={formik.handleChange}
