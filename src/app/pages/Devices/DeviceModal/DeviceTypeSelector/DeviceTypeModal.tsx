@@ -5,6 +5,8 @@ import { DeviceTypeCount } from 'app/types';
 
 import { DeviceTypeModalContent } from './DeviceTypeModalContent';
 
+export const DEVICE_TYPE_MODAL_TEST_ID = 'device-type-modal';
+
 export interface DeviceTypeModalProps {
   show: boolean;
   onClose: () => void;
@@ -12,7 +14,7 @@ export interface DeviceTypeModalProps {
 }
 
 export const DeviceTypeModal: FC<DeviceTypeModalProps> = ({ show, onClose, onSelection }) => (
-  <ModalWrapper show={show} onClose={onClose}>
+  <ModalWrapper data-testid={DEVICE_TYPE_MODAL_TEST_ID} show={show} onClose={onClose}>
     <DeviceTypeModalContent onClose={onClose} onSelection={onSelection} />
   </ModalWrapper>
 );

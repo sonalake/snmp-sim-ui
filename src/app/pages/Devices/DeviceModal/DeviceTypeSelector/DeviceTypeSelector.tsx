@@ -21,6 +21,8 @@ const customTheme = {
   }
 };
 
+export const DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID = 'device-type-selector-button';
+
 interface DeviceTypeSelectorProps extends Omit<TextInputProps, 'onChange'> {
   onChange: (val: string) => void;
 }
@@ -51,10 +53,11 @@ export const DeviceTypeSelector: FC<DeviceTypeSelectorProps> = ({
     <>
       <div>
         <div className='mb-2 block'>
-          <Label className='leading-normal dark:text-white' value='Type' />
+          <Label className='leading-normal dark:text-white' htmlFor={props.id} value='Type' />
         </div>
         <div className='flex'>
           <Button
+            data-testid={DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID}
             theme={customTheme}
             color={color}
             name={props.name}

@@ -52,7 +52,7 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({
           id='search'
           required={true}
           value={search}
-          name='name'
+          name='search'
           placeholder='Search device types'
           disabled={isLoading}
           onChange={e => setSearch(e.target.value)}

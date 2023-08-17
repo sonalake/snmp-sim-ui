@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import { renderWithRouter } from 'app/utils/testUtils';
 
+import { DEVICE_MODAL_TEST_ID } from './DeviceModal';
 import { Devices } from './Devices';
 
 describe('Devices', () => {
@@ -85,13 +86,13 @@ describe('Devices', () => {
 
       await waitFor(() => expect(screen.getByTestId('table-element')).toBeInTheDocument());
 
-      expect((await screen.findByTestId('modal')).classList).toContain('hidden');
+      expect((await screen.findByTestId(DEVICE_MODAL_TEST_ID)).classList).toContain('hidden');
 
       userEvent.click(screen.getByTestId('add-device-btn'));
-      expect((await screen.findByTestId('modal')).classList).not.toContain('hidden');
+      expect((await screen.findByTestId(DEVICE_MODAL_TEST_ID)).classList).not.toContain('hidden');
 
       userEvent.click(screen.getByTestId('device-modal-cancel-btn'));
-      expect((await screen.findByTestId('modal')).classList).toContain('hidden');
+      expect((await screen.findByTestId(DEVICE_MODAL_TEST_ID)).classList).toContain('hidden');
     });
   });
 });
