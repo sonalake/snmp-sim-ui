@@ -64,7 +64,7 @@ export const DeviceTypeSelector: FC<DeviceTypeSelectorProps> = ({
             onClick={() => setIsDeviceTypeOpen(true)}
             onBlur={handleBlur}
           >
-            {props.defaultValue || 'Select from the list'}
+            {props.defaultValue || 'Select device type'}
             <HiChevronDown className='h-4 w-4' />
           </Button>
         </div>

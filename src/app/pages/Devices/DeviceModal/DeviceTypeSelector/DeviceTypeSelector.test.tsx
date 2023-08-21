@@ -72,7 +72,7 @@ describe('DeviceTypeSelector', () => {
     );
     expect(await screen.findByTestId(DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID)).toBeInTheDocument();
     expect(screen.getByTestId(DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID)).toHaveTextContent(
-      'Select from the list'
+      'Select device type'
     );
 
     userEvent.click(screen.getByTestId(DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID));

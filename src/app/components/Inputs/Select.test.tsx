@@ -16,7 +16,7 @@ describe('Select', () => {
         label='Test Select'
         id='test-select'
         name='testSelect'
-        placeholder='Select from the list'
+        placeholder='Select device type'
         options={OPTIONS}
         onChange={jest.fn()}
       />

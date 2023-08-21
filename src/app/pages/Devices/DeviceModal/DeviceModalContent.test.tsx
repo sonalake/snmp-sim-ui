@@ -83,7 +83,7 @@ describe('DeviceModalContent', () => {
     expect(await screen.findByTestId('add-device-form')).toBeInTheDocument();
 
     expect(screen.getByTestId(DEVICE_TYPE_SELECTOR_BUTTON_TEST_ID)).toHaveTextContent(
-      'Select from the list'
+      'Select device type'
     );
 
     expect((await screen.findByTestId(DEVICE_TYPE_MODAL_TEST_ID)).classList).toContain('hidden');

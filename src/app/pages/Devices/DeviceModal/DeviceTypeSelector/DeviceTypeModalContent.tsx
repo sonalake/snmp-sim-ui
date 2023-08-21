@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from 'react';
-import { HiOutlineX } from 'react-icons/hi';
+import { HiArrowLeft } from 'react-icons/hi';
 import { TextInput } from 'flowbite-react';
 
 import { Heading, LoadingIndicator } from 'app/components';
@@ -35,15 +35,15 @@ export const DeviceTypeModalContent: FC<DeviceTypeModalContentProps> = ({
   return (
     <div className='rounded p-6'>
       <div className='flex flex-col pb-3'>
-        <div className='flex items-start justify-between'>
-          <Heading.Modal>Add device</Heading.Modal>
+        <div className='flex items-center'>
           <button
             aria-label='Close'
-            className='ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-800 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
+            className='mr-0.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-800 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white'
             onClick={onClose}
           >
-            <HiOutlineX aria-hidden={true} className='h-5 w-5' />
+            <HiArrowLeft aria-hidden={true} className='h-5 w-5' />
           </button>
+          <Heading.Modal>Select device type</Heading.Modal>
         </div>
         <Heading.ModalSub>Select a device type below or add your own.</Heading.ModalSub>
       </div>

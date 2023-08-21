@@ -22,7 +22,7 @@ const validationSchema = yup.object({
       'Address must be in format "127.0.0.1"'
     )
     .required('Address is required'),
-  port: yup.number().moreThan(1024).required('Port is required')
+  port: yup.number().moreThan(1023).lessThan(65536).required('Port is required')
 });
 
 type DeviceModalContentProps = Omit<DeviceModalProps, 'show'>;
@@ -63,7 +63,6 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
             <HiOutlineX aria-hidden={true} className='h-5 w-5' />
           </button>
         </div>
-        <Heading.ModalSub>Select a device type below or add your own.</Heading.ModalSub>
       </div>
       <form autoComplete='off' data-testid='add-device-form' onSubmit={formik.handleSubmit}>
         <div className='px-6 py-1 flex-1 overflow-auto'>
@@ -73,16 +72,6 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
                 {apiError}
               </Alert>
             )}
-            <DeviceTypeSelector
-              id='type'
-              required={true}
-              autoComplete='off'
-              defaultValue={formik.values.type}
-              name='type'
-              onChange={val => formik.setFieldValue('type', val)}
-              onBlur={formik.handleBlur}
-              color={formik.touched.type && Boolean(formik.errors.type) ? 'failure' : 'gray'}
-            />
             <TextInput
               label='Name'
               id='name'
@@ -94,31 +83,45 @@ export const DeviceModalContent: FC<DeviceModalContentProps> = ({ onClose }) => 
               onBlur={formik.handleBlur}
               color={formik.touched.name && Boolean(formik.errors.name) ? 'failure' : 'gray'}
             />
-            <TextInput
-              label='Address'
-              id='address'
-              placeholder='127.0.0.1'
+            <DeviceTypeSelector
+              id='type'
               required={true}
               autoComplete='off'
-              value={formik.values.address}
-              name='address'
-              onChange={formik.handleChange}
+              defaultValue={formik.values.type}
+              name='type'
+              onChange={val => formik.setFieldValue('type', val)}
               onBlur={formik.handleBlur}
-              color={formik.touched.address && Boolean(formik.errors.address) ? 'failure' : 'gray'}
+              color={formik.touched.type && Boolean(formik.errors.type) ? 'failure' : 'gray'}
             />
-            <TextInput
-              label='Port'
-              id='port'
-              placeholder='1025 or higher'
-              required={true}
-              type='number'
-              autoComplete='off'
-              value={formik.values.port}
-              name='port'
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              color={formik.touched.port && Boolean(formik.errors.port) ? 'failure' : 'gray'}
-            />
+            <div className='flex flex-row gap-4'>
+              <TextInput
+                label='Address'
+                id='address'
+                placeholder='127.0.0.1'
+                required={true}
+                autoComplete='off'
+                value={formik.values.address}
+                name='address'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                color={
+                  formik.touched.address && Boolean(formik.errors.address) ? 'failure' : 'gray'
+                }
+              />
+              <TextInput
+                label='Port'
+                id='port'
+                placeholder='1024 to 65535'
+                required={true}
+                type='number'
+                autoComplete='off'
+                value={formik.values.port}
+                name='port'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                color={formik.touched.port && Boolean(formik.errors.port) ? 'failure' : 'gray'}
+              />
+            </div>
           </div>
         </div>
         <div className='flex items-start justify-between rounded-b p-6 pt-3'>
