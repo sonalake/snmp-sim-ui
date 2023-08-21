@@ -3,8 +3,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { StatusIndicator } from 'app/components';
 import { Device } from 'app/types';
 
-import { DeviceBadge } from './DeviceBadge';
-
 export const devicesColumns: ColumnDef<Device>[] = [
   {
     header: 'Name',
@@ -28,12 +26,20 @@ export const devicesColumns: ColumnDef<Device>[] = [
   {
     header: 'IP address',
     accessorKey: 'snmp_host',
-    cell: ({ row: { original } }) => <DeviceBadge>{original.snmp_host}</DeviceBadge>
+    cell: ({ row: { original } }) => (
+      <div className='font-normal text-sm text-gray-900 dark:text-gray-200'>
+        {original.snmp_host}
+      </div>
+    )
   },
   {
     header: 'Port',
     accessorKey: 'snmp_port',
-    cell: ({ row: { original } }) => <DeviceBadge>{original.snmp_port}</DeviceBadge>
+    cell: ({ row: { original } }) => (
+      <div className='font-normal text-sm text-gray-900 dark:text-gray-200'>
+        {original.snmp_port}
+      </div>
+    )
   },
   {
     header: 'Status',

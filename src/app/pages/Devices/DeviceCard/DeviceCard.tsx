@@ -5,8 +5,6 @@ import { Card } from 'flowbite-react';
 import { StatusIndicator } from 'app/components';
 import { Device } from 'app/types';
 
-import { DeviceBadge } from '../DeviceBadge';
-
 const customTheme = {
   root: {
     base: 'flex flex-col rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-50 hover:border-blue-400 hover:dark:border-blue-400',
@@ -34,8 +32,12 @@ export const DeviceCard: FC<DeviceCardProps> = ({ device }) => (
     <div className='text-sm font-normal text-gray-500 dark:text-gray-400'>{device.type}</div>
     <div className='flex flex-row justify-between gap-1'>
       <div className='flex flex-row gap-[2px]'>
-        <DeviceBadge className='rounded-r-none'>{device.snmp_host}</DeviceBadge>
-        <DeviceBadge className='rounded-l-none'>{device.snmp_port}</DeviceBadge>
+        <div className='font-normal text-sm text-blue-800 dark:text-gray-200 mr-2'>
+          {device.snmp_host}
+        </div>
+        <div className='font-normal text-sm text-blue-800 dark:text-gray-200'>
+          {device.snmp_port}
+        </div>
       </div>
       <StatusIndicator
         title={device.status === 'running' ? 'Running' : 'Stopped'}
