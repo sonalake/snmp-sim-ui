@@ -6,12 +6,18 @@ import { Button, DarkThemeToggle, TextInput } from 'flowbite-react';
 
 import {
   ButtonIcon,
-  DataTableWithPatination,
+  DataTable,
   LoadingIndicator,
   PageProps,
-  PageWrapper
+  PageWrapper,
+  Pagination
 } from 'app/components';
-import { DeviceStatus, PAGINATION_DEFAULT_PAGE_SIZE_OPTION, ViewState } from 'app/constants';
+import {
+  DeviceStatus,
+  PAGINATION_CARD_VIEW_PAGE_SIZE_OPTION,
+  PAGINATION_LIST_VIEW_PAGE_SIZE_OPTION,
+  ViewState
+} from 'app/constants';
 import { useDebounce } from 'app/hooks';
 import { FetchDevicesQueryParams, useFetchDevices } from 'app/queries/useDeviceQueries';
 import { Device } from 'app/types';
@@ -23,7 +29,7 @@ import { DevicesSidebarContent } from './DevicesSidebar';
 import { DevicesViewToggle } from './DevicesViewToggle';
 
 export const Devices = () => {
-  const [viewState, changeViewState] = useState<ViewState>(ViewState.LIST);
+  const [viewState, setViewState] = useState<ViewState>(ViewState.LIST);
 
   const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
 
@@ -31,7 +37,7 @@ export const Devices = () => {
   const [sortingState, setSortingState] = useState<SortingState>([]);
   const [deviceQueryParams, setDeviceQueryParams] = useState<FetchDevicesQueryParams>({
     page: 1,
-    pageSize: PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
+    pageSize: PAGINATION_LIST_VIEW_PAGE_SIZE_OPTION,
     sorting: [],
     search: '',
     status: DeviceStatus.ALL,
@@ -76,7 +82,17 @@ export const Devices = () => {
     debouncedRequest();
   };
 
-  const handleStateChange = (state: ViewState) => changeViewState(state);
+  const handleViewStateChange = (state: ViewState) => {
+    setDeviceQueryParams(query => ({
+      ...query,
+      page: 1,
+      pageSize:
+        state === ViewState.CARDS
+          ? PAGINATION_CARD_VIEW_PAGE_SIZE_OPTION
+          : PAGINATION_LIST_VIEW_PAGE_SIZE_OPTION
+    }));
+    setViewState(state);
+  };
 
   const openDeviceModal = () => setIsDeviceModalOpen(true);
   const onDeviceModalClose = () => setIsDeviceModalOpen(false);
@@ -133,10 +149,9 @@ export const Devices = () => {
           </div>
           <div className='flex items-center'>
             <DarkThemeToggle />
-            <DevicesViewToggle viewState={viewState} changeViewState={handleStateChange} />
+            <DevicesViewToggle viewState={viewState} changeViewState={handleViewStateChange} />
           </div>
         </div>
-
         {isLoading && (
           <div className='mt-64'>
             <LoadingIndicator />
@@ -145,15 +160,11 @@ export const Devices = () => {
         {!isLoading && !!devices && (
           <>
             {viewState === ViewState.LIST ? (
-              <DataTableWithPatination<Device>
+              <DataTable<Device>
                 columns={devicesColumns}
-                disabled={isLoading}
+                data={devices.items}
                 isSelectable={false}
-                items={devices.items}
-                pageProps={deviceQueryParams}
                 sortingState={sortingState}
-                totalCount={devices.count}
-                onPaginationChange={handlePaginationChange}
                 onSortingChange={handleSortingChange}
               />
             ) : (
@@ -163,9 +174,14 @@ export const Devices = () => {
                 ))}
               </div>
             )}
+            <Pagination
+              onPaginationChange={handlePaginationChange}
+              totalCount={devices.count}
+              disabled={isLoading}
+              pageProps={deviceQueryParams}
+            />
           </>
         )}
-
         <DeviceModal show={isDeviceModalOpen} onClose={onDeviceModalClose} />
       </>
     </PageWrapper>

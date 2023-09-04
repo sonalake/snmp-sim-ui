@@ -72,7 +72,7 @@ describe('Devices', () => {
     userEvent.click(screen.getByTestId('view-toggle-button'));
 
     expect(await screen.queryByTestId('table-element')).toBeNull();
-    expect(await screen.findAllByTestId('flowbite-card')).toHaveLength(10);
+    expect(await screen.findAllByTestId('flowbite-card')).toHaveLength(12);
 
     userEvent.click(screen.getByTestId('view-toggle-button'));
 

@@ -1,8 +1,6 @@
 import { FC, useMemo } from 'react';
 import { Pagination as FlowbitePagination } from 'flowbite-react';
 
-import { PAGINATION_DEFAULT_PAGE_SIZE_OPTION } from '../../constants';
-
 export interface PageProps {
   page: number;
   pageSize: number;
@@ -48,8 +46,8 @@ export const Pagination: FC<{
   );
 
   const displayPagination = useMemo(
-    () => totalCount >= PAGINATION_DEFAULT_PAGE_SIZE_OPTION,
-    [totalCount]
+    () => totalCount >= pageProps.pageSize,
+    [pageProps.pageSize, totalCount]
   );
 
   const handlePageChange = (page: number) => {
